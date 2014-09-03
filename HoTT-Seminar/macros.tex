@@ -1,12 +1,6 @@
 %%%% MACROS FOR NOTATION %%%%
 % Use these for any notation where there are multiple options.
 
-%%% Notes and exercise sections
-\makeatletter
-\newcommand{\sectionNotes}{\phantomsection\section*{Notes}\addcontentsline{toc}{section}{Notes}\markright{\textsc{\@chapapp{} \thechapter{} Notes}}}
-\newcommand{\sectionExercises}[1]{\phantomsection\section*{Exercises}\addcontentsline{toc}{section}{Exercises}\markright{\textsc{\@chapapp{} \thechapter{} Exercises}}}
-\makeatother
-
 %%% Definitional equality (used infix) %%%
 \newcommand{\jdeq}{\equiv}      % An equality judgment
 \let\judgeq\jdeq
@@ -325,7 +319,7 @@
 \let\ntypeU\typeleU
 \let\ntypep\typelep
 \let\ntypepU\typelepU
-\renewcommand{\set}{\ensuremath{\mathsf{Set}}\xspace}
+\newcommand{\set}{\ensuremath{\mathsf{Set}}\xspace}
 \newcommand{\setU}{\ensuremath{\mathsf{Set}_\UU}\xspace}
 \newcommand{\prop}{\ensuremath{\mathsf{Prop}}\xspace}
 \newcommand{\propU}{\ensuremath{\mathsf{Prop}_\UU}\xspace}
@@ -451,11 +445,6 @@
 \newcommand{\uhilb}{\ensuremath{\mathcal{H}ilb}\xspace}
 \newcommand{\utype}{\ensuremath{\mathcal{T}\!ype}\xspace}
 
-% Pullback corner
-\newbox\pbbox
-\setbox\pbbox=\hbox{\xy \POS(65,0)\ar@{-} (0,0) \ar@{-} (65,65)\endxy}
-\def\pb{\save[]+<3.5mm,-3.5mm>*{\copy\pbbox} \restore}
-
 % Macros for the categories chapter
 \newcommand{\inv}[1]{{#1}^{-1}}
 \newcommand{\idtoiso}{\ensuremath{\mathsf{idtoiso}}\xspace}
@@ -579,7 +568,7 @@
 \newcommand{\istype}[1]{\mathsf{is}\mbox{-}{#1}\mbox{-}\mathsf{type}}
 \newcommand{\nplusone}{\ensuremath{(n+1)}}
 \newcommand{\nminusone}{\ensuremath{(n-1)}}
-\newcommand{\fact}{\mathsf{fact}}
+\renewcommand{\fact}{\mathsf{fact}}
 
 %%% Macros for homotopy
 \newcommand{\kbar}{\overline{k}} % Used in van Kampen's theorem
@@ -666,146 +655,6 @@
 
 \newcommand{\power}[1]{\mathcal{P}(#1)} % power set
 \newcommand{\powerp}[1]{\mathcal{P}_+(#1)} % inhabited power set
-
-%%%% THEOREM ENVIRONMENTS %%%%
-
-% The cleveref package provides \cref{...} which is like \ref{...}
-% except that it automatically inserts the type of the thing you're
-% referring to, e.g. it produces "Theorem 3.8" instead of just "3.8"
-% (and hyperref makes the whole thing a hyperlink).  This saves a slight amount
-% of typing, but more importantly it means that if you decide later on
-% that 3.8 should be a Lemma or a Definition instead of a Theorem, you
-% don't have to change the name in all the places you referred to it.
-
-% The following hack improves on this by using the same counter for
-% all theorem-type environments, so that after Theorem 1.1 comes
-% Corollary 1.2 rather than Corollary 1.1.  This makes it much easier
-% for the reader to find a particular theorem when flipping through
-% the document.
-\makeatletter
-\def\defthm#1#2#3{%
-  %% Ensure all theorem types are numbered with the same counter
-  \newaliascnt{#1}{thm}
-  \newtheorem{#1}[#1]{#2}
-  \aliascntresetthe{#1}
-  %% This command tells cleveref's \cref what to call things
-  \crefname{#1}{#2}{#3}% following brace must be on separate line to support poorman cleveref sed file
-}
-
-% Now define a bunch of theorem-type environments.
-\newtheorem{thm}{Theorem}[section]
-\crefname{thm}{Theorem}{Theorems}
-%\defthm{prop}{Proposition}   % Probably we shouldn't use "Proposition" in this way
-\defthm{cor}{Corollary}{Corollaries}
-\defthm{lem}{Lemma}{Lemmas}
-\defthm{axiom}{Axiom}{Axioms}
-% Since definitions and theorems in type theory are synonymous, should
-% we actually use the same theoremstyle for them?
-\theoremstyle{definition}
-\defthm{defn}{Definition}{Definitions}
-\theoremstyle{remark}
-\defthm{rmk}{Remark}{Remarks}
-\defthm{eg}{Example}{Examples}
-\defthm{egs}{Examples}{Examples}
-\defthm{notes}{Notes}{Notes}
-% Number exercises within chapters, with their own counter.
-\newtheorem{ex}{Exercise}[chapter]
-\crefname{ex}{Exercise}{Exercises}
-
-% Display format for sections
-\crefformat{section}{\S#2#1#3}
-\Crefformat{section}{Section~#2#1#3}
-\crefrangeformat{section}{\S\S#3#1#4--#5#2#6}
-\Crefrangeformat{section}{Sections~#3#1#4--#5#2#6}
-\crefmultiformat{section}{\S\S#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\Crefmultiformat{section}{Sections~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\crefrangemultiformat{section}{\S\S#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-\Crefrangemultiformat{section}{Sections~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-
-% Display format for appendices
-\crefformat{appendix}{Appendix~#2#1#3}
-\Crefformat{appendix}{Appendix~#2#1#3}
-\crefrangeformat{appendix}{Appendices~#3#1#4--#5#2#6}
-\Crefrangeformat{appendix}{Appendices~#3#1#4--#5#2#6}
-\crefmultiformat{appendix}{Appendices~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\Crefmultiformat{appendix}{Appendices~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\crefrangemultiformat{appendix}{Appendices~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-\Crefrangemultiformat{appendix}{Appendices~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-
-\crefname{part}{Part}{Parts}
-
-% Number subsubsections
-\setcounter{secnumdepth}{5}
-
-% Display format for figures
-\crefname{figure}{Figure}{Figures}
-
-%%%% EQUATION NUMBERING %%%%
-
-% The following hack uses the single theorem counter to number
-% equations as well, so that we don't have both Theorem 1.1 and
-% equation (1.1).
-\let\c@equation\c@thm
-\numberwithin{equation}{section}
-
-
-%%%% ENUMERATE NUMBERING %%%%
-
-% Number the first level of enumerates as (i), (ii), ...
-\renewcommand{\theenumi}{(\roman{enumi})}
-\renewcommand{\labelenumi}{\theenumi}
-
-
-%%%% MARGINS %%%%
-
-% This is a matter of personal preference, but I think the left
-% margins on enumerates and itemizes are too wide.
-\setitemize[1]{leftmargin=2em}
-\setenumerate[1]{leftmargin=*}
-
-% Likewise that they are too spaced out.
-\setitemize[1]{itemsep=-0.2em}
-\setenumerate[1]{itemsep=-0.2em}
-
-%%% Notes %%%
-\def\noteson{%
-\gdef\note##1{\mbox{}\marginpar{\color{blue}\textasteriskcentered\ ##1}}}
-\gdef\notesoff{\gdef\note##1{\null}}
-\noteson
-
-\newcommand{\Coq}{\textsc{Coq}\xspace}
-\newcommand{\Agda}{\textsc{Agda}\xspace}
-\newcommand{\NuPRL}{\textsc{NuPRL}\xspace}
-
-%%%% CITATIONS %%%%
-
-% \let \cite \citep
-
-%%%% INDEX %%%%
-
-\newcommand{\footstyle}[1]{{\hyperpage{#1}}n} % If you index something that is in a footnote
-\newcommand{\defstyle}[1]{\textbf{\hyperpage{#1}}}  % Style for pageref to a definition
-
-\newcommand{\indexdef}[1]{\index{#1|defstyle}}   % Index a definition
-\newcommand{\indexfoot}[1]{\index{#1|footstyle}} % Index a term in a footnote
-\newcommand{\indexsee}[2]{\index{#1|see{#2}}}    % Index "see also"
-
-
-%%%% Standard phrasing or spelling of common phrases %%%%
-
-\newcommand{\ZF}{Zermelo--Fraenkel}
-\newcommand{\CZF}{Constructive \ZF{} Set Theory}
-
-\newcommand{\LEM}[1]{\ensuremath{\mathsf{LEM}_{#1}}\xspace}
-\newcommand{\choice}[1]{\ensuremath{\mathsf{AC}_{#1}}\xspace}
-
-%%%% MISC %%%%
-
-\newcommand{\mentalpause}{\medskip} % Use for "mental" pause, instead of \smallskip or \medskip
-
-%% Use \symlabel instead of \label to mark a pageref that you need in the index of symbols
-\newcounter{symindex}
-\newcommand{\symlabel}[1]{\refstepcounter{symindex}\label{#1}}
 
 % Local Variables:
 % mode: latex
