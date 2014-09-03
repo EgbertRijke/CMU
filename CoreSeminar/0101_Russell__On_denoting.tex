@@ -1,0 +1,78 @@
+\documentclass{article}
+\input{preamble}
+
+\paperauthor{Russell}
+\papertitle{On denoting}
+
+
+\begin{document}
+\maketitle
+
+The main message of Russell's essay on denoting should have been a certain
+phrase with the interaction between denoting phrases, propositions and meanings
+as its meaning, accompanied with evidence for the proposition that this might
+indeed be used effectively in an attempt to understand how we use language to 
+gather knowledge. Indeed, the importance of denoting is that knowledge
+is obtained through denoting and by means of denoting we may obtain knowledge
+of objects of which we have no acquaintence. The basic idea is that denoting
+phrases describe objects of our world including among other things the physical 
+world, experiences, imaginations and abstractions; and that we use denoting 
+phrases in propositions to make assertions about those objects.
+
+In his theory meaning and denoting, Russell distinguishes two classes of
+expressions about objects: that of denoting phrases and
+propositions. To some of these, a meaning (or even multiple meanings) might be
+assigned. As a means of summarizing his ideas of denoting phrases, let us try
+to translate them into algebraic language. Thus, we have a set $D$ of denoting
+phrases and a type $O$ of objects of the world (it is not clear that this type
+should be a set) and meaning could be represented by a relation 
+$M\hookrightarrow D\times O$. Every denoting phrase is also considered an
+object, so there is also a monomorphism $D \hookrightarrow O$ which assigns to
+every denoting phrase the object representing that denoting phrase. If $d$ is
+a denoting phrase, then there are also denoting phrases $\mu(d)$ for `the meaning
+of $d$' and $\delta(d)$ for the denotation of $d$. There are no further relations
+on these functions $\mu,\delta:D\to D$; Russell stresses that it is not the case
+that $\mu(d)=d$.
+
+There is also a set $P$ of propositions, where universal quantification and negation
+provide for certain maps which we don't spell out here. However, important in
+Russell's theory is the partial function $\text{the}:D\to P$, which turns some
+of the denoting phrases into unique existential statements. Russell's explanation
+of `the so-and-so' is one of the gripes of Strawson in his article \emph{On 
+referring}.
+
+In his theory of propositions, Russell proposes a system where every
+proposition can be rewritten using
+\begin{enumerate}
+\item $C(\text{everything})$, which means that `$C(x)$ is always true'.
+\item $C(\text{nothing})$, which means that ``$C(x)$ is false', is always true'.
+\item $C(\text{something})$, which means that `it is false that `$C(x)$ is
+false' is always true'.
+\end{enumerate}
+
+It goes unargued why `$C(x)$ is false' or `$x$ is
+identical to $y$' do not appear in his list of propositions and the modern
+convention is that $C(\text{something})$ would mean `there exists an $x$ such
+that $C(x)$'. 
+
+An eminent feature of denoting phrases and propositions in Russell's theory is 
+that apparently they have to be evaluated regardless of the context in which 
+they are made. Russell gives the impression that the meaning of `the king of 
+France' is a priory void, regardless of the fact that there has been a king of 
+France and there might actually be at any moment someone who wishes to be 
+referred to as the king of France (e.g.~because he has that role in another
+context such as a fictive work). Nobody would argue that in such a context it
+would be meaningless to speak of the king of France. By disregarding
+the context in which assertions are made, Russell seems to undermine his point
+of view that all assertions should have a truth-value.
+
+Lastly, it should be pointed out that it is unclear from the article how 
+propositions relate to sentences (of a natural language). In
+all the examples Russell provides, propositions are English sentences providing
+a noun phrase and assigning a quality to it, e.g.~`the king of France is bald',
+yet Russell is of the opinion that `the author of Waverley' is not
+the subject of the sentence `the author of Waverley was a man'. Which position
+he does take relative to linguistics and symbolic logic remains a unremarked
+upon and this makes it hard to evaluate the reach of his claims.
+
+\end{document}
