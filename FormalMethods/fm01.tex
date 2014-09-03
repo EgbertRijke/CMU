@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand\hwnumber{1}
+
+\begin{document}
+
+\maketitle
+
+\begin{ex}
+%set local notation
+\newcommand{\ulimsym}{{\uparrow}}
+\newcommand{\ulim}[2]{\ulimsym_{#1\in\mathbb{N}}\,{#2}_{#1}}
+\newcommand{\dlimsym}{{\downarrow}}
+\newcommand{\dlim}[2]{\dlimsym_{#1\in\mathbb{N}}\,{#2}_{#1}}
+Let $X$ be a space, let $\sigalg{A}$ be a $\sigma$-algebra on $X$ and
+let $P:\sigalg{A}\to[0,1]$ be a function with $P(\emptyset)=0$ and $P(X)=1$. The exercise asks to verify that the three properties
+\begin{enumerate}
+\item $P$ is $\sigma$-additive: let $PD_\sigalg{A}:=\{s:\mathbb{N}\to\sigalg{A}\mid i\neq j \Rightarrow s_i\cap s_j=\emptyset\text{ for all }i,j\in\mathbb{N}\}$ be the collection of pairwise disjoint sequences of measurable sets; for every $S\in PD_\sigalg{A}$ we have
+\begin{equation*}
+\textstyle
+P(\bigcup_{i\in\mathbb{N}}S_i)=\sum_{i\in\mathbb{N}}P(S_i)
+\end{equation*}
+\item $P$ is upwards continuous: let $MI_\sigalg{A}:=\in\{s:\mathbb{N}\to\sigalg{A}\mid s_i\subseteq s_{i+1}\text{ for every }i\in\mathbb{N}\}$ be the collection of monotonously increasing sequences of measurable sets; for every $S\in MI_\sigalg{A}$ we have
+\begin{equation*}
+\textstyle
+P(\bigcup_{i\in\mathbb{N}}S_i)=\ulimsym_{i}\,{P(S_i)}
+\end{equation*}
+\item $P$ is downwards continuous: let $MD_\sigalg{A}:=\{s:\mathbb{N}\to\sigalg{A}\mid s_{i+1}\subseteq s_i\text{ for every }i\in\mathbb{N}\}$ be the collection of monotonously decreasing sequences of measurable sets; for every $S\in MD_\sigalg{A}$ we have
+\begin{equation*}
+\textstyle
+P(\bigcap_{i\in\mathbb{N}}S_i)=\dlim{i}{P(S_i)}
+\end{equation*}
+\end{enumerate}
+are equivalent.
+
+Suppose first that $P$ is $\sigma$-additive and let $S\in MI_\sigalg{A}$. Then we have the sequence $S':\mathbb{N}\to\sigalg{A}$ given by $S'_0:=S_0$ and $S'_{i+1}:=S_{i+1}\setminus S_i$ which is pairwise disjoint because $S$ is increasing. Since $P$ is assumed to be $\sigma$-additive, we have the equality
+\begin{equation*}
+\textstyle
+P(\bigcup_{i\in\mathbb{N}}S_i)=\sum_{i\in\mathbb{N}}P(S_i).
+\end{equation*}
+By definition, we have the equality
+\begin{equation*}
+\sum_{i\in\mathbb{N}}P(S_i)=\lim_{j\to\infty}\sum_{i=0}^j P(S_i).
+\end{equation*}
+Since $P$ is assumed to take values in $[0,1]$ it is always non-negative, so the latter is a limit of a monotone increasing sequence of real numbers, which we may write in this exercise as $\ulimsym_j\,\sum_{i=0}^j P(S_i)$. Now we note that 
+\begin{equation*}
+\textstyle
+\sum_{i=0}^j P(S_i) = P(\bigcup_{i=0}^j S_i) = P(S_j)
+\end{equation*}
+by the $\sigma$-additivity of $P$ ($\sigma$-additivity implies finite additivity). We conclude that $P(\bigcup_{i\in\mathbb{N}}S_i)=\ulimsym_{j}\,{P(S_j)}$.
+
+Now suppose that $P$ is upwards continuous. We will show that it follows that $P$ is $\sigma$-additive. To begin, let $S\in PD_\sigalg{A}$. Then we construct the monotone increasing sequence $S'$ by $S'_i=\bigcup_{j=0}^i S_j$. Now it follows by the upwards continuity of $P$ that
+\begin{equation*}
+\textstyle
+P(\bigcup_{i\in\mathbb{N}}S'_i)=\ulimsym_{i}\,{P(S'_i)}
+\end{equation*}
+
+\note{We probably have to assume finite additivity of $P$.\\ It is not clear what is meant by the phrase `natural approximations from without or within'.}
+\end{ex}
+
+\begin{ex}
+Answer to second exercise.
+\end{ex}
+
+\setcounter{ex}{0}
+
+\begin{ex}
+Answer to first exercise in second part.
+\end{ex}
+
+\end{document}
