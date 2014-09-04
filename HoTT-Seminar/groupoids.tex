@@ -159,6 +159,119 @@ the obvious way.
 \end{definition}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Categories with families}
+\begin{definition}
+A \emph{Category with families} consists of the following data
+\begin{itemize}
+\item A category $\mathcal{C}$ of contexts and substitutions with a terminal
+object $[]$ corresponding to the empty context.
+\item A collection-valued functor $Ty:\mathcal{C}^{op}\to\mathcal{S}et$ associating
+to each context $\Gamma$ the collection of types depending on it. If $f:\Delta\to
+\Gamma$ and $A\in Ty(\Gamma)$ one writes $A\{f\}$ for $Ty(f)(A)$.
+\item For each $\Gamma\in\mathcal{C}$ and $A\in Ty(\Gamma)$ a collection of terms
+$Tm(\Gamma,A)$ together with a substitution functor $Tm(f,a):Tm(\Gamma,A)\to
+Tm(\Delta,A\{f\})$ functorial in $f$ in the obvious way.
+\item For each $A\in Ty(\Gamma)$ a so-called context-extension $\Gamma.A$ which has
+the property that the homset $\mathcal{C}(\Delta,\Gamma.A)$ and
+\begin{equation*}
+\{(f,M)\mid f:\Delta\to\Gamma\text{ and }M\in Tm(\Delta,A\{f\})\}
+\end{equation*}
+are isomorphic naturally in $\Delta$.
+\end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Context extension}
+\begin{definition}
+Let $A\in Ty(\Gamma)$ be a family of groupoids; we will define the context
+extension $\Gamma.A$ as the total category of the co-fibration obtained by
+applying the Grothendieck construction.
+\begin{itemize}
+\item The objects of $\Gamma.A$ are pairs $(\gamma,a)$ where $\gamma\in\Gamma$ and
+$a\in A(\gamma)$.
+\item A morphism in $\Gamma.A$ from $(\gamma,a)$ to $(\gamma',a')$
+is a pair $(p,q)$ where $p:\gamma\to\gamma'$ in $\Gamma$ and $q:A(p,a)\to a'$ in
+$A(\gamma')$.
+\item The composition of $(p,q):(\gamma,a)\to(\gamma',a')$ with
+$(p',q'):(\gamma',a')\to(\gamma'',a'')$ in $\Gamma.A$ is defined as
+$(p'\circ p,q'\circ A(p,q))$.
+\item The identity at $(\gamma,a)$ is $(id_\gamma,id_a)$
+and the inverse of $(p,q)$ is $(p^{-1},A(p^{-1},q^{-1}))$.
+\end{itemize}
+The canonical projection $\mathsf{p}_A:\Gamma.A\to\Gamma$ associated to $A$ sends 
+$(\gamma,a)$ to $\gamma$ and $(p,q)$ to $p$ is a 
+morphism of groupoids from $\Gamma.A$ to $\Gamma$. Likewise, we have an element
+$\mathsf{q}_A\in Tm(A\{\mathsf{p}_A\})$ given by $\mathsf{q}_A(\gamma,a)=a$ and
+$\mathsf{q}_A(p,q)=q$.
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The groupoid of terms}
+To each dependent object $M\in Tm(A)$ we can associate a functor
+$\bar{M}:\Gamma\to\Gamma.A$ by applying the natural bijection of context
+extension to the pair $(id_\Gamma,M)$. Using this correspondence, we can define
+a groupoid structure on $Tm(A)$.
+
+\begin{definition}
+Consider $M,N\in Tm(A)$. A morphism $\tau:M\to N$ is a collection
+$\{\tau_\gamma:M(\gamma)\to N(\gamma)\}_{\gamma\in\Gamma}$ such that $\bar{\tau}
+:=\{(id_\gamma,\tau_\gamma)\}_{\gamma\in\Gamma}$ is a natural transformation from
+$\bar{M}$ to $\bar{N}$.
+\end{definition}
+
+\begin{definition}
+Let $A\in Ty(\Gamma)$, $B\in Ty(\Gamma.A)$ and let $\gamma\in\Gamma$. Then we
+define $B_\gamma\in Ty(A(\gamma))$ by $B\{\hat{\gamma}\}$ where $\hat{\gamma}
+:A(\gamma)\to\Gamma.A$ is given by $a\mapsto (\gamma,a)$ and $p\mapsto(id_\gamma,p)$. 
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dependent function space}
+\begin{definition}
+Let $A\in Ty(\Gamma)$ and $B\in Ty(\Gamma.A)$. Then we define $\Pi_{LF}(A,B)\in
+Ty(\Gamma)$ by taking
+\begin{equation*}
+\Pi_{LF}(A,B)(\gamma):= Tm(B_\gamma)
+\end{equation*}
+as a groupoid for the action on objects; if $p:\gamma\to\gamma'$ 
+we define the functor $\Pi_{LF}(A,B)(p):Tm(B_\gamma)\to Tm(B_{\gamma'})$ by setting
+\begin{align*}
+(p\cdot M)(a) & := (p,id)\cdot M(p^{-1}\cdot a)\\
+(p\cdot M)(q) & := (p,id)\cdot M(p^{-1}\cdot q)
+\end{align*}
+for $a\in A(\gamma')$ and $q:a\to a'$ respectively as the action on objects; and by
+setting
+\begin{equation*}
+(p\cdot\tau)_a := (p,id)\cdot \tau_{p^{-1}\cdot a}
+\end{equation*}
+for $\tau:M\to N$ as the action on morphisms.
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The universe of sets}
+Let $\mathcal{V}$ be a universe in the metalanguage. Call a groupoid $\Gamma$ small
+if both its collection of objects and its homsets lie in $\mathcal{V}$. Write $Gpd$ for
+the groupoid of small groupoids. The inclusion from $Gpd$ to $GPD$ defines a family
+$El\in Ty(Gpd)$. The groupoid $Gpd$ together with $El$ serves as the interpretation
+of the type $\type$ and its associated `invisible' $El$ operator.
+
+We define $Se(\Gamma)$ for the homset $\Gamma\to Gpd$; it follows that $Se(\Gamma)
+\subseteq Ty(\Gamma)$. 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Identity sets}
+To interpret identity sets in full generality we need an element
+\begin{equation*}
+Id\in Tm([A:\type,a:A,a':A]
+\end{equation*}
+\end{frame}
+
 \section{Applications and extension}
 
 \end{document}
