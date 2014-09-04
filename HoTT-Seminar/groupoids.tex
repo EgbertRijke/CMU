@@ -267,9 +267,62 @@ We define $Se(\Gamma)$ for the homset $\Gamma\to Gpd$; it follows that $Se(\Gamm
 \begin{frame}
   \frametitle{Identity sets}
 To interpret identity sets in full generality we need an element
-\begin{equation*}
-Id\in Tm([A:\type,a:A,a':A]
+\begin{equation*}\textstyle
+Id\in Tm([\prd{A:\type}{a,a':A}\type])
 \end{equation*}
+for every $A\in Ty(\Gamma)$. This amounts to giving a small family of groupoids
+over the groupoid of quadruples $(\gamma,A,a_1,a_2)$ consisting of $\gamma\in\Gamma$,
+$A\in Gpd$ and $a,a'\in A$. Morphisms in this context groupoid are quadruples
+$(\alpha,p,q_1,q_2)$ where $\alpha:\gamma\to\gamma'$, $p:A\to A'$ and $q_i:p\cdot a_i
+\to a_i'$. Note that $El(p)(a_i)=p(a_i)$, so that we can write $p(a_i)$ rather
+than $p\cdot a_i$.
+
+\begin{definition}
+Let $\Gamma$ be a groupoid. We define $Id\in Tm([\prd{A:\type}{a_1,a_2:A}\type])$
+by
+\begin{align*}
+Id(\gamma,A,a_1,a_2) & := \triangle(A(\gamma)(a_1,a_2))\\
+Id_A(\alpha,p,q_1,q_2) & := q_2\circ p(s)\circ q_1^{-1}
+\end{align*}
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The reflexivity term}
+To interpret the reflexivity term, we will define an object
+\begin{equation*}\textstyle
+  refl\in Tm([\prd{A:\type}{a:A}Id(A,a,a)])
+\end{equation*}
+
+\begin{definition}
+  Let $\Gamma$ be a groupoid. Then we define 
+  $refl\in Tm([\prd{A:\type}{a:A}Id(A,a,a)])$ by 
+  \begin{equation*}
+    refl(A,a) := id_A\in A(a,a)
+  \end{equation*}
+  Since $Id$ is discrete, the definition of the morphism part of relf reduces
+  to checking that
+  \begin{equation*}
+    q \circ p(refl(A,a))\circ q^{-1} = refl(A',a')
+  \end{equation*}
+  for $p:A\to A'$ and $q:p(a)\to a'$. This follows from the functoriality of $p$.
+\end{definition}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Identity elimination}
+  To interpret identity elimination, we have to find a term
+  \begin{align*}
+  J 
+  & \in Tm\Big(\Big[\prd{A:\type}{C:\prd{a_1,a_2:A}{s:\idtype{A}{a_1}{a_2}}\type}{d:\prd{a:A}C(a,a,\refl{a})}
+    \\ 
+  & {}\hspace{4em} \prd{a_1,a_2:A}{s:\idtype{A}{a_1}{a_2}}C(a_1,a_2,s)\Big]\Big)
+  \end{align*}
+  This amounts to giving a term of $C$ in the context
+  \begin{align*}
+  [A:\type, & \textstyle C:\prd{a_1,a_2:A}{s:Id_A(a_1,a_2)}\type, \\
+  & \textstyle d: \prd{a:A}C(a,a,\refl{a}), a_1:A,a_2:A,s:\idtype{A}{a_1}{a_2}]
+  \end{align*}
 \end{frame}
 
 \section{Applications and extension}
