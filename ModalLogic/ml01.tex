@@ -1,0 +1,53 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{1}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+In each of the following, $M$ denotes a model $(W,R,\lsem{-}\rsem)$ and $w\in W$
+denotes a state.
+\begin{enumerate} 
+\item We have that $(M,w)\models \varphi\lor\neg\varphi$ if and only if $w\in \lsem\varphi\lor
+\neg\varphi\rsem$, if and only if $w\in \lsem\varphi\rsem\cup\lsem\neg\varphi\rsem$,
+if and only if $w\in\lsem\varphi\rsem\cup\lsem\varphi\rsem^c$, if and only if
+$\varphi\in W$. By assumption $w\in W$.
+\item We have that $(M,w)\models \varphi\to(\psi\to\varphi)$ if and only if
+$w\in\lsem\varphi\to(\psi\to\varphi)\rsem$ if and only if $w\in
+\lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$. Note that $W=\lsem\varphi\lor\neg
+\varphi\rsem\subseteq \lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$. So
+$w\in \lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$ for all $w\in W$.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Consider the model
+\begin{equation*}
+\begin{tikzcd}
+x \rar & y
+\end{tikzcd}
+\end{equation*}
+with $\lsem p\rsem:=\{x\}$. Since $(M,y)\nmodels p$ it follows that $(M,x)
+\nmodels\nec p$ while we do have $(M,x)\models p$. Hence it follows that
+$(M,x)\nmodels p\to\nec p$.
+\item Consider the trivial frame with $W:=\{\star\}$ and let $M$
+be any model based on this frame. Then $(M,\star)\nmodels\bot$ while $(M,\star)
+\models\nec\bot$; hence $(M,\star)\nmodels\nec\bot\to\bot$.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Note that for any model $M$ over a trivial frame, any $w\in W$ and any proposition 
+$\varphi$, we have $(M,w)\models\nec\varphi$ and hence also $(M,w)\models\varphi\to\nec\varphi$.
+Thus $\varphi\to\nec\varphi$ is valid with respect to the class of trivial frames.
+\item Since $\nec\varphi$ is valid with respect to trivial frames, $\nec\varphi\to\varphi$
+is valid only if $\varphi$ is. In particular, $\nec\bot\to\bot$ isn't valid in
+any trivial frame.
+\end{enumerate}
+\end{ex}
+
+\end{document}
