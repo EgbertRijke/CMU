@@ -61,7 +61,79 @@ P(\bigcup_{i\in\mathbb{N}}S'_i)=\ulimsym_{i}\,{P(S'_i)}
 \end{ex}
 
 \begin{ex}
-Answer to second exercise.
+To show that $\mathcal{C}$ is a field, note first that the union of an empty collection (which is thus a finite collection) of cones is the empty set. Its complement is the cone determined by the initial segment of length $0$. To see that $\mathcal{C}$ has the other complements, let $E$ be a finite subset of $2^{<\omega}$. Denote by $l:2^{<\omega}\to\mathbb{N}$ the function which assigns to each $e\in 2^{<\omega}$ and write $L:=\max l(E)$. Now write $C_E:=\bigcup_{e\in E}[e]$ and define
+\begin{equation*}
+E^\ast:=\{e\in 2^L\mid \exists_{(\sigma\in C_E)}\sigma_L= e\};
+\end{equation*}
+here $\sigma_L$ is the initial segment of $\sigma$ of length $L$. In other words, $E^\ast$ is the image of $C_E$ of the function $r_L:2^\omega\to 2^L$ which restricts a sequence $\sigma$ to its initial segment of length $L$. Then it is immediate that
+\begin{equation*}
+\bigcup\nolimits_{e\in E}[e]=\bigcup\nolimits_{e\in E^\ast}[e],
+\end{equation*}
+and therefore it is also immediate that
+\begin{equation*}
+\Big(\bigcup\nolimits_{e\in E}[e]\Big)^c = \bigcup\nolimits_{e\in 2^L\setminus E^\ast}[e].
+\end{equation*}
+This shows that complements of finite unions of cones can be written as finite unions of cones, i.e.~that $\mathcal{C}$ has complements. Thirdly, note that finite unions of finite unions of cones are again finite unions of cones, so that $\mathcal{C}$ is also closed under finite unions. This finishes the proof that $\mathcal{C}$ is a field.
+
+Next, suppose that the set of outcomes (i.e.~the set which was initially taken to be the set $2$) is an infinite set $X$ and let $x\in X$. Then the set $C_x:=\{\sigma\in X^\omega\mid\sigma(0)=x\}$ is a cone; we assert that its complement cannot be written as a finite union of cones. This is a proof of negation, so suppose to the contrary that $E$ is a finite subset of $X^{<\omega}$ with the property that
+\begin{equation*}
+C_E:=\bigcup\nolimits_{e\in E}[e]=X^\omega\setminus C_x.
+\end{equation*}
+Now consider the function $z:X^\omega\to X$ given by $\sigma\mapsto\sigma(0)$. Of course, the image of $z$ is $X$ itself. However, since $X^\omega=C_E\cup C_x$ we have that $X=f(C_E)\cup f(C_x)$. The image of $C_E$ is the set $\{e(0)\mid e\in E\}$, which is finite since $E$ is finite. Hence we have that $X=\{x\}\cup\{e(0)\mid e\in E\}$, contradicting the assumption that $X$ is infinite. Therefore we conclude that the complement of $C_x$ is not a finite union of cones, and consequently that the collection of finite union of cones is not a field.
+
+Back to the case of $2^\omega$; we have to show that $\mathcal{C}$ is exactly the set $\mathcal{C}'$ of finite unions of cylinders. First, note that every cone is a cylinder, so we have that $\mathcal{C}\subseteq\mathcal{C}'$. For the other direction, we will have to write every cylinder as a finite union of cones. Let $e$ be a finite partial function from $\omega$ to $X$ (so that $[e]$ is exactly a general cylinder) and let $L$ be the largest number on which $e$ is defined. We may now consider the set
+\begin{equation*}
+E:=\{\sigma_L\in 2^L\mid\sigma\in[e]\},
+\end{equation*}  
+where again $\sigma_L$ is the initial segment of length $L$ of $\sigma$. Then it is immediate that $[e]=\bigcup_{e'\in E}[e']$, which is a finite union of cones. It follows that every finite union of cylinders is a finite union of cones as well, so that we have $\mathcal{C}'\subseteq\mathcal{C}$. This completes the proof that $\mathcal{C}=\mathcal{C}'$.  
+\end{ex}
+
+\begin{ex}
+We borrow the notation from the solution of exercise 2 above.
+
+For this exercise we have to show that $\{z\}\notin\mathcal{C}$ for the function $z\in 2^\omega$ given by $z(n):=0$. Suppose it were; then we would have a finite subset $E\subseteq 2^{<\omega}$ such that $C_E=\{z\}$. Note that $E$ cannot be empty because in that case we would have $C_E=2^\omega$. Thus, we have some $e\in E$. Now we define $\sigma\in 2^\omega$ by $\sigma(n):=e(n)$ for $n\leq l(e)$ and $\sigma(n):=1$ for larger $n$. Then we have $\sigma_{l(e)}=e$ and hence $\sigma\in C_E$, contradicting with the assumption that $C_E=\{z\}$. Therefore we conclude that it cannot be the case that $\{z\}\in\mathcal{C}$. 
+\end{ex}
+
+\begin{ex}
+I don't understand the question.
+\end{ex}
+
+\begin{ex}
+Let $\sigma\in 2^\omega$ and write $\sigma_n$ for the initial segment of $\sigma$ of length $n$. Then we have
+\begin{equation*}
+\bigcap\nolimits_{n\in\omega}[\sigma_n]=\{\sigma\}.
+\end{equation*}
+In particular, the singleton $\{\sigma\}$ is a measurable set. Note that $[\sigma_{n+1}]\subseteq[\sigma_n]$ for each $n\in\omega$. By the downwards continuity of probability measures, we have that $P(\{\sigma\})=\lim_{n\to\infty}P([\sigma_n])=\lim_{n\to\infty}2^{-n}=0$. 
+\end{ex}
+
+\begin{ex}
+Let $X$ be a probability space in which singletons are measurable and have measure $0$. Then, for each $x\in X$ we have $P(X\setminus\{x\})=1$. If we assume that arbitrary intersections of sets of measure $1$ are again of measure $1$, then we find that
+\begin{equation*}\textstyle
+1=P(\bigcap_{x\in X}X\setminus\{x\})=P(\varnothing)\leq P(\{x\})=0,
+\end{equation*}
+a contradiction.
+\end{ex}
+
+\begin{ex}
+The empty set is the union of the empty collection of half-open intervals and its complement $\Omega$ is itself a half-open interval. Now let $E$ be a finite set of half-open intervals and write $I_E:=\bigcup_{J\in E} J$. Write $i_E:=\{\inf(J)\in\mathbb{R}\mid J\in E\}$ and $m_E:=\{\max J\in\mathbb{R}\mid J\in E\}$ and consider 
+\begin{align*}
+m_E^\ast & :=(i_E\cup\{1\})\setminus (m_E\cup\{0\})\\
+i_E^\ast & :=(m_E\cup\{0\})\setminus (i_E\cup\{1\}).
+\end{align*} 
+
+Now we assert that we can construct a bijection $f$ from $i_E^\ast$ to $m_E^\ast$. Note that $i_E$ and $m_E$ have the same number of elements because they correspond to beginning and end points of the intervals in $E$. Since $0$ cannot appear as an endpoint and $1$ cannot appear as a beginning point of an interval, it follows that also $i_E\cup\{1\}$ and $m_E\cup\{0\}$ have the same number of elements. Consequently, $i_E^\ast$ and $m_E^\ast$ have the same number of elements. Now the elements of $i_E^\ast$ and $m_E^\ast$ can be ordered (the natural way) and we let the bijection $f$ be the unique order preserving bijection.
+
+This allows us to consider the finite collection
+\begin{equation*}
+F=\{(x,f(x)]\mid x\in i_E^\ast\}
+\end{equation*}
+of half-open intervals. We have made sure that each of these intervals is disjoint from any of the intervals in $E$. By including $0$ and $1$ at the appropriate moments, we have made sure that $\bigcup F$ is indeed the complement of $\bigcup E$.
+
+If we would have taken open intervals, the class $\mathcal{H}$ would not be closed under complement because comlements of open sets are closed and the interval is connected.
+\end{ex}
+
+\begin{ex}
+
 \end{ex}
 
 \setcounter{ex}{0}
