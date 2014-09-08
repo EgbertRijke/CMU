@@ -115,7 +115,9 @@ a contradiction.
 \end{ex}
 
 \begin{ex}
-The empty set is the union of the empty collection of half-open intervals and its complement $\Omega$ is itself a half-open interval. Now let $E$ be a finite set of half-open intervals and write $I_E:=\bigcup_{J\in E} J$. Write $i_E:=\{\inf(J)\in\mathbb{R}\mid J\in E\}$ and $m_E:=\{\max J\in\mathbb{R}\mid J\in E\}$ and consider 
+The empty set is the union of the empty collection of half-open intervals and its complement $\Omega$ is itself a half-open interval. Now let $D$ be a finite set of half-open intervals. From $D$, we
+can easily construct a finite set $E$ of pairwise disjoint half-open intervals. 
+Write $I_E:=\bigcup_{J\in E} J$ and write $i_E:=\{\inf(J)\in\mathbb{R}\mid J\in E\}$ and $m_E:=\{\max J\in\mathbb{R}\mid J\in E\}$. Then we define 
 \begin{align*}
 m_E^\ast & :=(i_E\cup\{1\})\setminus (m_E\cup\{0\})\\
 i_E^\ast & :=(m_E\cup\{0\})\setminus (i_E\cup\{1\}).
@@ -127,7 +129,7 @@ This allows us to consider the finite collection
 \begin{equation*}
 F=\{(x,f(x)]\mid x\in i_E^\ast\}
 \end{equation*}
-of half-open intervals. We have made sure that each of these intervals is disjoint from any of the intervals in $E$. By including $0$ and $1$ at the appropriate moments, we have made sure that $\bigcup F$ is indeed the complement of $\bigcup E$.
+of half-open intervals. We have made sure that each of these intervals is disjoint from any of the intervals in $E$ (note that the half-open intervals in $E$ do not intersect each other). By including $0$ and $1$ at the appropriate moments, we have made sure that $\bigcup F$ is indeed the complement of $\bigcup E$.
 
 If we would have taken open intervals, the class $\mathcal{H}$ would not be closed under complement because comlements of open sets are closed and the interval is connected.
 \end{ex}
