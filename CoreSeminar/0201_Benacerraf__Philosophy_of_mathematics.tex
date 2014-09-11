@@ -8,10 +8,71 @@
 \begin{document}
 \maketitle
 
-The question about the epistemological content of mathematics is one that concerns the very foundations of mathematics.
+The question about the epistemological content of (classical) mathematics is one that 
+concerns the very foundations of mathematics; the mathematical implications of
+possible answers move the question beyond mere philosophy. Three points of view
+are presented: that of the logicist, the intuitionist and the formalist.
+The role of the theories of integers and of real numbers is principal in all
+points of view. Although the derivation of the system of integers presents no
+real problems in either approach, the construction of the real numbers presents
+problems which neither of the three can fully overcome.
 
-The logicist point of view is that all of mathematics is reducible to logic.
+The logicist point of view, which has been held most noteably by Russell and
+Whitehead, is that all of mathematics is reducible to logic. While one might
+argue that definitions and theorems should really be synonyms (as is currently the practice
+in type theory), Carnap splits the logicists thesis into two parts: (1) the
+concepts of mathematics can be derived from logical concepts through explicit
+definitions; and (2) the theorems of mathematics can be derived from logical
+axioms through purely logical deduction. The system of propositional calculus
+should, according to the logicist, be enough to provide the means for the
+construction of mathematics. Then, every provable mathematical sentence can be
+translated into a sentence using only primitive logical symbols, which is then
+derivable according to the rules of logic.
+
+However, some of the classical theorems of arithmetic and set theory require
+further axioms besides the logical ones, such as the axioms of infinity or the
+axiom of choice, because logic only deals with possible entities and cannot
+make assertions of the existence of things, according to Carnap. While this
+might be the case for propositional calculus, on which set theory is based,
+the propositions as types philosophy provides systematic means for including
+inductive types and thereby avoiding the need for having an ad hoc axiom of
+infinity. In the view of modern type theorists, the $W$-type constructor for
+inductive types is just another of the primitive constants, which is overlooked
+when attention is restricted to propositional calculus.
+
+The construction of the real numbers by Dedekind presents a real number as a
+cut of rational numbers. A Dedekind cut consists of a left and a right class of
+rational numbers such that each of the rationals belongs to one of them; if
+a rational is less than a rational in the left class then it is in the left
+class and if it is bigger than something in the right class it is in the right.
+This is an impredicative definition and to overcome the difficulties that come
+with impredicativity, Russell has come up with the simple theory of types where
+a stratification of classes is used to prevent one from deriving contradictions
+of the nature of Russell's paradox. 
+
+Intuitionists see mathematics as a free activity of thought. In their view,
+attributing an existence, such as a choice function, independent of our thought
+infers with the guarantee that all mathematical constructions are actual constructions
+of the mind, which they aim for. In a line of thought similar to that of Russell's
+stratification of type theory, intuitionists consider impredicative definitions
+impossible because according to them it is self-evident that in the construction
+of a species only previously defined objects may have an appearence. Brouwer has
+introduced a theory of spreads of real numbers, where spreads are choice-sequences
+of rationals following certain axioms to follow the Dedekind construction. I found
+the section on spreads not quite clarifying, so I will not comment on that any further.
+
+Hilbert's aim, presenting the formalist's point of view, was to prove the validity
+of mathematics by investigating methods of proof. Mathematics is viewed as a
+combinatorial game played with the primitive symbols of logic, and the golden
+rule is to find a finitary combinatorial way to construct proofs. Thus, the
+program of Hilbert lead to find all the symbols used in logic and mathematics;
+to characterize unambiguously all the combinations of these symbols which
+represent statements classified as meaningful; supply a construction procedure
+to give precise meaning to the act of proving; and finally to show that the
+provable statements of classical mathematics indeed have a translation and a
+proof in this game. However, proving the consistency of mathematics this way
+has proved to be a daunting task, at best, especially in the view of G\"odel's
+incompleteness theorems.
 
 It might be worthwile to note that in Voevodsky's program of the Univalent Foundations of Mathematics, another solution for the construction of the real numbers has been envisioned. This construction is of an inductive kind and exploits the possibility of freely adding propositional equality between terms (here, free must be taken as in free algebras). In this construction the impredicativity of Dedekind's real numbers is avoided and Cauchy completeness is guaranteed without the need for an axiom of choice; thus the construction should be satisfactory from a constructivist point of view. The construction goes very much like that of the Cauchy real numbers, except that not only Cauchy sequences of rational numbers are considered in the definition, but Cauchy sequences of real numbers alike. For this, it is needed that an $\epsilon$-proximity relation is generated for every positive rational number $\epsilon$, \emph{within} the definition of the real numbers. While Heyting argues in his article that `\emph{absolutely no ordering relations have been defined between [Euler's constant] and the rational numbers}', such an ordering is built-in from the start in the univalent real numbers. To do this, an inductive-inductive approach has to be taken, but this does not imply a non-constructive nature of the construction.
-
 \end{document}
