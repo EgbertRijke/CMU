@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% THE APPLY MACRO
+%%%%
+%%%% The apply macro is used in front of a command which are applicable. Here,
+%%%% applicable means that there is a version \macro@apply of \macro. The
+%%%% apply macro is mainly used in the macros for article-models-ttinternal.tex
+%%%% where there appear abstracted versions of the type theoretical operations.
+%%%% Those are operations with possibly many arguments, which are rendered
+%%%% invisible for the internalization. When one does want to apply the 
+%%%% arguments, the apply macro provides a clean syntax compared to using
+%%%% \subst directly.
+
+\makeatletter
+\newcommand{\apply}[1]{%
+\apply@#1%
+}
+
+\newcommand*{\apply@}[1]{%
+  \@ifundefined{apply@@\detokenize{#1}}{#1}{%
+    \csname apply@@\detokenize{#1}\endcsname
+  }%
+}
+
+\newcommand*{\apply@def}[1]{%
+  \expandafter\def\csname apply@@\detokenize{#1}\expandafter\endcsname
+  \expandafter{%
+    \csname\expandafter\@gobble\string#1@apply\endcsname
+  }%
+}
+
+%%%% Now we make @apply versions of various macros
+
+\newcommand{\cftctxext@apply}[3][]{\subst{#3}{{#2}{\cftctxext[#1]}}}
+\apply@def\cftctxext
+
+\newcommand{\cftfamext@apply}[4][]{\subst{#4}{{#3}{{#2}{\cftfamext[#1]}}}}
+\apply@def\cftfamext
+
+\newcommand{\cftwk@apply}[3]{\subst{#3}{{#2}{\cftwk{#1}}}}
+\apply@def\cftwk
+
+\newcommand{\cftwkc@apply}[4]{\subst{#4}{{#3}{{#2}{\cftwkc{#1}}}}}
+\apply@def\cftwkc
+
+\newcommand{\cftwkf@apply}[5]{\subst{#5}{{#4}{{#3}{{#2}{\cftwkf{#1}}}}}}
+\apply@def\cftwkf
+
+\newcommand{\cftwkt@apply}[6]{\subst{#6}{{#5}{{#4}{{#3}{{#2}{\cftwkt{#1}}}}}}}
+\apply@def\cftwkt
+
+\newcommand{\cftsubst@apply}[4]{\subst{#4}{{#3}{{#2}{\cftsubst{#1}}}}}
+\apply@def\cftsubst
+
+\newcommand{\cftsubstc@apply}[5]{\subst{#5}{{#4}{{#3}{{#2}{\cftsubstc{#1}}}}}}
+\apply@def\cftsubstc
+
+\newcommand{\cftsubstf@apply}[6]{\subst{#6}{{#5}{{#4}{{#3}{{#2}{\cftsubstf{#1}}}}}}}
+\apply@def\cftsubstf
+
+\newcommand{\cftsubstt@apply}[7]{\subst{#7}{{#6}{{#5}{{#4}{{#3}{{#2}{\cftsubstt{#1}}}}}}}}
+\apply@def\cftsubstt
+\makeatother

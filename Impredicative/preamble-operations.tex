@@ -1,0 +1,425 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% THE EMPTY CONTEXT
+
+\newcommand{\emptysym}{[\;]}
+\newcommand{\emptyc}{{\emptysym}}
+\newcommand{\emptyf}[1][]{{\emptysym}_{#1}}
+\newcommand{\emptytm}[1][]{\typefont{\#}_{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONTEXT EXTENSION 
+%%%%
+%%%% The context extension command.
+%%%%
+%%%% To get a feeling of how the command works, here are a few examples.
+%%%% \ctxext{A}{B} will print A.B
+%%%% \ctxext{{A}{B}}{C} will print (A.B).C
+%%%% \ctxext{{{A}{B}}{C}}{{D}{E}} will print ((A.B).C).(D.E)
+
+\makeatletter
+\newcommand{\ctxext}[2]{\@ctxext@ctx #1.\@ctxext@type #2}
+\newcommand{\@ctxext}{\@ifnextchar\bgroup{\@@ctxext}{}}
+\newcommand{\@ctxext@ctx}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ctxext
+  }}}}}}}
+\newcommand{\@ctxext@type}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ctxext
+  }}}}}}}
+\newcommand{\@@ctxext}[1]{\@ifnextchar\bgroup{\@ctxext@parens{#1}}{#1}}
+\newcommand{\@ctxext@parens}[2]{(\ctxext{#1}{#2})}
+\newcommand{\@ctxext@nested}[3]{\@ctxext@parens{#2}{#3}}
+
+%%%% We want that some commands accept binary trees as arguments that default
+%%%% into extensions. We make the following command to realize this
+\newcommand{\default@ctxext}{\@ifnextchar\bgroup{\ctxext}{}}
+\newcommand{\default@ctxext@parens}{\@ifnextchar\bgroup{\@ctxext@parens}{}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% SUBSTITUTION
+
+%%%% The substitution command will act the following way
+%%%%
+%%%% \subst{x}{P} will print P[x]
+%%%% \subst{x}{{f}{Q}} will print Q[f][x]
+%%%% \subst{{x}{f}}{{x}{Q}} will print Q[x][f[x]]
+
+\makeatletter
+\newcommand{\subst}[3][]{%
+  \@subst@type #3{}[\@subst@term #2]^{#1}}
+\newcommand{\@subst}{%
+  \@ifnextchar\bgroup{\@@subst}{}}
+\newcommand{\@@subst}[1]{%
+  \@ifnextchar\bgroup{\subst{#1}}{#1}}
+\newcommand{\@subst@term}{%
+  \@subst}
+\newcommand{\@subst@type}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+%  \@ifnextchar\mfam{\@mfam@nested}{%
+%  \@ifnextchar\mtm{\@mtm@nested}{%
+  \subst@type@unfold{\@subst}
+  }}}}}}}}%}}
+\newcommand{\subst@type@unfold}[1]{#1}
+\newcommand{\@subst@nested}[3]{%
+  \@subst@parens{#2}{#3}}
+\newcommand{\@subst@parens}[2]{%
+  (\subst{#1}{#2})}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% WEAKENING
+
+%%%% The weakening command is very much like the substitution command.
+
+\makeatletter
+\newcommand{\ctxwk}[3][]{%
+  \langle\@ctxwk@act #2\rangle^{#1} \@ctxwk@pass #3}
+\newcommand{\@ctxwk}{%
+  \@ifnextchar\bgroup{\@@ctxwk}{}}
+\newcommand{\@@ctxwk}[1]{%
+  \@ifnextchar\bgroup{\ctxwk{#1}}{#1}}
+\newcommand{\@ctxwk@act}{%
+  \@ctxwk}
+\newcommand{\@ctxwk@pass}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+%  \@ifnextchar\mfam{\@mfam@nested}{%
+%  \@ifnextchar\mtm{\@mtm@nested}{%
+  \@ctxwk
+  }}}}}}}}%}}
+\newcommand{\@ctxwk@parens}[2]{%
+  (\ctxwk{#1}{#2})}
+\newcommand{\@ctxwk@nested}[3]{%
+  \@ctxwk@parens{#2}{#3}}
+\makeatother
+
+%%%% Not sure if we're gonna need the following.
+\newcommand{\ctxwkop}[2]{%
+  \ctxwk{#2}{#1}}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% IDENTITY TERMS
+
+\makeatletter
+\newcommand{\idtm}[1]{\typefont{id}_{\default@ctxext #1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% TERM EXTENSION
+%%%%
+%%%% The term extension command \tmext is slightly complicated because 
+%%%% \tmext@unfold should do different things depending on whether it has two
+%%%% or four arguments. Thus \tmext has a full form and a short form, where
+%%%% the short form has two arguments and the full form has four. 
+
+\makeatletter
+
+%%%% The basic term extension commands
+\newcommand{\default@tmext}{\@ifnextchar\bgroup{\tmext}{}}
+\newcommand{\tmext}[2]{%
+  \@ifnextchar\bgroup{\tmext@full{#1}{#2}}{\tmext@short{#1}{#2}}}
+\newcommand{\tmext@full}[4]{%
+  \ctxext{\tmext@testleft #3}{\tmext@testright #4}}
+\newcommand{\tmext@short}[2]{%
+  \ctxext{\tmext@testleft #1}{\tmext@testright #2}}
+\newcommand{\tmext@testleft}{%
+  \@ifnextchar\bgroup{\@tmext@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+%  \default@tmext
+  }}}}}}}}
+\newcommand{\tmext@testright}{%
+  \@ifnextchar\bgroup{\@tmext@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ifnextchar\cprojfst{\cprojfst@nested}{%
+  \@ifnextchar\cprojsnd{\cprojsnd@nested}{%
+%  \default@tmext
+  }}}}}}}}}}
+\newcommand{\@tmext@nested}[1]{%
+  \@tmext@parens}
+\newcommand{\@tmext@parens}[2]{%
+  \@ifnextchar\bgroup
+    {\tmext@full@parens{#1}{#2}}
+    {(\tmext@short{#1}{#2})}}
+\newcommand{\tmext@full@parens}[4]{%
+  (\tmext@full{#1}{#2}{#3}{#4})}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% JUDGMENTAL MORPHISMS
+
+\makeatletter
+
+%%%% Composition of morphisms
+\newcommand{\comp@testtonest}[1]{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  #1
+  }}}}}
+
+\newcommand{\jcomp}[3]{%
+  \jcomp@testleft #3 \circ \jcomp@testright #2}
+\newcommand{\jcomp@testleft}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}}
+\newcommand{\jcomp@testright}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}}
+\newcommand{\@jcomp@nested}[4]{%
+  \@jcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jcomp@parens}[3]{%
+  (\jcomp{#1}{#2}{#3})}
+
+%%%% Vertical composition of morphisms.
+\newcommand{\jvcomp}[3]{%
+  \jvcomp@testleft #2 * \jvcomp@testright #3}
+\newcommand{\jvcomp@testleft}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jvcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  }}}}}}}}}
+\newcommand{\jvcomp@testright}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\ctxext{\@ctxext@nested}{%
+  \@ifnextchar\bgroup{\@jvcomp@parens}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  }}}}}}}}}
+\newcommand{\@jvcomp@nested}[4]{%
+  \@jvcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jvcomp@parens}[3]{%
+  (\jvcomp{#1}{#2}{#3})}
+
+%%%% Vertical family composition
+\newcommand{\jfvcomp}[3]{%
+  \jfvcomp@testleft #2 \circledast \jfvcomp@testright #3}
+\newcommand{\jfvcomp@testleft}{%
+  \jvcomp@testleft}
+\newcommand{\jfvcomp@testright}{%
+  \jvcomp@testright}
+\newcommand{\@jfvcomp@nested}[4]{%
+  \@jfvcomp@parens{#2}{#3}{#4}}
+\newcommand{\@jfvcomp@parens}[3]{%
+  (\jfvcomp{#1}{#2}{#3})}
+
+%%%% The judgment that F is a morphism from P to Q over f in context \Gamma.
+\newcommand{\jfhomsym}[3]{\jhomsym[{#1}]{#2}{#3}}
+\newcommand{\jfhom}[7]{
+  \judgment{#1}{}{}{#7}{}{}{\jfhomsym{#4}{#5}{#6}}}
+\newcommand{\jfhomeq}[8]{%
+  \judgment{#1}{#7}{\jdeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+\newcommand{\jfhomdefn}[8]{%
+  \judgment{#1}{#7}{\defeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+    
+\newcommand{\jfcomp}[5]{%
+%  \jfcomp@testleft #5 \circledcirc \jfcomp@testright #4}
+  \jfcomp@testleft #5 \bullet \jfcomp@testright #4}
+\newcommand{\jfcomp@testleft}{%
+  \@ifnextchar\bgroup{\@jfcomp@parens}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\ctxwk{\@ctxwk@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}
+\newcommand{\jfcomp@testright}{%
+  \@ifnextchar\bgroup{\@jfcomp@parens}{%
+  \@ifnextchar\jfcomp{\@jfcomp@nested}{%
+  \@ifnextchar\jcomp{\@jcomp@nested}{%
+  \@ifnextchar\subst{\@subst@nested}{%
+  \@ifnextchar\tmext{\@tmext@nested}{%
+  \@ifnextchar\jvcomp{\@jvcomp@nested}{%
+  \@ifnextchar\jfvcomp{\@jfvcomp@nested}{%
+  }}}}}}}}
+\newcommand{\@jfcomp@nested}[1]{%
+  \@jfcomp@parens}
+\newcommand{\@jfcomp@parens}[5]{%
+  (\jfcomp{#1}{#2}{#3}{#4}{#5})}
+  
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% TERMS AS MORPHISMS
+
+\makeatletter
+\newcommand{\jtermashom}[1]{\hat{#1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% JUDGMENTAL TRIVIAL COFIBRATIONS
+
+\newcommand{\jtcext}{\tilde}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% CONTEXT PROJECTIONS
+
+\makeatletter
+\newcommand{\cprojgenf}[3]{%
+  \typefont{pr}^{%
+    \@ifnextchar\bgroup{\@ctxext@parens}{%
+    \@ifnextchar\ctxext{\@ctxext@nested}{%
+    }}
+    #2,
+    \@ifnextchar\bgroup{\@ctxext@parens}{%
+    \@ifnextchar\ctxext{\@ctxext@nested}{%
+    }}
+    #3
+    }_{#1}}
+\newcommand{\cprojgen}[4]{%
+  \subst{#4}{\cprojgenf{#1}{#2}{#3}}}
+\newcommand{\cprojgenf@nested}[1]{%
+  \cprojgenf@parens}
+\newcommand{\cprojgenf@parens}[3]{%
+  (\cprojgenf{#1}{#2}{#3})}
+\newcommand{\cprojgen@nested}[1]{%
+  \cprojgen@parens}
+\newcommand{\cprojgen@parens}[4]{%
+  (\cprojgen{#1}{#2}{#3}{#4})}
+
+\newcommand{\cprojfstf}[2]{%
+  \cprojgenf{0}{#1}{#2}}
+\newcommand{\cprojfstf@nested}[1]{%
+  \cprojfstf@parens}
+\newcommand{\cprojfstf@parens}[2]{%
+  (\cprojfstf{#1}{#2})}
+
+\newcommand{\cprojfst}[3]{%
+  \cprojgen{0}{#1}{#2}{#3}}
+\newcommand{\cprojfst@nested}[1]{%
+  \cprojfst@parens}
+\newcommand{\cprojfst@parens}[3]{%
+  (\cprojfst{#1}{#2}{#3})}
+
+\newcommand{\cprojsndf}[2]{%
+  \cprojgenf{1}{#1}{#2}}
+\newcommand{\cprojsndf@nested}[1]{%
+  \cprojsndf@parens}
+\newcommand{\cprojsndf@parens}[2]{%
+  (\cprojsndf{#1}{#2})}
+
+\newcommand{\cprojsnd}[3]{%
+  \cprojgen{1}{#1}{#2}{#3}}
+\newcommand{\cprojsnd@nested}[1]{%
+  \cprojsnd@parens}
+\newcommand{\cprojsnd@parens}[3]{%
+  (\cprojsnd{#1}{#2}{#3})}
+  
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% FIBER INCLUSIONS
+
+\makeatletter
+\newcommand{\finc}[3][]{\typefont{in}^{#3}_{#2}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% DEPENDENT FUNCTION TYPES
+
+\makeatletter
+\newcommand{\sprd}[2]{\Pi(\default@ctxext #1,\default@ctxext #2)}
+\begin{comment}
+\newcommand{\@sprd@test@cod}[2]{%
+  \@ifnextchar\bgroup{\@sprd@do@cod{#1}}{%
+  \Pi(\@sprd@test@dom{#1}{#2} #1,
+  }}
+\newcommand{\@sprd@do@cod}[4]{%
+  \ctxext{\@sprd{#1}{#2}}{\@sprd{#1}{#3}}
+  }
+\newcommand{\@sprd}[2]{
+  \@ifnextchar\bgroup{\@@sprd}{%
+    \Pi(}
+    #1,{#2})
+  }
+\newcommand{\@@sprd}[5]{%
+  \sprd{#1}{\sprd{#2}{#4}}
+  }
+\end{comment}
+
+\newcommand{\slam}[3]{%
+  \lambda^{{\default@ctxext@parens #1},{\default@ctxext@parens #2}}
+  (\default@ctxext #3)
+  }
+\newcommand{\sev}[3]{\tfev^{{\default@ctxext@parens #1},{\default@ctxext@parens #2}}(#3)}
+
+\newcommand{\evtm}[2]{\mathsf{ev}^{#1,#2}}
+
+\newcommand{\ctxev}[4][]{\varepsilon^{#1}_{#2,#3}(#4)}
+
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% NON-DEPENDENT FUNCTION TYPES
+
+\newcommand{\jfun}[2]{#1\to#2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% THE UNIT TYPE
+
+\makeatletter
+\newcommand{\unitc}[1]{%
+  \unit^0_{\default@ctxext #1}}
+\newcommand{\unitct}[1]{%
+  \ttt^0_{\default@ctxext #1}}
+\newcommand{\unitf}[2]{%
+  \unit^1_{\default@ctxext #1,\default@ctxext #2}}
+\newcommand{\unitft}[2]{%
+  \ttt^1_{\default@ctxext #1,\default@ctxext #2}}
+\makeatother

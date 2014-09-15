@@ -1,0 +1,243 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% UNFOLD
+%%%%
+%%%% For each definition in the type theory we make two versions of the macro:
+%%%% the macro introducing the new notation and an @unfold version of the macro
+%%%% which outputs the meaning of that new notation. Thus, we can use the
+%%%% following construction to write our text. When we introduce \macro, we can
+%%%% write \unfold{\macro} and the output will be the result of \macro@unfold.
+
+\makeatletter
+\newcommand{\unfold}{%
+  \unfoldnext}
+\newcommand{\unfoldall}[1]{%
+  \begingroup%
+  \renewcommand{\jhom}{\jhom@unfold}%
+  \renewcommand{\jhomeq}{\jhomeq@unfold}%
+  \renewcommand{\jhomdefn}{\jhomdefn@unfold}%
+  \renewcommand{\jfhom}{\jfhom@unfold}%
+  \renewcommand{\jcomp}{\jcomp@unfold}%
+  \renewcommand{\@jcomp@nested}{\@jcomp@unfold@nested}%
+  \renewcommand{\@jcomp@parens}{\@jcomp@unfold@parens}%
+  \renewcommand{\tmext}{\tmext@unfold}%
+  \renewcommand{\@tmext@nested}{\@tmext@unfold@nested}%
+  \renewcommand{\@tmext@parens}{\@tmext@unfold@parens}%
+  \renewcommand{\cprojfstf}{\cprojfstf@unfold}%
+  \renewcommand{\cprojfst}{\cprojfst@unfold}%
+  \renewcommand{\cprojsndf}{\cprojsndf@unfold}%
+  \renewcommand{\cprojsnd}{\cprojsnd@unfold}%
+  \renewcommand{\jfcomp}{\jfcomp@unfold}%
+%  \renewcommand{\@jfcomp@nested}{\@jfcomp@unfold@nested}%
+%  \renewcommand{\@jfcomp@parens}{\@jfcomp@unfold@parens}%
+  \renewcommand{\finc}{\finc@unfold}%
+  \renewcommand{\jvcomp}{\jvcomp@unfold}%
+  \renewcommand{\jfvcomp}{\jfvcomp@unfold}
+  \renewcommand{\subst@type@unfold}[1]{
+    \@ifnextchar\cprojfstf{\@eatdo{\cprojfstf@parens}}{%
+      ##1}
+    }
+  #1%
+  \endgroup%
+  }
+
+%%%% The following command is useful when you have checked with '\@ifnextchar'
+%%%% that the next character is a macro '\firstmacro' and you want to replace
+%%%% it by '\secondmacro'. To establish this, simply call for
+%%%% '\@ifnextchar\firstmacro{\@eatdo{\secondmacro}}{}' with the second 
+%%%% argument of \@eatdo left unspecified.
+\newcommand{\@eatdo}[2]{#1}
+
+%%%% The intention of '\unfoldnext' is to unfold only the definition of the
+%%%% next character, provided that it is in the list of unfoldable macros.
+\newcommand{\unfoldnext}[1]{%
+  \unfold@#1%
+}
+\newcommand*{\unfold@}[1]{%
+  \@ifundefined{unfold@@\detokenize{#1}}{#1}{%
+    \csname unfold@@\detokenize{#1}\endcsname
+  }%
+}
+\newcommand*{\unfold@def}[1]{%
+  \expandafter\def\csname unfold@@\detokenize{#1}\expandafter\endcsname
+  \expandafter{%
+    \csname\expandafter\@gobble\string#1@unfold\endcsname
+  }%
+}
+
+%%%% Unfolding the \jhom judgment and relatives
+\newcommand{\jhom@unfold}[4]{%
+  \jterm%
+    {{#1}{#2}}%
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}%
+    {#4}%
+  }
+\unfold@def\jhom
+
+\newcommand{\jhomeq@unfold}[5]{%
+  \jtermeq%
+    {{#1}{#2}}%
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}%
+    {#4}%
+    {#5}%
+  }
+\unfold@def\jhomeq
+
+\newcommand{\jhomdefn@unfold}[5]{%
+  \jtermdefn%
+    {{#1}{#2}}%
+    {\ctxwk{\default@ctxext #2}{\default@ctxext@parens #3}}%
+    {#4}%
+    {#5}%
+  }
+\unfold@def\jhomdefn
+
+\newcommand{\jfhom@unfold}[7]{%
+  \jterm
+    {{{#1}{#2}}{#5}}
+    {\ctxwk{\default@ctxext #5}{\jcomp{#2}{#4}{#6}}}
+    {#7}}
+\unfold@def\jfhom
+
+%%%% Unfolding the \jcomp judgment and relatives
+\newcommand{\jcomp@unfold}[3]{%
+  \subst
+    {\jcomp@unfold@test@preside #2}
+    {\ctxwk{\default@ctxext #1}{\jcomp@unfold@test@postside #3}}}
+\newcommand{\jcomp@unfold@test@preside}{%
+  \@ifnextchar\bgroup{\@jcomp@unfold@parens}{}}
+\newcommand{\jcomp@unfold@test@postside}{%
+  \@ifnextchar\bgroup{\@jcomp@unfold@parens}{%
+  \@ctxwk@pass
+  }}
+\unfold@def\jcomp
+
+\newcommand{\@jcomp@unfold@nested}[4]{%
+  \@jcomp@unfold@parens{#2}{#3}{#4}}
+\unfold@def\@jcomp@nested
+
+\newcommand{\@jcomp@unfold@parens}[3]{%
+  (\jcomp@unfold{#1}{#2}{#3})}
+\unfold@def\@jcomp@parens
+
+%%%% The unfolded term extension commands
+\newcommand{\tmext@unfold}[2]{%
+  \@ifnextchar\bgroup{\tmext@unfold@full{#1}{#2}}{\tmext@short{#1}{#2}}}
+\newcommand{\tmext@unfold@full}[4]{%  
+  \subst{#4}{{#3}{\idtm{\ctxext{#1}{#2}}}}}
+\unfold@def\tmext
+
+\newcommand{\@tmext@unfold@nested}[1]{%
+  \@tmext@unfold@parens}
+\unfold@def\@tmext@nested
+
+\newcommand{\@tmext@unfold@parens}[4]{%
+  (\tmext@unfold{#1}{#2}{#3}{#4})}
+\unfold@def\@tmext@parens
+
+%%%% Unfolding the \jvcomp judgment and relatives
+\newcommand{\jvcomp@unfold}[3]{%
+  \tmext{}{}{\ctxwk{#1}{#2}}{#3}
+  }
+\newcommand{\jvcomp@unfold@test@preside}{%
+  \@ifnextchar\bgroup{\@jvcomp@unfold@parens}{}}
+\newcommand{\jvcomp@unfold@test@postside}{%
+  \@ifnextchar\bgroup{\@jvcomp@unfold@parens}{}}
+\newcommand{\@jvcomp@unfold@nested}[4]{%
+  \@jvcomp@unfold@parens{#2}{#3}{#4}}
+\newcommand{\@jvcomp@unfold@parens}[3]{%
+  (\jvcomp@unfold{#1}{#2}{#3})}
+\unfold@def\jvcomp
+
+%%%% Unfolding \jfcomp
+\newcommand{\jfcomp@unfold}[5]{%
+  \jcomp{#3}{#4}{{#1}{#2}{#5}}}
+\unfold@def\jfcomp
+
+%%%% Unfolding the \jfvcomp judgment and relatives
+\newcommand{\jfvcomp@unfold}[3]{%
+  \tmext{}{}{\ctxwk{#1}{#2}}{#3}
+  }
+\newcommand{\jfvcomp@unfold@test@preside}{%
+  \@ifnextchar\bgroup{\@jfvcomp@unfold@parens}{}}
+\newcommand{\jfvcomp@unfold@test@postside}{%
+  \@ifnextchar\bgroup{\@jfvcomp@unfold@parens}{}}
+\newcommand{\@jfvcomp@unfold@nested}[4]{%
+  \@jfvcomp@unfold@parens{#2}{#3}{#4}}
+\newcommand{\@jfvcomp@unfold@parens}[3]{%
+  (\jfvcomp@unfold{#1}{#2}{#3})}
+\unfold@def\jfvcomp
+
+%%%% Unfolding the projections
+\newcommand{\cprojfstf@unfold}[2]{%
+  \ctxwk{\default@ctxext #2}\idtm{\default@ctxext #1}}
+\unfold@def\cprojfstf
+
+\newcommand{\cprojfst@unfold}[3]{%
+  \subst{#3}{(\cprojfstf@unfold{#1}{#2})}}
+\unfold@def\cprojfst
+
+\newcommand{\cprojsndf@unfold}[2]{%
+  \idtm{\default@ctxext #2}}
+\unfold@def\cprojsndf
+
+\newcommand{\cprojsnd@unfold}[3]{%
+  \subst{#3}{\cprojsnd@unfold{#1}{#2}}}
+\unfold@def\cprojsnd
+
+%%%% Unfolding the fiber inclusion
+\newcommand{\finc@unfold}[3][]{%
+  \tmext%
+    {\ctxwk{\subst{#2}{#3}}{#1}}%
+    {\ctxwk{\subst{#2}{#3}}{#3}}%
+    {\ctxwk{\subst{#2}{#3}}{#2}}%
+    {\idtm{\subst{#2}{#3}}}%
+  }
+\unfold@def\finc
+
+%%%% Unfolding jtermashom
+\newcommand{\jtermashom@unfold}[1]{\tmext{\idtm{A}}{#1}}
+\unfold@def\jtermashom
+
+%%%% Unfolding algebras
+\newcommand{\cftalg@unfold}[1]{%
+  ( \cftalgc{\cftalg{#1}},
+    \cftalgf{\cftalg{#1}},
+    \cftalgt{\cftalg{#1}},
+    \cftctxext[\cftalg{#1}],
+    \cftfamext[\cftalg{#1}],
+    \cftempc{\cftalg{#1}},
+    \cftempf{\cftalg{#1}})
+  }
+\unfold@def\cftalg
+
+\newcommand{\extalg@unfold}[1]{%
+  (\cftalgc{\algfont{#1}},
+    \cftalgf{\algfont{#1}},
+    \cftalgt{\algfont{#1}},
+    \cftctxext[\algfont{#1}],
+    \cftfamext[\algfont{#1}])
+  }
+\unfold@def\extalg
+
+\newcommand{\cfthom@unfold}[1]{%
+  ( \cfthomc{\cfthom{#1}},
+    \cfthomf{\cfthom{#1}},
+    \cfthomt{\cfthom{#1}})
+  }
+\unfold@def\cfthom
+
+\newcommand{\cftidhom@unfold}[1]{
+  ( \idtm{\cftalgc{#1}},
+    \idtm{\cftalgf{#1}},
+    \idtm{\cftalgt{#1}})
+  }
+\unfold@def\cftidhom
+
+\newcommand{\cfthomcomp@unfold}[2]{%
+  ( \jcomp{}{\cfthomc{#1}}{\cfthomc{#2}},
+    \jfcomp{}{}{}{\cfthomf{#1}}{\cfthomf{#2}},
+    \jfcomp{}{}{}{\cfthomf{#1}}{\cfthomt{#2}})
+  }
+\unfold@def\cfthomcomp
+
+\makeatother

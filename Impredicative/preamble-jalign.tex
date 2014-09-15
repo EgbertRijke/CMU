@@ -1,0 +1,139 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% ALIGNING JUDGMENTS
+%%%%
+%%%% Sometimes judgments need to be aligned and we wish to do so without
+%%%% having to break the usual macros for judgments. Therefore we provide the
+%%%% \jalign macro. Alignment will always be at the turnstyle symbol.
+
+\makeatletter
+\newcommand{\jalign}[1]{%
+\jalign@#1%
+}
+
+\newcommand*{\jalign@}[1]{%
+  \@ifundefined{jalign@@\detokenize{#1}}{#1}{%
+    \csname jalign@@\detokenize{#1}\endcsname
+  }%
+}
+
+\newcommand*{\jalign@def}[1]{%
+  \expandafter\def\csname jalign@@\detokenize{#1}\expandafter\endcsname
+  \expandafter{%
+    \csname\expandafter\@gobble\string#1@jalign\endcsname
+  }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\judgment@jalign}[7]{%
+  \@judgment@ctx{#1} & \vdash \@judgment@rel{#2}{#3}{#4}{#5}{#6} #7}
+\jalign@def\judgment
+
+\newcommand{\jctx@jalign}[1]{%
+  \jalign\judgment{}{}{}{}{}{#1}{\jctx@sym}}
+\jalign@def\jctx
+
+\newcommand{\jctxeq@jalign}[2]{%
+  \jalign\judgment{}{#1}{\jdeq}{#2}{}{}{\jctx@sym}}
+\jalign@def\jctxeq
+
+\newcommand{\jctxdefn@jalign}[2]{%
+  \jalign\judgment{}{#1}{\defeq}{#2}{}{}{\jctx@sym}}
+\jalign@def\jctxdefn
+
+\newcommand{\jfam@jalign}[2]{%
+  \jalign\judgment{#1}{}{}{}{}{#2}{\jfam@sym}}
+\jalign@def\jfam
+
+\newcommand{\jfameq@jalign}[3]{%
+  \jalign\judgment{#1}{#2}{\jdeq}{#3}{}{}{\jfam@sym}}
+\jalign@def\jfameq
+
+\newcommand{\jfamdefn@jalign}[3]{%
+  \jalign\judgment{#1}{#2}{\defeq}{#3}{}{}{\jfam@sym}}
+\jalign@def\jfamdefn
+
+\newcommand{\jtype@jalign}[2]{%
+  \jalign\judgment{#1}{}{}{}{}{#2}{\jtype@sym}}
+\jalign@def\jtype
+
+\newcommand{\jtypeeq@jalign}[3]{%
+  \jalign\judgment{#1}{#2}{\jdeq}{#3}{}{}{\jtype@sym}}
+\jalign@def\jtypeeq
+
+\newcommand{\jtypedefn@jalign}[3]{%
+  \jalign\judgment{#1}{#2}{\defeq}{#3}{}{}{\jtype@sym}}
+\jalign@def\jtypedefn
+
+\newcommand{\jterm@jalign}[3]{%
+  \jalign\judgment{#1}{}{}{#3}{:}{#2}{}}
+\jalign@def\jterm
+
+\newcommand{\jtermeq@jalign}[4]{%
+  \jalign\judgment{#1}{#3}{\jdeq}{#4}{:}{#2}{}}
+\jalign@def\jtermeq
+
+\newcommand{\jtermdefn@jalign}[4]{%
+  \jalign\judgment{#1}{#3}{\defeq}{#4}{:}{#2}{}}
+\jalign@def\jtermdefn
+
+\newcommand{\jhom@jalign}[4]{%
+  \jalign\judgment{#1}{}{}{#4}{}{}{\jhomsym{#2}{#3}}}
+\jalign@def\jhom
+
+\newcommand{\jhomeq@jalign}[5]{%
+  \jalign\judgment{#1}{#4}{\jdeq}{#5}{}{}{\jhomsym{#2}{#3}}}
+\jalign@def\jhomeq
+
+\newcommand{\jhomdefn@jalign}[5]{%
+  \jalign\judgment{#1}{#4}{\defeq}{#5}{}{}{\jhomsym{#2}{#3}}}
+\jalign@def\jhomdefn
+
+\newcommand{\jfhom@jalign}[7]{
+  \jalign\judgment{#1}{}{}{#7}{}{}{\jfhomsym{#4}{#5}{#6}}}
+\jalign@def\jfhom
+
+\newcommand{\jfhomeq@jalign}[8]{%
+  \jalign\judgment{#1}{#7}{\jdeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+\jalign@def\jfhomeq
+
+\newcommand{\jfhomdefn@jalign}[8]{%
+  \jalign\judgment{#1}{#7}{\defeq}{#8}{}{}{\jhomsym[{#4}]{#5}{#6}}}
+\jalign@def\jfhomdefn
+
+\newcommand{\jextalg@jalign}[2]{%
+  \jalign\judgment{#1}{}{}{}{}{\extalg{#2}}{\extalg@sym}}
+\jalign@def\jextalg
+
+\newcommand{\jextalgctx@jalign}[2]{%
+  \jalign\jfam{#1}{\cftalgc{\cftalg{#2}}}}
+\jalign@def\jextalgctx
+
+\newcommand{\jextalgfam@jalign}[2]{%
+  \jalign\jfam{#1}{\cftalgf{\cftalg{#2}}}}
+\jalign@def\jextalgfam
+
+\newcommand{\jextalgtm@jalign}[2]{%
+  \jalign\jfam{{#1}{\cftalgf{\cftalg{#2}}}}{\cftalgt{\cftalg{#2}}}}
+\jalign@def\jextalgtm
+
+\newcommand{\jextalgctxext@jalign}[2]{%
+  \jalign\jhom%
+    {#1}%
+    {{\cftalgc{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}%
+    {\cftalgc{\cftalg{#2}}}%
+    {\cftctxext[\cftalg{#2}]}}
+\jalign@def\jextalgctxext
+
+\newcommand{\jextalgfamext@jalign}[2]{%
+  \jalign\jhom
+    { {#1}{\cftalgc{\cftalg{#2}}}}
+    { {\cftalgf{\cftalg{#2}}}
+      {\jcomp{}{\cftctxext{\cftalg{#2}}}{\cftalgf{\cftalg{#2}}}}}
+    { \cftalgf{\cftalg{#2}}}
+    { \cftfamext[\cftalg{#2}]}}
+\jalign@def\jextalgfamext
+
+
+
+\makeatother

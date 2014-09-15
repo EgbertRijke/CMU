@@ -1,0 +1,238 @@
+\documentclass{article}
+
+\title{The dependent naturality of evaluations at a point}
+\author{Egbert Rijke}
+\date\today
+
+\input{preamble}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Steve discovered how one can use a naturality condition to arrive at the impredicative encodings of type up to homotopy level $1$. We attempt to generalize this to arbitrary types.
+\end{abstract}
+
+The idea of the impredicative encoding of mere propositions starts with the observation that for any mere proposition $P$, the canonical function
+\begin{equation*}
+\lam{p}{X}{f}f(p):P\to\prd{X:\prop}(P\to X)\to X
+\end{equation*}
+is an equivalence. If one wants to generalize this to sets, this almost works too, except that we must consider the type of functions in $\prd{X:\set}(A\to X)\to X$ which are natural with respect to $X$. For any set $A$, the canonical function of type
+\begin{equation*}
+A\to\sm{\epsilon:\prd{X:\set}(A\to X)\to X}\prd{X,Y:\set}{f:X\to Y}\id{f\circ\epsilon_X}{\epsilon_Y\circ(\lam{g}f\circ g)}
+\end{equation*}
+is an equivalence. Our goal is to generalize this naturality condition so that we get a similar equivalence for arbitrary types. 
+
+One way of looking at the type $A^\ast\defeq\sm{\epsilon:\prd{X:\type}(A\to X)\to X}\cdots$ we aim to define is that it will describe abstract evaluations. But the only sort of evaluations we hope to find in $A^\ast$ are evaluations at a point of $A$. Of course, evaluations are the counit of an adjunction, so they must be natural. However, our setting is dependent type theory and not category theory, so we must take the dependency into account. Thus we must expect a dependent naturality condition. Consider the following commutative diagram
+\begin{equation*}
+\begin{tikzcd}
+\lam{g}\prd{a:A}Y(g(a)) \ar[fib,xshift=-.7ex]{ddr} \ar{dr}{\epsilon_1(X,Y)}
+\\
+& Y\circ \epsilon_0(X) \ar{r} \ar[fib,xshift=-.7ex]{d} & Y \ar[fib,xshift=-.7ex]{d}\\
+& (A\to X) \ar{r}[swap]{\epsilon_0(X)} \ar[densely dotted,xshift=.7ex]{u}[swap]{f\circ \epsilon_0(X)} \ar[densely dotted,xshift=-2.8ex]{uul}{\lam{g}f\circ g} & X \ar[densely dotted,xshift=.7ex]{u}[swap]{f}
+\end{tikzcd}
+\end{equation*}
+where $X$ is a type, $Y$ is a family over $X$ and $f$ is a section of $Y$. Thus we will require that
+\begin{align}
+\epsilon_0(X) 
+& : (A\to X)\to X
+  \label{epsilon0}
+  \\
+\epsilon_1(X,Y)
+& : \prd{g:A\to X} \Big(\prd{a:A}Y(g(a))\Big)\to Y(\epsilon_0(X,g))
+  \label{epsilon1}
+  \\
+\epsilon_2(X,Y,f) 
+& : \prd{g:A\to X}\id{\epsilon_1(X,Y,g,f\circ g)}{f(\epsilon_0(X,g))}
+  \label{epsilon2}
+\end{align}
+are part of the data of $A^\ast$. Let us temporarily denote the type of triples $\pairr{\epsilon_0,\epsilon_1,\epsilon_2}$ by $TA$. Then there is a function $N:TA\to TA$ defined by
+\begin{align*}
+N(\epsilon)_0(X,g) & \defeq g(\epsilon_0(A,\idfunc[A]))\\
+N(\epsilon)_1(X,Y,g,h) & \defeq h(\epsilon_0(A,\idfunc[A]))\\
+N(\epsilon)_2(X,Y,f,g) & \defeq \refl{f(g(\epsilon_0(A,\idfunc[A])))}.
+\end{align*}
+Now we can formulate naturality by requiring that
+\begin{equation*}
+\id{\epsilon}
+{N(\epsilon)}.
+\end{equation*}
+Note that an identification $\alpha:\id{\epsilon}{\zeta}$ in $TA$ may equivalently be given by a triple $\pairr{\alpha_0,\alpha_1,\alpha_2}$ where
+\begin{align*}
+\alpha_0 & :\id{\epsilon_0}{\zeta_0}\\
+\alpha_1 & :\id{\trans{\alpha_0}{\epsilon_1}}{\zeta_1}\\
+\alpha_2 & :\id{\trans{\pairr{\alpha_0,\alpha_1}}{\epsilon_2}}{\zeta_2}
+\end{align*}
+
+Note that we may equivalently require that there are $\epsilon_3$, $\epsilon_4$ and $\epsilon_5$ of the following types:
+\begin{align}
+\epsilon_3 
+& : \prd{X:\type}{g:A\to X}\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}
+  \label{epsilon3}
+  \\
+\epsilon_4
+  \label{epsilon4}
+& : \prd{X:\type}{Y:X\to\type}{g:A\to X}{h:\prd{a:A}Y(g(a))}
+  \\
+& \qquad\qquad
+  \id{\trans{\epsilon_3(X,g)}{h(\epsilon_0(A,\idfunc[A]))}}
+        {\epsilon_1(X,Y,g,h)}
+  \nonumber
+  \\
+\epsilon_5
+  \label{epsilon5}
+& : \prd{X:\type}{Y:X\to\type}{f:\prd{x:X}Y(x)}{g:A\to X}
+  \\
+& \qquad\qquad
+  \id{\trans{\pairr{\epsilon_3(X,g),\epsilon_4(X,Y,g,f\circ g)}}{\refl{f(g(\epsilon_0(A,\idfunc[A])))}}}{\epsilon_2(X,Y,f,g)}.
+  \nonumber
+\end{align}
+
+\begin{thm}
+Let $A$ be a type and define $A^\ast$ to be the type consisting of sextuples $\pairr{\epsilon_0,\ldots,\epsilon_5}$, as introduced in \autoref{epsilon0,epsilon1,epsilon2,epsilon3,epsilon4,epsilon5}. Then the function $\varphi:A\to A^*$ defined by
+\begin{align*}
+\varphi(a)_0
+& \defeq
+  \lam{X}{g}g(a)
+  \\
+\varphi(a)_1
+& \defeq
+  \lam{X}{Y}{g}{h}h(a)
+  \\
+\varphi(a)_2
+& \defeq
+  \lam{X}{Y}{f}{g}\refl{f(g(a))}
+  \\
+\varphi(a)_3
+& \defeq
+  \lam{X}{g}\refl{g(a)}
+  \\
+\varphi(a)_4
+& \defeq
+  \lam{X}{Y}{g}{h}\refl{h(a)}
+  \\
+\varphi(a)_5
+& \defeq
+  \lam{X}{Y}{f}{g}\refl{\refl{f(g(a))}}
+\end{align*}
+is an equivalence.
+\end{thm}
+
+\begin{proof}
+We define $\psi:A^\ast\to A$ by
+\begin{equation*}
+\psi(\epsilon_0,\ldots,\epsilon_5)\defeq\epsilon_0(A,\idfunc[A]).
+\end{equation*}
+It is then immediate that $\id{\psi\circ\varphi}{\idfunc[A]}$, thus it is left to show that $\id{\varphi\circ\psi}{\idfunc[A^\ast]}$. Let $\pairr{\epsilon_0,\ldots,\epsilon_5}:A^\ast$. Note that $\varphi(\psi(\epsilon_0,\ldots,\epsilon_5))\jdeq\varphi(\epsilon_0(A,\idfunc[A]))$. 
+
+Our goal is to find $\pairr{\alpha_0,\ldots,\alpha_5}$ where
+\begin{align*}
+\alpha_0(X,g)
+& :
+  \id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}
+  \\
+\alpha_1(X,Y,g,h)
+& :
+  \id
+    { \trans{\alpha_0(X,g)}{h(\epsilon_0(A,\idfunc[A]))}
+      }
+    { \epsilon_1(X,Y,g,h)
+      }
+    \\
+\alpha_2(X,Y,f,g)
+& :
+  \id
+    { \trans{\pairr{\alpha_0(X,g),\alpha_1(X,Y,g,f\circ g)}}{\refl{f(g(\epsilon_0(A,\idfunc[A])))}}}
+    { \epsilon_2(X,Y,f,g)}
+  \\
+\alpha_3(X,g)
+& :
+  \id
+    { \trans{\alpha_0(X,g)}{\refl{g(\epsilon_0(A,\idfunc[A]))}}}
+    { \epsilon_3(X,g)}
+  \\
+\alpha_4(X,Y,g)
+& :
+    { \trans{\pairr{\alpha_0(X,g),\alpha_1(X,Y,g,h),\alpha_3(X,g)}}
+        {\refl{h(\epsilon_0(A,\idfunc[A]))}}}
+  \\
+& \qquad\qquad
+    \idsymbin
+    { \epsilon_4(X,Y,g,h)}
+  \\
+\alpha_5(X,Y,g)
+& :
+    { \trans{\pairr{\alpha_0(X,g),\alpha_1(X,Y,g,f\circ g),\alpha_4(X,Y,f,g)}}
+        {\refl{\refl{f(g(\epsilon_0(A,\idfunc[A])))}}}}
+  \\
+& \qquad\qquad
+    \idsymbin
+    { \epsilon_5(X,Y,f,g)}
+\end{align*}
+Note that for $\alpha_0$, $\alpha_1$ and $\alpha_2$ we may exactly choose $\epsilon_3$, $\epsilon_4$ and $\epsilon_5$.
+Since we have taken $\alpha_0\defeq\epsilon_3$, we see that the type of $\alpha_3(X,g)$ becomes
+\begin{equation*}
+\id
+    { \trans{\epsilon_3(X,g)}{\refl{g(\epsilon_0(A,\idfunc[A]))}}}
+    { \epsilon_3(X,g)}
+\end{equation*}
+Here we have to be careful to calculate the transportation in the right way. We have $\epsilon_{3,4,5}:N(\epsilon_{0,1,2})\to\epsilon_{0,1,2}$ which is both a path in the base space and a term of the fiber. The fibration in question is $\lam{\epsilon}N(\epsilon)=\epsilon$, so the transportation evaluates as
+\begin{equation*}
+  \trans{\epsilon_3(X,g)}{\refl{g(\epsilon_0(A,\idfunc[A]))}}
+    =
+    \ct{\op{\ap{N}{\epsilon_{3,4,5}}}}{\refl{\blank}}{\epsilon_{3,4,5}}
+\end{equation*}
+Thus, it is equivalent to show that
+\begin{equation*}
+\ap{N}{\epsilon_{3,4,5}}=\refl{\blank}
+\end{equation*}
+\end{proof}
+
+\begin{comment}
+\begin{lem}
+Let $s:A\to B$ and $r:B\to A$ be such that $H:\prd{x:A}\id{r(s(x))}{x}$. Define
+\begin{equation*}
+B^\ast\defeq\sm{y:B}\id{s(r(y))}{y}.
+\end{equation*}
+Then the function $\varphi:A\to B^\ast$ defined by
+\begin{equation*}
+\varphi(x)\defeq\pairr{s(x),\ap{s}{H(x)}}
+\end{equation*}
+is an equivalence.
+\end{lem}
+
+\begin{proof}
+We define the inverse $\psi:B^\ast\to A$ by
+\begin{equation*}
+\psi(y,z)\defeq r(y).
+\end{equation*}
+Then we have $\psi(\varphi(x))\jdeq r(s(x))$ and thus $\id{\psi\circ\varphi}{\idfunc[A]}$. For the other direction, we note that $\varphi(\psi(y,z))\jdeq\varphi(r(y))\jdeq\pairr{s(r(y)),\ap{s}{H(r(y))}}$ for $\pairr{y,z}:B^\ast$. We have $z:\id{s(r(y))}{y}$, so it remains to show that $\id{\trans{z}{\ap{s}{H(r(y))}}}{z}$. 
+\end{proof}
+
+\begin{thm}
+Let $A$ be a type and define
+\begin{equation*}
+A^\ast\defeq \sm{\epsilon_0:\prd{X:\type}(A\to X)\to X}\prd{X:\type}{g:A\to X}\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}.
+\end{equation*}
+Then the function $\varphi:A\to A^\ast$ defined by
+\begin{align*}
+\varphi(a)_0(X,g) & \defeq g(a)\\
+\varphi(a)_1(X,g) & \defeq \refl{g(a)} 
+\end{align*}
+is an equivalence. 
+\end{thm}
+
+\begin{proof}
+We define $\psi:A^\ast\to A$ by $\psi(\epsilon_0,\epsilon_1)\defeq\epsilon_0(A,\idfunc[A])$. Then we have
+\begin{equation*}
+\psi(\varphi(a))\jdeq\idfunc[A](a)\jdeq a,
+\end{equation*}
+showing that $\psi\circ\varphi\jdeq\idfunc[A]$. For the other direction, let $\pairr{\epsilon_0,\epsilon_1}:A^\ast$. Then
+the identifications
+\begin{align*}
+\epsilon_1(X,g):\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}
+\end{align*}
+for $X:\type$ and $g:A\to X$ provide an identification $\id{\varphi(\psi(\epsilon_0,\epsilon_1))_0}{\epsilon_0}$ via function extensionality. To find an identification $\id{\varphi(\psi(\epsilon_0,\epsilon_1))_1}{\epsilon_1}$.
+\end{proof}
+\end{comment}
+\end{document}

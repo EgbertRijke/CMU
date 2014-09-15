@@ -1,0 +1,524 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% PACKAGES
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+%%%% Spicing up the document
+\usepackage{mathpazo}
+\usepackage[scaled=0.95]{helvet}
+\usepackage{courier}
+\linespread{1.05} % Palatino looks better with this
+\usepackage{microtype}
+
+\usepackage{fancyhdr} % To set headers and footers
+\usepackage{enumitem,mathtools,xspace,xcolor}
+\usepackage{comment}
+\usepackage{ifthen}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}\xspace}
+\newcommand{\xmark}{\ding{55}\xspace}
+
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{xcolor}
+
+\DeclareCaptionFormat{myformat}{{\bf #1}#2#3{\color{black!20}\hrulefill}}
+\captionsetup[figure]{format=myformat}
+
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usepackage[inference]{semantic}
+\usepackage{booktabs}
+
+\usepackage[hyphens]{url} % This package has to be loaded *before* hyperref
+\usepackage[pagebackref,colorlinks,citecolor=darkgreen,linkcolor=darkgreen,unicode]{hyperref}
+\definecolor{darkgreen}{rgb}{0,0.45,0}
+
+% For some reason the following can't be above hyperref...
+\usepackage{amssymb,amsmath,amsthm,stmaryrd,mathrsfs,wasysym}
+\usepackage{aliascnt}
+\usepackage[capitalize]{cleveref}
+
+% The braket macro shouldn't be necessary
+\usepackage{braket} % used for \setof{ ... } macro
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% To include references in TOC we should use this package rather than a hack.
+\usepackage{tocbibind}
+\usepackage{etoolbox}           % get \apptocmd
+%\apptocmd{\thebibliography}{\addcontentsline{toc}{section}{References}}{}{} % tell bibliography to get itself into the table of contents
+
+
+\begin{comment}
+%%%% Header and footers
+\pagestyle{fancyplain}
+\setlength{\headheight}{15pt}
+\renewcommand{\chaptermark}[1]{\markboth{\textsc{Chapter \thechapter. #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\textsc{\thesection\ #1}}}
+\end{comment}
+
+% TOC depth
+\setcounter{tocdepth}{3}
+
+\lhead[\fancyplain{}{{\thepage}}]%
+      {\fancyplain{}{\nouppercase{\rightmark}}}
+\rhead[\fancyplain{}{\nouppercase{\leftmark}}]%
+      {\fancyplain{}{\thepage}}
+\cfoot{\textsc{\footnotesize [Draft of \today]}}
+\lfoot[]{}
+\rfoot[]{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% We mostly use the macros of the book, to keep notations
+%%%% and conventions the same. Recall that when the macros file
+%%%% is updated, we need to comment the lines containing the
+%%%% string `[chapter]` since our article is not a book.
+%%%%
+%%%% Instructions for updating the macros.tex file:
+%%%% - fetch the latest macros.tex file from the HoTT/book git repository.
+%%%% - comment all lines containing "[chapter]" because this is not a book.
+%%%% - comment the definition of pbcorner because the xypic package is not used.
+%%%%
+\input{macros}
+
+\newcommand{\idsymbin}{=}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Our commands which are not part of the macros.tex file.
+%%%% We should keep these commands separate, because we will
+%%%% update the macros.tex following the updates of the book.
+
+%%%% First we redefine the \id, \eqv and \ct commands so that they accept an
+%%%% arbitrary number of arguments. This is useful when writing longer strings
+%%%% of equalities or equivalences.
+
+\makeatletter
+
+\renewcommand{\id}[3][]{
+  \@ifnextchar\bgroup
+    {#2 \mathbin{\idsym_{#1}} \id[#1]{#3}}
+    {#2 \mathbin{\idsym_{#1}} #3}
+  }
+
+\renewcommand{\eqv}[2]{
+  \@ifnextchar\bgroup
+    {#1 \eqvsym \eqv{#2}}
+    {#1 \eqvsym #2}
+  }
+
+\newcommand{\ctsym}{%
+  \mathchoice{\mathbin{\raisebox{0.5ex}{$\displaystyle\centerdot$}}}%
+             {\mathbin{\raisebox{0.5ex}{$\centerdot$}}}%
+             {\mathbin{\raisebox{0.25ex}{$\scriptstyle\,\centerdot\,$}}}%
+             {\mathbin{\raisebox{0.1ex}{$\scriptscriptstyle\,\centerdot\,$}}}
+  }
+
+\renewcommand{\ct}[3][]{
+  \@ifnextchar\bgroup
+    {#2 \mathbin{\ctsym_{#1}} \ct[#1]{#3}}
+    {#2 \mathbin{\ctsym_{#1}} #3}
+  }
+
+\makeatother
+
+%%%% We always use textstyle products and sums...
+%\renewcommand{\prd}{\tprd}
+%\renewcommand{\sm}{\tsm}
+\makeatletter
+\renewcommand{\@dprd}{\@tprd}
+\renewcommand{\@dsm}{\@tsm}
+\renewcommand{\@dprd@noparens}{\@tprd}
+\renewcommand{\@dsm@noparens}{\@tsm}
+
+%%%% ...with a bit more spacing
+\renewcommand{\@tprd}[1]{\mathchoice{{\textstyle\prod_{(#1)}\,}}{\prod_{(#1)}\,}{\prod_{(#1)}\,}{\prod_{(#1)}\,}}
+\renewcommand{\@tsm}[1]{\mathchoice{{\textstyle\sum_{(#1)}\,}}{\sum_{(#1)}\,}{\sum_{(#1)}\,}{\sum_{(#1)}\,}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% We adjust the \prd command so that implicit arguments become possible.
+%%%%
+%%%% First, we have the following switch. Set it to true if implicit arguments
+%%%% are desired, or to false if not. Note turning off implicit arguments
+%%%% might render some parts of the text harder to comprehend, since in the
+%%%% text might appear $f(x)$ where we would have $f(i,x)$ without implicit
+%%%% arguments.
+
+\newcommand{\implicitargumentson}{\boolean{true}}
+
+%%%% If one wants to use implicit arguments in the notation for product types,
+%%%% a * has to be put before the argument that has to be implicit.
+%%%% For example: in $\prd{x:A}*{y:B}{u:P(y)}Q(x,y,u)$, the argument y is
+%%%% implicit. Any of the arguments can be made implicit this way.
+
+%%%% First of all, we should make the command \prd search not only for a
+%%%% brace, but also for a star. We introduce an auxiliary command that
+%%%% determines whether the next character is a star or brace.
+\newcommand{\@ifnextchar@starorbrace}[2]
+%  {\@ifnextcharamong{#1}{#2}{*}{\bgroup};}
+  {\@ifnextchar*{#1}{\@ifnextchar\bgroup{#1}{#2}}}
+  
+%%%% When encountering the \prd command, latex should determine whether it
+%%%% should print implicit argument brackets or not. So the first branching
+%%%% happens right here.
+\renewcommand{\prd}{\@ifnextchar*{\@iprd}{\@prd}}
+
+\newcommand{\@prd}[1]
+  {\@ifnextchar@starorbrace
+    {\prd@parens{#1}}
+    {\@ifnextchar\sm{\prd@parens{#1}\@eatsm}{\prd@noparens{#1}}}}
+\newcommand{\@prd@parens}{\@ifnextchar*{\@iprd}{\prd@parens}}
+\renewcommand{\prd@parens}[1]
+  {\@ifnextchar@starorbrace
+    {\@theprd{#1}\@prd@parens}
+    {\@ifnextchar\sm{\@theprd{#1}\@eatsm}{\@theprd{#1}}}}
+\newcommand{\@theprd}[1]
+  {\mathchoice{\@dprd{#1}}{\@tprd{#1}}{\@tprd{#1}}{\@tprd{#1}}}
+\renewcommand{\dprd}[1]{\@dprd{#1}\@ifnextchar@starorbrace{\dprd}{}}
+\renewcommand{\tprd}[1]{\@tprd{#1}\@ifnextchar@starorbrace{\tprd}{}}
+
+%%%% Here we tell the actual symbols to be printed.
+\newcommand{\@theiprd}[1]{\mathchoice{\@diprd{#1}}{\@tiprd{#1}}{\@tiprd{#1}}{\@tiprd{#1}}}
+\newcommand{\@iprd}[2]{\@ifnextchar@starorbrace%
+  {\@theiprd{#2}\@prd@parens}%
+  {\@ifnextchar\sm%
+    {\@theiprd{#2}\@eatsm}%
+    {\@theiprd{#2}}}}
+\def\@tiprd#1{
+  \ifthenelse{\implicitargumentson}
+    {\@@tiprd{#1}\@ifnextchar\bgroup{\@tiprd}{}}
+    {\@tprd{#1}}}
+\def\@@tiprd#1{\mathchoice{{\textstyle\prod_{\{#1\}}\,}}{\prod_{\{#1\}}\,}{\prod_{\{#1\}}\,}{\prod_{\{#1\}}\,}}
+\def\@diprd{
+  \ifthenelse{\implicitargumentson}
+    {\@tiprd}
+    {\@tprd}}
+    
+
+%%%% And finally we need to redefine \@eatprd so that implicit arguments also
+%%%% works in the scope of a dependent sum.    
+\def\@eatprd\prd{\@prd@parens}
+
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Redefining the quantifiers, so that some of the longer 
+%%%% formulas appear one a single line without problems
+
+%%% Dependent products written with \forall, in the same style
+\makeatletter
+\def\tfall#1{\forall_{(#1)}\@ifnextchar\bgroup{\,\tfall}{\,}}
+\renewcommand{\fall}{\tfall}
+
+%%% Existential quantifier %%%
+\def\texis#1{\exists_{(#1)}\@ifnextchar\bgroup{\,\texis}{\,}}
+\renewcommand{\exis}{\texis}
+
+%%% Unique existence %%%
+\def\uexis#1{\exists!_{(#1)}\@ifnextchar\bgroup{\,\uexis}{\,}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+
+\newcommand{\famsym}{\mathcal{F}}
+\newcommand{\tmsym}{\mathcal{T}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% 
+
+\input{preamble-unfold}
+
+\input{preamble-apply}
+
+\input{preamble-pretty}
+
+\input{preamble-judgments}
+
+\input{preamble-operations}
+
+\input{preamble-jalign}
+
+%\input{preamble-cftalg}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% THE CONSTRUCTORS OF THE TYPE THEORY OF MODELS
+
+\makeatletter
+%%%% The initial model
+\newcommand{\mctx}{%
+  \mathcal{C}}
+
+%%%% The family constructor
+\newcommand{\mfam}[2][]{%
+  \mathcal{F}_{\default@ctxext #2}^{#1}}
+\newcommand{\@mfam@nested}[1]{\@mfam@parens}
+\newcommand{\@mfam@parens}[2][]{(\mfam[#1]{#2})}
+
+%%%% The terms constructor
+\newcommand{\mtm}[2][]{%
+  \mathcal{T}_{\default@ctxext #2}^{#1}}
+\newcommand{\@mtm@nested}[1]{\@mtm@parens}
+\newcommand{\@mtm@parens}[2][]{(\mtm[#1]{#2})}
+
+%%%% The empty type constructor
+\newcommand{\tfemp}[1]{%
+  \typefont{emp}_{\default@ctxext #1}}
+\newcommand{\tft}[1]{%
+  \typefont{t}_{\default@ctxext #1}}
+
+%%%% The extension constructor
+\newcommand{\tfext}[1]{%
+  \typefont{ext}_{\default@ctxext #1}}
+
+%%%% The substitution constructor
+\newcommand{\tfsubst}[1]{%
+  \typefont{subst}_{\default@ctxext #1}}
+  
+%%%% The weakening constructor
+\newcommand{\tfwk}[1]{%
+  \typefont{wk}_{\default@ctxext #1}}
+
+%%%% The identity function constructor
+\newcommand{\tfid}[1]{%
+  \typefont{idtm}_{\default@ctxext #1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Introducing logical usage of fonts.
+\newcommand{\modelfont}{\mathit} % use 'mf' in command to indicate model font
+\newcommand{\typefont}{\mathsf} % use 'tf' in command to indicate type font
+\newcommand{\catfont}{\mathrm} % use 'cf' in command to indicate cat font
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Some macros of the book are redefined.
+
+\renewcommand{\UU}{\typefont{U}}
+\renewcommand{\isequiv}{\typefont{isEquiv}}
+\renewcommand{\happly}{\typefont{hApply}}
+\renewcommand{\pairr}[1]{{\mathopen{}\langle #1\rangle\mathclose{}}}
+\renewcommand{\type}{\typefont{Type}}
+\renewcommand{\op}[1]{{{#1}^\typefont{op}}}
+\renewcommand{\susp}{\typefont{\Sigma}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following is a big unorganized list of new macros that we use in the
+%%%% notes. 
+
+\newcommand{\tfW}{\typefont{W}}
+\newcommand{\tfM}{\typefont{M}}
+\newcommand{\mfM}{\modelfont{M}}
+\newcommand{\mfN}{\modelfont{N}}
+\newcommand{\tfctx}{\typefont{ctx}}
+\newcommand{\mftypfunc}[1]{{\modelfont{typ}^{#1}}}
+\newcommand{\mftyp}[2]{{\mftypfunc{#1}(#2)}}
+\newcommand{\tftypfunc}[1]{{\typefont{typ}^{#1}}}
+\newcommand{\tftyp}[2]{{\tftypfunc{#1}(#2)}}
+\newcommand{\hfibfunc}[1]{\typefont{fib}_{#1}}
+\newcommand{\mappingcone}[1]{\mathcal{C}_{#1}}
+\newcommand{\equifib}{\typefont{equiFib}}
+\newcommand{\tfcolim}{\typefont{colim}}
+\newcommand{\tflim}{\typefont{lim}}
+\newcommand{\tfdiag}{\typefont{diag}}
+\newcommand{\tfGraph}{\typefont{Graph}}
+\newcommand{\mfGraph}{\modelfont{Graph}}
+\newcommand{\unitGraph}{\unit^\mfGraph}
+\newcommand{\UUGraph}{\UU^\mfGraph}
+\newcommand{\tfrGraph}{\typefont{rGraph}}
+\newcommand{\mfrGraph}{\modelfont{rGraph}}
+\newcommand{\isfunction}{\typefont{isFunction}}
+\newcommand{\tfconst}{\typefont{const}}
+\newcommand{\conemap}{\typefont{coneMap}}
+\newcommand{\coconemap}{\typefont{coconeMap}}
+\newcommand{\tflimits}{\typefont{limits}}
+\newcommand{\tfcolimits}{\typefont{colimits}}
+\newcommand{\islimiting}{\typefont{isLimiting}}
+\newcommand{\iscolimiting}{\typefont{isColimiting}}
+\newcommand{\islimit}{\typefont{isLimit}}
+\newcommand{\iscolimit}{\typefont{iscolimit}}
+\newcommand{\pbcone}{\typefont{cone_{pb}}}
+\newcommand{\tfinj}{\typefont{inj}}
+\newcommand{\tfsurj}{\typefont{surj}}
+\newcommand{\tfepi}{\typefont{epi}}
+\newcommand{\tftop}{\typefont{top}}
+\newcommand{\sbrck}[1]{\Vert #1\Vert}
+\newcommand{\strunc}[2]{\Vert #2\Vert_{#1}}
+\newcommand{\gobjclass}{{\typefont{U}^\mfGraph}}
+\newcommand{\gcharmap}{\typefont{fib}}
+\newcommand{\diagclass}{\typefont{T}}
+\newcommand{\opdiagclass}{\op{\diagclass}}
+\newcommand{\equifibclass}{\diagclass^{\eqv{}{}}}
+\newcommand{\universe}{\typefont{U}}
+\newcommand{\catid}[1]{{\catfont{id}_{#1}}}
+\newcommand{\isleftfib}{\typefont{isLeftFib}}
+\newcommand{\isrightfib}{\typefont{isRightFib}}
+\newcommand{\leftLiftings}{\typefont{leftLiftings}}
+\newcommand{\rightLiftings}{\typefont{rightLiftings}}
+\newcommand{\psh}{\typefont{Psh}}
+\newcommand{\rgclass}{\typefont{\Omega^{RG}}}
+\newcommand{\terms}[2][]{\lfloor #2 \rfloor^{#1}}
+\newcommand{\grconstr}[2]
+             {\mathchoice % max size is textstyle size.
+             {{\textstyle \int_{#1}}#2}% 
+             {\int_{#1}#2}%
+             {\int_{#1}#2}%
+             {\int_{#1}#2}}
+\newcommand{\ctxhom}[3][]{\typefont{hom}_{#1}(#2,#3)}
+\newcommand{\graphcharmapfunc}[1]{\gcharmap_{#1}}
+\newcommand{\graphcharmap}[2][]{\graphcharmapfunc{#1}(#2)}
+\newcommand{\tfexp}[1]{\typefont{exp}_{#1}}
+\newcommand{\tffamfunc}{\typefont{fam}}
+\newcommand{\tffam}[1]{\tffamfunc(#1)}
+\newcommand{\tfev}{\typefont{ev}}
+\newcommand{\tfcomp}{\typefont{comp}}
+\newcommand{\isDec}[1]{\typefont{isDecidable}(#1)}
+\newcommand{\smal}{\mathcal{S}}
+\renewcommand{\modal}{{\ensuremath{\ocircle}}}
+\newcommand{\eqrel}{\typefont{EqRel}}
+\newcommand{\piw}{\ensuremath{\Pi\typefont{W}}} %% to be used in conjunction with -pretopos.
+\renewcommand{\sslash}{/\!\!/}
+\newcommand{\mprd}[3][]{\Pi^{#1}(#2,#3)}
+\newcommand{\msm}[2]{\Sigma(#1,#2)}
+\newcommand{\midt}[1]{\idvartype_#1}
+\newcommand{\reflf}[1]{\typefont{refl}^{#1}}
+\newcommand{\tfJ}{\typefont{J}}
+\newcommand{\tftrans}{\typefont{trans}}
+
+\newcommand{\tfT}{\typefont{T}}
+\newcommand{\reflsym}{{\mathsf{refl}}}
+\newcommand{\strans}[2]{\ensuremath{{#1}_{*}({#2})}}
+\newcommand{\eqtype}[1]{\typefont{Eq}_{#1}}
+\newcommand{\eqtoid}[1]{\typefont{eqtoid}(#1)}
+\newcommand{\greek}{\mathrm}
+\newcommand{\product}[2]{{#1}\times{#2}}
+\newcommand{\pairp}[1]{(#1)}
+\newcommand{\jequalizer}[3]{\{#1|#2\jdeq #3\}}
+\newcommand{\jequalizerin}[2]{\iota_{#1,#2}}
+\newcommand{\tounit}[1]{{!_{#1}}}
+\newcommand{\trwk}{\typefont{trwk}}
+\newcommand{\trext}{\typefont{trext}}
+\newcommand{\tfindf}[2][]{\typefont{ind}_{#2}^{#1}}
+
+\makeatletter
+\newcommand{\tfind}[3][]{\tfindf[#1]{#2}(\default@ctxext #3)}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% When investigation pointed structures we use the \pt macro.
+
+\makeatletter
+\newcommand{\pt}[1][]{*_{
+  \@ifnextchar\undergraph{\@undergraph@nested}
+    {\@ifnextchar\underovergraph{\@underovergraph@nested}{}}#1}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPERATIONS ON GRAPHS
+%%%%
+%%%% First of all, each graph has a type of vertices and a type of edges. The
+%%%% type of vertices of a graph $\Gamma$ is denoted by $\pts{\Gamma}$;
+%%%% and likewise for the type of edges.
+
+\makeatletter
+\newcommand{\pts}[1]{{\@graphop@nested{#1}}_{0}}
+\newcommand{\edg}[1]{{\@graphop@nested{#1}}_{1}}
+\newcommand{\@graphop@nested}[1]
+  {\@ifnextchar\ctxext{\@ctxext@nested}
+      {\@ifnextchar\undergraph{\@undergraph@nested}
+         {\@ifnextchar\underovergraph{\@underovergraph@nested}{}}}
+    #1}
+\makeatother
+
+%%%% The following operations of \undergraph and \underovergraph are used to
+%%%% define the free category and the free groupoid of a graph, respectively
+
+\makeatletter
+\newcommand{\@undergraphtest}[2]{\@ifnextchar({#1}{#2}}
+\newcommand{\undergraph}[2]{\@undergraphtest{\@undergraph@parens{#1}{#2}}{\@undergraph{#1}{#2}}}
+\newcommand{\@undergraph}[2]{{#2/#1}}
+\newcommand{\@undergraph@nested}[3]{\@undergraph@parens{#2}{#3}}
+\newcommand{\@undergraph@parens}[2]{(\@undergraph{#1}{#2})}
+\makeatother
+
+\makeatletter
+\newcommand{\underovergraph}[2]{\@underovergraphtest{\@underovergraph@parens{#1}{#2}}{\@underovergraph{#1}{#2}}}
+\newcommand{\@underovergraph}[2]{{#2}\,{\parallel}\,{#1}}
+\newcommand{\@underovergraphtest}{\@undergraphtest}
+\newcommand{\@underovergraph@parens}[2]{(\@underovergraph{#1}{#2})}
+\newcommand{\@underovergraph@nested}[3]{\@underovergraph@parens{#2}{#3}}
+\makeatother
+
+\newcommand{\graphid}[1]{\mathrm{id}_{#1}}
+\newcommand{\freecat}[1]{\mathcal{C}(#1)}
+\newcommand{\freegrpd}[1]{\mathcal{G}(#1)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Some tikz macros to typeset diagrams uniformly.
+
+\tikzset{patharrow/.style={double,double equal sign distance,-,font=\scriptsize}}
+\tikzset{description/.style={fill=white,inner sep=2pt}}
+\tikzset{fib/.style={->>,font=\scriptsize}}
+
+%% Used for extra wide diagrams, e.g. when the label is too large otherwise.
+\tikzset{commutative diagrams/column sep/Huge/.initial=18ex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% New theorem environment for conjectures.
+
+%\defthm{conj}{Conjecture}{Conjectures}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following environment for desiderata should not be there. It is better
+%%%% to use the issue tracker for desiderata.
+
+\newenvironment{desiderata}{\begingroup\color{blue}\textbf{Desiderata.}}
+{\endgroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% The following piece of code from tex.stackexchange:
+%%%%
+%%%% http://tex.stackexchange.com/a/55180/14653
+%%%%
+%%%% We include it so that inference rules in align environments have enough
+%%%% vertical space.
+
+\newlength\minalignvsep
+
+\makeatletter
+\def\align@preamble{%
+   &\hfil
+    \setboxz@h{\@lign$\m@th\displaystyle{##}$}%
+    \ifnum\row@>\@ne
+    \ifdim\ht\z@>\ht\strutbox@
+    \dimen@\ht\z@
+    \advance\dimen@\minalignvsep
+    \ht\strutbox\dimen@
+    \fi\fi
+    \strut@
+    \ifmeasuring@\savefieldlength@\fi
+    \set@field
+    \tabskip\z@skip
+   &\setboxz@h{\@lign$\m@th\displaystyle{{}##}$}%
+    \ifnum\row@>\@ne
+    \ifdim\ht\z@>\ht\strutbox@
+    \dimen@\ht\z@
+    \advance\dimen@\minalignvsep
+    \ht\strutbox@\dimen@
+    \fi\fi
+    \strut@
+    \ifmeasuring@\savefieldlength@\fi
+    \set@field
+    \hfil
+    \tabskip\alignsep@
+}
+\makeatother
+
+\minalignvsep.2em
+
+\allowdisplaybreaks
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setdescription[1]{itemsep=-0.2em}
