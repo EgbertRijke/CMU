@@ -4,15 +4,18 @@
 \author{Egbert Rijke}
 \date\today
 
+\newcommand{\impredicative}[1]{\mathsf{Imp}(#1)}
+
 \input{preamble}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Steve discovered how one can use a naturality condition to arrive at the impredicative encodings of type up to homotopy level $1$. We attempt to generalize this to arbitrary types.
+Steve discovered how one can use a naturality condition to arrive at the impredicative encodings of types up to homotopy level $1$. We attempt to generalize this to arbitrary types.
 \end{abstract}
 
+\section{Introduction}
 The idea of the impredicative encoding of mere propositions starts with the observation that for any mere proposition $P$, the canonical function
 \begin{equation*}
 \lam{p}{X}{f}f(p):P\to\prd{X:\prop}(P\to X)\to X
@@ -23,7 +26,8 @@ A\to\sm{\epsilon:\prd{X:\set}(A\to X)\to X}\prd{X,Y:\set}{f:X\to Y}\id{f\circ\ep
 \end{equation*}
 is an equivalence. Our goal is to generalize this naturality condition so that we get a similar equivalence for arbitrary types. 
 
-One way of looking at the type $A^\ast\defeq\sm{\epsilon:\prd{X:\type}(A\to X)\to X}\cdots$ we aim to define is that it will describe abstract evaluations. But the only sort of evaluations we hope to find in $A^\ast$ are evaluations at a point of $A$. Of course, evaluations are the counit of an adjunction, so they must be natural. However, our setting is dependent type theory and not category theory, so we must take the dependency into account. Thus we must expect a dependent naturality condition. Consider the following commutative diagram
+\section{The impredicative encoding}
+One way of looking at the type $\impredicative{A}\defeq\sm{\epsilon:\prd{X:\type}(A\to X)\to X}\cdots$ we aim to define is that it will describe abstract evaluations. But the only sort of evaluations we hope to find in $\impredicative{A}$ are evaluations at a point of $A$. Of course, evaluations are the counit of an adjunction, so they must be natural. However, our setting is dependent type theory and not category theory, so we must take the dependency into account. Thus we must expect a dependent naturality condition. Consider the following commutative diagram
 \begin{equation*}
 \begin{tikzcd}
 \lam{g}\prd{a:A}Y(g(a)) \ar[fib,xshift=-.7ex]{ddr} \ar{dr}{\epsilon_1(X,Y)}
@@ -32,7 +36,7 @@ One way of looking at the type $A^\ast\defeq\sm{\epsilon:\prd{X:\type}(A\to X)\t
 & (A\to X) \ar{r}[swap]{\epsilon_0(X)} \ar[densely dotted,xshift=.7ex]{u}[swap]{f\circ \epsilon_0(X)} \ar[densely dotted,xshift=-2.8ex]{uul}{\lam{g}f\circ g} & X \ar[densely dotted,xshift=.7ex]{u}[swap]{f}
 \end{tikzcd}
 \end{equation*}
-where $X$ is a type, $Y$ is a family over $X$ and $f$ is a section of $Y$. Thus we will require that
+where $X$ is a type, $Y$ is a family over $X$ and $f$ is a section of $Y$. In type theoretical terms, this diagram consists of
 \begin{align}
 \epsilon_0(X) 
 & : (A\to X)\to X
@@ -43,26 +47,36 @@ where $X$ is a type, $Y$ is a family over $X$ and $f$ is a section of $Y$. Thus 
   \label{epsilon1}
   \\
 \epsilon_2(X,Y,f) 
-& : \prd{g:A\to X}\id{\epsilon_1(X,Y,g,f\circ g)}{f(\epsilon_0(X,g))}
+& : \prd{g:A\to X}\id{\epsilon_1(X,Y,g,f\circ g)}{f(\epsilon_0(X,g))},
   \label{epsilon2}
 \end{align}
-are part of the data of $A^\ast$. Let us temporarily denote the type of triples $\pairr{\epsilon_0,\epsilon_1,\epsilon_2}$ by $TA$. Then there is a function $N:TA\to TA$ defined by
+which shall be part of the data of $\impredicative{A}$. 
+
+\begin{defn}
+Define the type of \emph{dependent evaluation triples $\pairr{\epsilon_0,\epsilon_1,\epsilon_2}$ of $A$} as introduced in
+\autoref{epsilon0,epsilon1,epsilon2} to be $E(A)$. 
+Then we can define the functions $\alpha_A:A\to E(A)$ and $\beta_A:E(A)\to A$ by
 \begin{align*}
-N(\epsilon)_0(X,g) & \defeq g(\epsilon_0(A,\idfunc[A]))\\
-N(\epsilon)_1(X,Y,g,h) & \defeq h(\epsilon_0(A,\idfunc[A]))\\
-N(\epsilon)_2(X,Y,f,g) & \defeq \refl{f(g(\epsilon_0(A,\idfunc[A])))}.
+\alpha_A(a)_0 & \defeq \lam{X}{g}g(a)\\
+\alpha_A(a)_1 & \defeq \lam{X}{Y}{g}{h}h(a)\\
+\alpha_A(a)_2 & \defeq \lam{X}{Y}{f}{g}\refl{f(g(a))}\\
+\beta_A(\epsilon) & \defeq \epsilon_0(A,\idfunc[A]).
 \end{align*}
+We also define $N\defeq \alpha_A\circ \beta_A:E(A)\to E(A)$.
+\end{defn}
+
 Now we can formulate naturality by requiring that
 \begin{equation*}
-\id{\epsilon}
-{N(\epsilon)}.
+\id{N(\epsilon)}{\epsilon}.
 \end{equation*}
-Note that an identification $\alpha:\id{\epsilon}{\zeta}$ in $TA$ may equivalently be given by a triple $\pairr{\alpha_0,\alpha_1,\alpha_2}$ where
-\begin{align*}
-\alpha_0 & :\id{\epsilon_0}{\zeta_0}\\
-\alpha_1 & :\id{\trans{\alpha_0}{\epsilon_1}}{\zeta_1}\\
-\alpha_2 & :\id{\trans{\pairr{\alpha_0,\alpha_1}}{\epsilon_2}}{\zeta_2}
-\end{align*}
+In other words, we propose to formulate the impredicative encoding $\impredicative{A}$ of $A$ as in the following definition.
+
+\begin{defn}
+Let $A$ be a type. We define the \emph{impredicative encoding $\impredicative{A}$ of $A$} to be
+\begin{equation*}
+\impredicative{A}\defeq\sm{\epsilon:E(A)}\id{N(\epsilon)}{\epsilon}.
+\end{equation*}
+\end{defn}
 
 Note that we may equivalently require that there are $\epsilon_3$, $\epsilon_4$ and $\epsilon_5$ of the following types:
 \begin{align}
@@ -89,7 +103,7 @@ Note that we may equivalently require that there are $\epsilon_3$, $\epsilon_4$ 
 \end{align}
 
 \begin{thm}
-Let $A$ be a type and define $A^\ast$ to be the type consisting of sextuples $\pairr{\epsilon_0,\ldots,\epsilon_5}$, as introduced in \autoref{epsilon0,epsilon1,epsilon2,epsilon3,epsilon4,epsilon5}. Then the function $\varphi:A\to A^*$ defined by
+Let $A$ be a type and define $\impredicative{A}$ to be the type consisting of sextuples $\pairr{\epsilon_0,\ldots,\epsilon_5}$, as introduced in \autoref{epsilon0,epsilon1,epsilon2,epsilon3,epsilon4,epsilon5}. Then the function $\varphi:A\to A^*$ defined by
 \begin{align*}
 \varphi(a)_0
 & \defeq
@@ -119,11 +133,11 @@ is an equivalence.
 \end{thm}
 
 \begin{proof}
-We define $\psi:A^\ast\to A$ by
+We define $\psi:\impredicative{A}\to A$ by
 \begin{equation*}
 \psi(\epsilon_0,\ldots,\epsilon_5)\defeq\epsilon_0(A,\idfunc[A]).
 \end{equation*}
-It is then immediate that $\id{\psi\circ\varphi}{\idfunc[A]}$, thus it is left to show that $\id{\varphi\circ\psi}{\idfunc[A^\ast]}$. Let $\pairr{\epsilon_0,\ldots,\epsilon_5}:A^\ast$. Note that $\varphi(\psi(\epsilon_0,\ldots,\epsilon_5))\jdeq\varphi(\epsilon_0(A,\idfunc[A]))$. 
+It is then immediate that $\id{\psi\circ\varphi}{\idfunc[A]}$, thus it is left to show that $\id{\varphi\circ\psi}{\idfunc[\impredicative{A}]}$. Let $\pairr{\epsilon_0,\ldots,\epsilon_5}:\impredicative{A}$. Note that $\varphi(\psi(\epsilon_0,\ldots,\epsilon_5))\jdeq\varphi(\epsilon_0(A,\idfunc[A]))$. 
 
 Our goal is to find $\pairr{\alpha_0,\ldots,\alpha_5}$ where
 \begin{align*}
@@ -212,9 +226,9 @@ Then we have $\psi(\varphi(x))\jdeq r(s(x))$ and thus $\id{\psi\circ\varphi}{\id
 \begin{thm}
 Let $A$ be a type and define
 \begin{equation*}
-A^\ast\defeq \sm{\epsilon_0:\prd{X:\type}(A\to X)\to X}\prd{X:\type}{g:A\to X}\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}.
+\impredicative{A}\defeq \sm{\epsilon_0:\prd{X:\type}(A\to X)\to X}\prd{X:\type}{g:A\to X}\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}.
 \end{equation*}
-Then the function $\varphi:A\to A^\ast$ defined by
+Then the function $\varphi:A\to \impredicative{A}$ defined by
 \begin{align*}
 \varphi(a)_0(X,g) & \defeq g(a)\\
 \varphi(a)_1(X,g) & \defeq \refl{g(a)} 
@@ -223,11 +237,11 @@ is an equivalence.
 \end{thm}
 
 \begin{proof}
-We define $\psi:A^\ast\to A$ by $\psi(\epsilon_0,\epsilon_1)\defeq\epsilon_0(A,\idfunc[A])$. Then we have
+We define $\psi:\impredicative{A}\to A$ by $\psi(\epsilon_0,\epsilon_1)\defeq\epsilon_0(A,\idfunc[A])$. Then we have
 \begin{equation*}
 \psi(\varphi(a))\jdeq\idfunc[A](a)\jdeq a,
 \end{equation*}
-showing that $\psi\circ\varphi\jdeq\idfunc[A]$. For the other direction, let $\pairr{\epsilon_0,\epsilon_1}:A^\ast$. Then
+showing that $\psi\circ\varphi\jdeq\idfunc[A]$. For the other direction, let $\pairr{\epsilon_0,\epsilon_1}:\impredicative{A}$. Then
 the identifications
 \begin{align*}
 \epsilon_1(X,g):\id{g(\epsilon_0(A,\idfunc[A]))}{\epsilon_0(X,g)}

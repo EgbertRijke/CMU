@@ -8,7 +8,7 @@
 
 \begin{ex}
 In each of the following, $M$ denotes a model $(W,R,\lsem{-}\rsem)$ and $w\in W$
-denotes a state.
+denotes a state. Accessibility shall always refer to $w$.
 \begin{enumerate} 
 \item We have that $(M,w)\models \varphi\lor\neg\varphi$ if and only if $w\in \lsem\varphi\lor
 \neg\varphi\rsem$, if and only if $w\in \lsem\varphi\rsem\cup\lsem\neg\varphi\rsem$,
@@ -19,6 +19,8 @@ $w\in\lsem\varphi\to(\psi\to\varphi)\rsem$ if and only if $w\in
 \lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$. Note that $W=\lsem\varphi\lor\neg
 \varphi\rsem\subseteq \lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$. So
 $w\in \lsem(\varphi\lor\neg\psi)\lor\neg\varphi\rsem$ for all $w\in W$.
+\item Note that $(M,w)\models\nec(\varphi\land\psi)$ if and only if $(M,v)\models\varphi\land\psi$ for all accessible $v\in W$, if and only if $(M,v)\models\varphi$ and $(M,v)\models\psi$ for all accessible $v\in W$, if and only if $(M,v)\models\varphi$ for all accessible $v\in W$ and $(M,v')\models\psi$ for all accessible $v'\in W$, if and only if $(M,w)\models\nec\varphi$ and $(M,w)\models\nec\psi$, if and only if $(M,w)\models\nec\varphi\land\nec\psi$.
+\item Suppose that $(M,w)\models\nec(\varphi\to\psi)$ and $(M,w)\models\nec\varphi$. Then $(M,v)\models\varphi\to\psi$ for every accessible $v\in W$ and $(M,v')\models \varphi$ for every accessible $v'\in W$. Thus $(M,v)\models(\varphi\to\psi)\land\varphi$ for every accessible $v\in W$, and hence also $(M,v)\models\psi$ for every accessible $v\in W$. Thus we have that $(M,w)\models\nec\psi$.
 \end{enumerate}
 \end{ex}
 
@@ -36,6 +38,27 @@ $(M,x)\nmodels p\to\nec p$.
 \item Consider the trivial frame with $W:=\{\star\}$ and let $M$
 be any model based on this frame. Then $(M,\star)\nmodels\bot$ while $(M,\star)
 \models\nec\bot$; hence $(M,\star)\nmodels\nec\bot\to\bot$.
+\item Consider the model
+\begin{equation*}
+\begin{tikzcd}
+x & y \ar{l} \ar{r} & z
+\end{tikzcd}
+\end{equation*}
+with $\lsem p\rsem:=\{x\}$ and $\lsem q\rsem:=\{z\}$. Then $(M,y)\models\pos p\land\pos q$, but $(M,y)\nmodels\pos(p\land q)$.
+\item Consider the model
+\begin{equation*}
+\begin{tikzcd}
+x \rar & y
+\end{tikzcd}
+\end{equation*}
+with $\lsem p\rsem:=\{x\}$. Then $(M,x)\models p$ but $(M,x)\nmodels\nec\pos p$. 
+\item Consider the model
+\begin{equation*}
+\begin{tikzcd}
+x \rar & y
+\end{tikzcd}
+\end{equation*}
+Then $(M,x)\models\pos\nec\bot$, but $(M,x)\nmodels\nec\pos\bot$. 
 \end{enumerate}
 \end{ex}
 
@@ -47,6 +70,34 @@ Thus $\varphi\to\nec\varphi$ is valid with respect to the class of trivial frame
 \item Since $\nec\varphi$ is valid with respect to trivial frames, $\nec\varphi\to\varphi$
 is valid only if $\varphi$ is. In particular, $\nec\bot\to\bot$ isn't valid in
 any trivial frame.
+\item Observe that trivial frames never model any formula of the form $\pos\varphi$. Therefore the equivalence is satisfied vacuously.
+\item The consequent is of the form $\nec\psi$, which is always modeled in trivial frames. Therefore, this formula is valid with respect to trivial frames.
+\item Since the antecedent is of the form $\pos\psi$, which is never modeled in any trivial frame, this formula is valid with respect to trivial frames.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+The (class of) reflexive frame(s) with precisely one point models all of the formulas of exercise 2, for any statement of the form $\nec\varphi$ or $\pos\varphi$ is modeled (at the point) precisely when $\varphi$ is. Recursively replacing all the occurences of the form $\nec\varphi$ or $\pos\varphi$ with $\varphi$ renders all the formulas simple tautologies.
+\end{ex}
+
+\begin{ex}
+Let $S$ be a reflexive and transitive relation containing $R^\ast$. We will first show by induction on the length of the sequences $z_1,\ldots,z_k$ that $R^\ast\subseteq S$. If the length is $1$, we have $x\mathbin{S} x$ by the assumption of reflexivity. Note that for any $x,y\in W$ with $x\mathbin{R}y$, we have the sequence $x,y$ of length $2$, showing that $y$ is reachable from $x$ and hence that $R\subseteq R^\ast$. Therefore we also have $R\subseteq S$. Now when $z_1,\ldots,z_{k+1}$ satisfies $z_i\mathbin{R}z_{i+1}$ for $i=1,\ldots,k$, it follows by the inductive hypothesis that $z_1\mathbin{S} z_k$. Since $z_k\mathbin{R} z_{k+1}$ and $R\subseteq S$, it follows that $z_k\mathbin{S} z_{k+1}$. The transitivity of $S$ now implies that $z_1\mathbin{S}z_{k+1}$. This completes the inductive proof that $R^\ast\subseteq S$.
+
+It is left to show that $R^\ast$ is in fact reflexive and transitive (note that we already verified that $R\subseteq R^\ast$). For $k=1$ the condition that $z_i\mathbin{R}z_{i+1}$ holds for all $i<k$ is satisfied vacuously; hence $R^\ast$ is reflexive. Now suppose that $a\mathbin{R^\ast}b$ and $b\mathbin{R^\ast}c$. Then there are $z_1,\ldots,z_k$ such that $a=z_1$, $b=z_k$ and $z_i\mathbin{R}z_{i+1}$ for all $i<k$, and there are $y_1,\ldots,y_l$ such that $y_1=b$, $y_l=c$ and $y_i\mathbin{R}y_{i+1}$ for all $i<l$. Now we form the sequence $x_1,\ldots,x_{k+l-1}$ by concatenating $z_1,\ldots,z_k$ and $y_2,\ldots,y_l$. This shows that $a\mathbin{R^\ast}c$, and thus that $R^\ast$ is transitive.
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item This formula is not modeled by $\mathbb{Z}$, but in $\mathbb{Q}$ and $\mathbb{R}$ it is valid. Considering integers, we might have $\lsem p\rsem=\{1\}$. In that case $(\mathbb{Z},0)\models Fp$, but $(\mathbb{Z},0)\nmodels FFp$. To see that the formula is valid for $M=\mathbb{Q}$ and $M=\mathbb{R}$, suppose that $(M,x)\models F\varphi$. Then there exists $y\in W$ such that $(M,y)\models\varphi$. It follows that $(M,\frac{1}{2}(y-x))\models F\varphi$ and hence that $(M,x)\models FF\varphi$. 
+\item This formula is valid in $\mathbb{Z}$ but not in $\mathbb{Q}$ or $\mathbb{R}$. If $(\mathbb{Z},x)\models\varphi\land H\varphi$, then $(\mathbb{Z},x+1)\models H\varphi$ and thus $(\mathbb{Z},x)\models FH\varphi$. If $M=\mathbb{Q}$ or $M=\mathbb{R}$, we can consider an atomic formula $p$ with $\lsem p\rsem=(-\infty,0]$. Then $(M,0)\models p\land Hp$. However, for every $x>0$ we have $(M,x)\nmodels Hp$ since $(M,\frac{1}{2}x)\nmodels p$. Therefore $(M,0)\nmodels FHp$.
+\item In words, $E\varphi$ means that $\varphi$ is valid somewhere and $A\varphi$ means that $\varphi$ is valid everywhere. So the formula means that if
+\begin{itemize}
+\item there is an $x\in W$ such that $(M,x)\models \varphi$.
+\item there is a $y\in W$ such that $(M,y)\models \neg\varphi$.
+\item the set $\lsem\varphi\rsem$ is upwards closed;
+\item the set $\lsem\neg \varphi\rsem$ is downwards closed
+\end{itemize}
+then there is a point $z$ such that $(-\infty,z)\subseteq\lsem\neg\varphi\rsem$ and $(z,\infty)\subseteq\lsem\varphi\rsem$. This is true for $\mathbb{Z}$ (discrete) and $\mathbb{R}$ (complete) but not for $\mathbb{Q}$ (dense, but not complete).
 \end{enumerate}
 \end{ex}
 
