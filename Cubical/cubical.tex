@@ -62,12 +62,25 @@ First we have to define $\pi_1:\cubobj{n+m}\to\cubobj{n}$ and $\pi_2:\cubobj{n+m
 We take
 \begin{align*}
 \pi_1 & \defeq \cubdeg{n+1}\circ\cdots\circ\cubdeg{n+m}\\
-\pi_2 & \defeq \cubdeg{1}\circ\cdots\circ\cubdeg{n}
+\pi_2 & \defeq \cubdeg{1}\circ\cdots\circ\cubdeg{n}.
 \end{align*}
-
 We have to show that for $n,m,a\in\mathbb{N}$ and any $f:\cubobj{a}\to\cubobj{n}$
 and $g:\cubobj{a}\to\cubobj{m}$ there is a unique $(f,g):\cubobj{a}\to\cubobj{n+m}$
-such that $\pi_1\circ(f,g)=f$ and $\pi_2\circ(f,g)=g$. 
+such that $\pi_1\circ(f,g)=f$ and $\pi_2\circ(f,g)=g$. Given 
+$f:\cubobj{a}\to\cubobj{n}$, we perform the construction of $(f,g)$ by
+induction over $g:\cubobj{a}\to\cubobj{m}$. 
+
+When $g=\catid{\cubobj{a}}$ we define
+\begin{equation*}
+(f,\catid{\cubobj{a}})=\catface{n+a}f.
+\end{equation*} 
+Now let $g:\cubobj{a}\to\cubobj{m}$ be such that there is a unique
+$(f,g):\cubobj{a}\to\cubobj{n+m}$ with the property that...
+
+Then for $\cubface{k}{i}\circ g$ we define
+\begin{equation*}
+(f,\cubface{k}{i}\circ g)\defeq \cubface{k+n}{i}\circ(f,g) 
+\end{equation*}
 \end{proof}
 
 \end{document}
