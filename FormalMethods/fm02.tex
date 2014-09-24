@@ -9,7 +9,174 @@
 \maketitle
 
 \begin{ex}
-Suppose 
+For this exercise we assume that customers get a connection provided that they
+need it and one is available, and that $50$ customers get a connection if $50$ 
+or more customers need a connection.
+\begin{enumerate}
+\item For $0\leq k<50$ the probability that $k$ modems are in use is
+\begin{equation*}
+{1000 \choose k}0.01^k\cdot 0.99^{1000-k}.
+\end{equation*}
+The probability that $50$ modems are in use at any given time is
+\begin{equation*}
+\sum_{k=50}^{1000}{1000\choose k}0.01^k\cdot 0.99^{1000-k}.
+\end{equation*}
+\item To compute the Poisson approximation, note that we have $\lambda=1000\cdot 0.01=10$.
+Thus, the Poisson approximation for any $0\leq k<50$ is
+\begin{equation*}
+e^{-10}\frac{10^k}{k!}
+\end{equation*}
+and the Poisson approximation for $k=50$ is
+\begin{equation*}
+\sum_{k=50}^{1000} e^{-10}\frac{10^k}{k!}.
+\end{equation*}
+\item The exact probability that at least $51$ customers need a connection is
+\begin{equation*}
+\sum_{k=51}^{1000}{1000\choose k}0.01^k\cdot 0.99^{1000-k}.
+\end{equation*}
+The Poisson approximation of that probability is
+\begin{equation*}
+\sum_{k=51}^{1000}e^{-10}\frac{10^k}{k!}.
+\end{equation*}
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+First of all, you don't need to \emph{eat} them; you can just open the wrapping and
+see if a golden ticket is inside. In the remainder of this solution, we replace
+eating with inspecting.
+
+The probability that a golden ticket is found for the first time after eating
+$k+1$, for $k\geq 0$ chocolate bars is
+\begin{equation*}
+(1-p)^k\cdot p.
+\end{equation*}
+Then the average of the number of chocolate bars you need to inspect is therefore
+one higher than
+\begin{align*}
+\sum_{k=0}^\infty k\cdot (1-p)^k\cdot p
+& =
+  p\cdot (1-p)\cdot \sum_{k=1}^\infty k\cdot (1-p)^{k-1}
+  \\
+& =
+  p\cdot (1-p)\cdot\Big(\frac{d}{dx}\sum_{k=0}^\infty x^k\Big)\Big|_{x:= 1-p}
+  \\
+& =
+  p\cdot (1-p)\cdot\Big(\frac{d}{dx}\frac{1}{1-x}\Big)\Big|_{x:= 1-p}
+  \\
+& =
+  p\cdot (1-p)\cdot\frac{1}{(1-x)^2}\Big|_{x:= 1-p}
+  \\
+& =
+  p\cdot (1-p)\cdot\frac{1}{p^2}
+  \\
+& = 
+  \frac{1-p}{p}
+\end{align*}
+So you expect to need to inspect $p^{-1}$ chocolate bars in order to find
+one with a golden ticket.
+
+To calculate the variance recall that:
+\begin{align*}
+E((k-E(k))^2) & =E(k^2)-2E(k\cdot E(k))+E(E(k)^2)
+  \\
+& = E(k^2)-2E(k)E(k)+E(k)^2
+  \\
+& =E(k^2)-E(k)^2.
+\end{align*}
+Since we already know that $E(k)=p^{-1}$, it remains to calculate $E(k^2)$. This we do as follows:
+\begin{align*}
+E(k^2) 
+& = 
+  \sum_{k=1}^\infty k^2 p\cdot (1-p)^{k-1}
+  \\
+& = 
+  p\cdot\sum_{k=0}^\infty k\frac{d}{dx} x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d}{dx}\sum_{k=0}^\infty k x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d}{dx}\sum_{k=0}^\infty x\frac{d}{dx}x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d^2}{dx^2}\sum_{k=0}^\infty x^{k+1}\Big|_{x:=1-p}
+  -p\cdot\frac{d}{dx}\sum_{k=0}^\infty x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d^2}{dx^2}\frac{x}{1-x}\Big|_{x:=1-p}
+  -p\cdot\frac{d}{dx}\frac{1}{1-x}\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot \frac{2}{p^3}
+  -p\cdot\frac{1}{p^2}
+  \\
+& = 
+  \frac{2-p}{p^2}.
+\end{align*}
+We conclude that the variance is $\frac{1-p}{p^2}$.
+\end{ex}
+
+\begin{ex}
+The expected value of the amount of money earned after playing the game is
+\begin{equation*}
+E(2^n) = \sum_{n=1}^\infty 2^n\cdot\frac{1}{2}\cdot\Big(\frac{1}{2}\Big)^{n-1}=\infty
+\end{equation*}
+Any person who's funny enough to want to play this game with me if I give him a finite amount of money might as well play with me if I offer him nothing for it. In fact, he might just give me an infinite amount of money and still keep an infinite amount himself.
+\end{ex}
+
+\begin{ex}
+It seems that the probability $p$ that a person is alive becomes irrelevant if we're going to calculate expected value conditional to the event that the amount of people alive is $a$. 
+
+Let $C$ be an arbitrary couple. The probability that both are alive is $\frac{a}{2m}\cdot\frac{a-1}{2m-1}$. The expected number of couples which survives is, by linearity, the sum over the couples of the probability that that couple survives. So we may expect that of 
+\begin{equation*}
+\frac{a}{2}\cdot\frac{a-1}{2m-1}
+\end{equation*}
+couples both partners are alive.
+\begin{comment}
+My first idea was to set up a recursive 2-ary function
+\begin{equation*}
+A:(m,a:\mathbb{N})\to(a\leq 2m)\to\mathbb{Q},
+\end{equation*}
+calculating the expected number of couples in which both people are alive. We intend that $A(m,a)$ is the expected number of couples in which both partners are alive, in the event that there were originally $m$ couples and that the amount of people alive is $a$. Now we define $A$ by
+\begin{align*}
+A(m,0) & := 0\\
+A(m,1) & := 0\\
+A(m,2m-1) & := m-1\\
+A(m,2m) & := m
+\intertext{and for $2\leq a \leq 2m-2$ we define}
+A(m,a) & := \frac{a}{2m}\cdot\frac{a-1}{2m-1}\cdot (A(m-1,a-2)+1)
+  \\
+& \qquad +\frac{a}{m}\cdot \frac{2m-a}{2m-1}\cdot A(m-1,a-1)
+  \\
+& \qquad + \frac{2m-a}{2m}\cdot\frac{2m-a-1}{2m-1}\cdot A(m-1,a)
+\end{align*}
+This function terminates when $0\leq a\leq 2m$. The recursion is obtained as follows: With the probability that both partners are alive we expect the value of $A(m-1,a-2)+1$; with the probability that exactly one of the partners is dead, we expect the value $A(m-1,a-1)$ and with the probability that both partners are dead we expect the value $A(m-1,a)$. It is easy to see that the function
+\begin{equation*}
+(m,a)\mapsto m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1}
+\end{equation*}
+satisfies the first four defining equations of $A$. A little calculation is now required:
+\begin{align*}
+m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1} 
+& = \frac{a}{2m}\cdot\frac{a-1}{2m-1}\cdot \Big((m-1)\cdot\frac{a-2}{2(m-1)}\cdot\frac{a-3}{2m-3}+1\Big)
+  \\
+& \qquad +\frac{a}{2m}\cdot \Big(1-\frac{a-1}{2m-1}\Big)\cdot (m-1)\cdot\frac{a-1}{2(m-1)}\cdot\frac{a-2}{2m-3}
+  \\
+& \qquad +\Big(1-\frac{a}{2m}\Big)\cdot \frac{a}{2m-1}\cdot (m-1)\cdot\frac{a-1}{2(m-1)}\cdot\frac{a-2}{2m-3}
+  \\
+& \qquad + \Big(1-\frac{a}{2m}\Big)\cdot \Big(1-\frac{a}{2m-1}\Big)\cdot (m-1)\cdot\frac{a}{2(m-1)}\cdot\frac{a-1}{2m-3}
+\end{align*}
+The probability that no couple survives is
+\begin{align*}
+\prod_{k=1}^{a-1}\frac{2m-2k}{2m-2k+1}
+& =
+  \frac{\prod_{k=1}^a(2m-2k)^2}{\prod_{j=1}^{2a} 2m-j-1}
+  \\
+& = 4^a\frac{(m-1)!^2(2m-2a-2)!}{(m-a-1)!^2(2m-1)!}
+  \\
+& = \frac{4^a}{m}{2m-1\choose m}^{-1}{2m-2a-2\choose m-a-1}
+\end{align*}
+\end{comment}
 \end{ex}
 
 \begin{ex}
