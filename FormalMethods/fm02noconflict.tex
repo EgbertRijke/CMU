@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand\hwnumber{2}
+
+\begin{document}
+
+\maketitle
+
+\begin{ex}
+Suppose 
+\end{ex}
+
+\begin{ex}
+To calculate the variance recall that:
+\begin{align*}
+E((k-E(k))^2) & =E(k^2)-2E(k\cdot E(k))+E(E(k)^2)
+  \\
+& = E(k^2)-2E(k)E(k)+E(k)^2
+  \\
+& =E(k^2)-E(k)^2.
+\end{align*}
+Since we already know that $E(k)=p^{-1}$, it remains to calculate $E(k^2)$. This we do as follows:
+\begin{align*}
+E(k^2) 
+& = 
+  \sum_{k=1}^\infty k^2 p\cdot (1-p)^{k-1}
+  \\
+& = 
+  p\cdot\sum_{k=0}^\infty k\frac{d}{dx} x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d}{dx}\sum_{k=0}^\infty k x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d}{dx}\sum_{k=0}^\infty x\frac{d}{dx}x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d^2}{dx^2}\sum_{k=0}^\infty x^{k+1}\Big|_{x:=1-p}
+  -p\cdot\frac{d}{dx}\sum_{k=0}^\infty x^k\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot\frac{d^2}{dx^2}\frac{x}{1-x}\Big|_{x:=1-p}
+  -p\cdot\frac{d}{dx}\frac{1}{1-x}\Big|_{x:=1-p}
+  \\
+& =
+  p\cdot \frac{2}{p^3}
+  -p\cdot\frac{1}{p^2}
+  \\
+& = 
+  \frac{2-p}{p^2}.
+\end{align*}
+We conclude that the variance is $\frac{1-p}{p^2}$.
+\end{ex}
+
+\begin{ex}
+The expected value of the amount of money earned after playing the game is
+\begin{equation*}
+E(2^n) = \sum_{n=1}^\infty 2^n\cdot\frac{1}{2}\cdot\Big(\frac{1}{2}\Big)^{n-1}=\infty
+\end{equation*}
+Any person who's funny enough to want to play this game with me if I give him a finite amount of money might as well play with me if I offer him nothing for it. In fact, he might just give me an infinite amount of money and still keep an infinite amount himself.
+\end{ex}
+
+\begin{ex}
+It seems that the probability $p$ that a person is alive becomes irrelevant if we're going to calculate expected value conditional to the event that the amount of people alive is $a$. 
+
+Let $C$ be an arbitrary couple. The probability that both are alive is $\frac{a}{2m}\cdot\frac{a-1}{2m-1}$. This is independent of the couple, so we may expect that of $m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1}$ couples both partners are alive.
+
+My first idea was to set up a recursive 2-ary function
+\begin{equation*}
+A:(m,a:\mathbb{N})\to(a\leq 2m)\to\mathbb{Q},
+\end{equation*}
+calculating the expected number of couples in which both people are alive. We intend that $A(m,a)$ is the expected number of couples in which both partners are alive, in the event that there were originally $m$ couples and that the amount of people alive is $a$. Now we define $A$ by
+\begin{align*}
+A(m,0) & := 0\\
+A(m,1) & := 0\\
+A(m,2m-1) & := m-1\\
+A(m,2m) & := m
+\intertext{and for $2\leq a \leq 2m-2$ we define}
+A(m,a) & := \frac{a}{2m}\cdot\frac{a-1}{2m-1}\cdot (A(m-1,a-2)+1)
+  \\
+& \qquad +\frac{a}{m}\cdot \frac{2m-a}{2m-1}\cdot A(m-1,a-1)
+  \\
+& \qquad + \frac{2m-a}{2m}\cdot\frac{2m-a-1}{2m-1}\cdot A(m-1,a)
+\end{align*}
+This function terminates when $0\leq a\leq 2m$. The recursion is obtained as follows: With the probability that both partners are alive we expect the value of $A(m-1,a-2)+1$; with the probability that exactly one of the partners is dead, we expect the value $A(m-1,a-1)$ and with the probability that both partners are dead we expect the value $A(m-1,a)$. It is easy to see that the function
+\begin{equation*}
+(m,a)\mapsto m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1}
+\end{equation*}
+satisfies the first four defining equations of $A$. A little calculation is now required:
+\begin{align*}
+m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1} 
+& = \frac{a}{2m}\cdot\frac{a-1}{2m-1}\cdot \Big((m-1)\cdot\frac{a-2}{2(m-1)}\cdot\frac{a-3}{2m-3}+1\Big)
+  \\
+& \qquad +\frac{a}{2m}\cdot \Big(1-\frac{a-1}{2m-1}\Big)\cdot (m-1)\cdot\frac{a-1}{2(m-1)}\cdot\frac{a-2}{2m-3}
+  \\
+& \qquad +\Big(1-\frac{a}{2m}\Big)\cdot \frac{a}{2m-1}\cdot (m-1)\cdot\frac{a-1}{2(m-1)}\cdot\frac{a-2}{2m-3}
+  \\
+& \qquad + \Big(1-\frac{a}{2m}\Big)\cdot \Big(1-\frac{a}{2m-1}\Big)\cdot (m-1)\cdot\frac{a}{2(m-1)}\cdot\frac{a-1}{2m-3}
+\end{align*}
+\end{ex}
+
+\begin{ex}
+The \emph{standard deviation} is a clearer measure of uncertainty, if you ask me. That tells you how far you can expect to be off the average. 
+
+Entropy is the expected value of the order of magnitude of the likeliness of events. This order of magnitude of the likeliness of an event is a `measure' for the amount of information that event is contributing to the whole system. If there is an event which will happen with great certainty, that will not add information to what state someone might expect to be in (or, what message he might have), because he can read that off from merely looking at the probability measure and see that this event is almost certain to happen. Furthermore, in the case of two independent events, information is added according to the formula $\log(p(A\cap B))=\log(p(A))+\log(p(B))$. Thus, when two independent events are observed, information is added without further ado! Or, the occurence of both events gives the same information as the two events separately, as one would wish for a theory of information. 
+\end{ex}
+
+\end{document}
