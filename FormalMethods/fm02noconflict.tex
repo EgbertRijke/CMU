@@ -65,8 +65,12 @@ Any person who's funny enough to want to play this game with me if I give him a 
 \begin{ex}
 It seems that the probability $p$ that a person is alive becomes irrelevant if we're going to calculate expected value conditional to the event that the amount of people alive is $a$. 
 
-Let $C$ be an arbitrary couple. The probability that both are alive is $\frac{a}{2m}\cdot\frac{a-1}{2m-1}$. This is independent of the couple, so we may expect that of $m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1}$ couples both partners are alive.
-
+Let $C$ be an arbitrary couple. The probability that both are alive is $\frac{a}{2m}\cdot\frac{a-1}{2m-1}$. The expected number of couples which survives is, by linearity, the sum over the couples of the probability that that couple survives. So we may expect that of 
+\begin{equation*}
+\frac{a}{2}\cdot\frac{a-1}{2m-1}
+\end{equation*}
+couples both partners are alive.
+\begin{comment}
 My first idea was to set up a recursive 2-ary function
 \begin{equation*}
 A:(m,a:\mathbb{N})\to(a\leq 2m)\to\mathbb{Q},
@@ -99,6 +103,17 @@ m\cdot\frac{a}{2m}\cdot\frac{a-1}{2m-1}
   \\
 & \qquad + \Big(1-\frac{a}{2m}\Big)\cdot \Big(1-\frac{a}{2m-1}\Big)\cdot (m-1)\cdot\frac{a}{2(m-1)}\cdot\frac{a-1}{2m-3}
 \end{align*}
+The probability that no couple survives is
+\begin{align*}
+\prod_{k=1}^{a-1}\frac{2m-2k}{2m-2k+1}
+& =
+  \frac{\prod_{k=1}^a(2m-2k)^2}{\prod_{j=1}^{2a} 2m-j-1}
+  \\
+& = 4^a\frac{(m-1)!^2(2m-2a-2)!}{(m-a-1)!^2(2m-1)!}
+  \\
+& = \frac{4^a}{m}{2m-1\choose m}^{-1}{2m-2a-2\choose m-a-1}
+\end{align*}
+\end{comment}
 \end{ex}
 
 \begin{ex}
