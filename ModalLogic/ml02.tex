@@ -1,0 +1,76 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{2}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+\begin{enumerate}
+\item The trivial model $M$ with one point $x$ satisfies $(M,x)\models\nec\bot$
+while $(M,x)\nmodels\pos\bot$. So this is a countermodel. By soundness, there
+can't be a $K$-proof of $\nec\bot\to\pos\bot$. 
+\item Now consider the frame $\mathbb{N}$ with the binary relation $S$ satisfying
+$n S m$ if and only if $n+1=m$. Since every natural number has a successor, 
+is immediate that this frame validates $\nec\varphi\to\pos\varphi$. Now consider 
+a valuation with $\lsem p\rsem:=\{1\}$. Then we have $(M,0)\models\nec p$ while
+$(M,0)\nmodels p$. 
+\item Recall that $\pos$ is defined to be $\neg\nec\neg$. The following is a 
+$\mathsf{KT}$ proof of the formula $\nec\varphi\to\neg\nec\neg\varphi$:
+\begin{align*}
+& \nec\neg\varphi\to\neg\varphi
+  \tag{axiom}
+  \\
+& (\nec\neg\varphi\to\neg\varphi)\to(\neg\neg\varphi\to\neg\nec\neg\varphi)
+  \tag{axiom}
+  \\
+& \neg\neg\varphi\to\neg\nec\neg\varphi
+  \tag{modus ponens}
+  \\
+& (\neg\neg\varphi\to\neg\nec\neg\varphi)\to(\varphi\to\neg\nec\neg\varphi)
+  \tag{axiom}
+  \\
+& \varphi\to\neg\nec\neg\varphi
+  \tag{modus ponens}
+  \\
+& \nec\varphi\to\varphi
+  \tag{axiom}
+  \\
+& (\nec\varphi\to\varphi)\to(\varphi\to\neg\nec\neg\varphi)\to(\nec\varphi\to\neg\nec\neg\varphi)
+  \tag{axiom}
+  \\
+& (\varphi\to\neg\nec\neg\varphi)\to(\nec\varphi\to\neg\nec\neg\varphi)
+  \tag{modus ponens}
+  \\
+& \nec\varphi\to\neg\nec\neg\varphi
+  \tag{modus ponens}
+\end{align*}
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Note that the frames validating $\nec\varphi\to\varphi$ are the reflexive frames and the
+frames validating $\nec\varphi\to\nec\nec\varphi$ are the transitive frames. Thus, $\mathsf{S4}$
+defines the class of reflexive, transitive frames. 
+
+Now consider the frame $\{0,1\}$ with the natural order $\leq$. By the above, this validates $\mathsf{S4}$. Let $\lsem p\rsem:=\{0\}$. Then we have $(M,0)\models p$. On the other hand, we have $(M,1)\nmodels\pos p$, so we also have $(M,0)\nmodels\nec\pos p$. Therefore, $(M,0)\nmodels p\to\nec\pos p$. By soundness, it follows
+that there is no $\mathsf{S4}$ proof of $p\to\nec\pos p$.
+\item
+\begin{align*}
+& \pos\nec\varphi\to\nec\varphi
+\end{align*} 
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+The proof is by induction 
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Consider the frames $M$ with two points and $N$ with one of the points of $M$, both with the least reflexive relation. Then $N$ is a generated subframe of $M$. Thus the point of $N$ has the same theory with respect to $N$ as with respect to $M$. However, both points of $M$ satisfy $\neg\bot$. This shows that $R\neg\bot$ does not hold in $M$, but it does in $N$. Therefore, $R$ is not equivalent to any formula of the basic modal language.
+\end{enumerate}
+\end{ex}
+\end{document}
