@@ -57,20 +57,142 @@ defines the class of reflexive, transitive frames.
 
 Now consider the frame $\{0,1\}$ with the natural order $\leq$. By the above, this validates $\mathsf{S4}$. Let $\lsem p\rsem:=\{0\}$. Then we have $(M,0)\models p$. On the other hand, we have $(M,1)\nmodels\pos p$, so we also have $(M,0)\nmodels\nec\pos p$. Therefore, $(M,0)\nmodels p\to\nec\pos p$. By soundness, it follows
 that there is no $\mathsf{S4}$ proof of $p\to\nec\pos p$.
-\item
+\item In words, the formula says that if there exists an accessible state $y$ with the property that all states accessible from $y$ satisfy $\varphi$, then every accessible state satisfies $\varphi$. 
 \begin{align*}
+& \neg\varphi\to\nec\pos\neg\varphi
+  \tag{axiom}
+  \\
+& (\neg\varphi\to\nec\pos\neg\varphi)\to(\neg\nec\pos\neg\varphi\to\neg\neg\varphi)
+  \tag{axiom}
+  \\
+& \neg\nec\pos\neg\varphi\to\neg\neg\varphi
+  \tag{modus ponens}
+  \\
+& (\neg\nec\pos\neg\varphi\to\neg\neg\varphi)\to(\neg\nec\neg\neg\pos\neg\varphi\to\varphi)
+  & &
+  \tag{axiom}
+  \\
+& \neg\nec\neg\neg\pos\neg\varphi\to\varphi
+  \tag{axiom}
+  \\
+& \pos\neg\neg\nec\neg\neg\varphi\to\varphi
+  \tag{definition}
+  \\
+& (\pos\neg\neg\nec\neg\neg\varphi\to\varphi)\to(\pos\nec\varphi\to\varphi)
+  \tag{axiom}
+  \\
+& \pos\nec\varphi\to\varphi
+  \tag{modus ponens}
+  \\
 & \pos\nec\varphi\to\nec\varphi
 \end{align*} 
 \end{enumerate}
 \end{ex}
 
 \begin{ex}
-The proof is by induction 
+The proof is by induction.
+\begin{itemize}
+\item The formula $\nec\neg\bot$ is valid for all frames since $\neg\bot$ is valid for all frames.
+\item To show that $(M,x)\models\nec(\varphi\land\psi)\leftrightarrow(\nec\varphi\land\nec\psi)$
+note that 
+\begin{itemize}
+\item $(M,x)\models\nec(\varphi\land\psi)$; if and only if
+\item $(M,y)\models\varphi\land\psi$ for every $y$ accessible from $x$; if and only if
+\item both $(M,y)\models\varphi$ for every $y$ accessible from $x$, and $(M,y)\models\psi$ for every
+$y$ accessible from $x$; if and only if
+\item both $(M,x)\models\nec\varphi$ and $(M,x)\models\nec\psi$; if and only if
+\item $(M,x)\models\nec\varphi\land\nec\psi$.
+\end{itemize}
+\item We have seen in class that the formula $\nec\varphi\to\varphi$ defines the reflexive
+frames.
+\item We have seen in class that the formula $\nec\varphi\to\nec\nec\varphi$ defines the the
+transitive frames.
+\item We have seen in class that every frame preserves validity via modus ponens.
+\item It remains to show that if every reflexive, transitive frame validates $\varphi\to\psi$,
+then every reflexive, transitive frame also validates $\nec\varphi\to\nec\psi$. Thus, assume $(M,x)\nmodels\varphi\to\psi$
+for every world $x$ in a model $M$ over a reflexive, transitive frame. Let $M$ be a model
+based on a reflexive transitive frame and let $x$ be a world in it. We have to verify that
+$(M,x)\models\nec\varphi\to\nec\psi$. Suppose therefore that $(M,x)\models\nec\varphi$. Then
+$(M,y)\models\varphi$ for every $y$ accessible from $x$. Let $y$ be accessible from $x$.
+By assumption we have that
+$(M,y)\models\varphi\to\psi$. Therefore it follows that $(M,y)\models\psi$. So we conclude
+that $(M,y)\models\psi$ for every world $y$ accessible from $x$. Therefore we also have
+that $(M,x)\models\nec\psi$. Hence $(M,x)\models\nec\varphi\to\nec\psi$.
+\end{itemize} 
 \end{ex}
 
 \begin{ex}
 \begin{enumerate}
 \item Consider the frames $M$ with two points and $N$ with one of the points of $M$, both with the least reflexive relation. Then $N$ is a generated subframe of $M$. Thus the point of $N$ has the same theory with respect to $N$ as with respect to $M$. However, both points of $M$ satisfy $\neg\bot$. This shows that $R\neg\bot$ does not hold in $M$, but it does in $N$. Therefore, $R$ is not equivalent to any formula of the basic modal language.
+\item Consider the primitive proposition $p$ with 
+\begin{equation*}
+\lsem p\rsem:=\bigcup_{k\in\mathbb{Z}}[2k-1,2k).
+\end{equation*} 
+For this primitive proposition, we see that
+$(\mathbb{R},0)\models Sp$ while $(\mathbb{R},\frac{1}{2})\nmodels Sp$.
+
+Now we define the bisimilation
+$\sim$ by
+\begin{align*}
+x & \sim y & & \Leftrightarrow & & x\models p\text{ if and only if }y\models p
+\end{align*}
+We verify the three conditions that this is indeed a bisimilation. The first condition is satisfied by construction since $p$ is the only primitive proposition under consideration.
+\begin{itemize}
+\item Suppose that $x\sim y$ and $x<x'$. 
+\begin{itemize}
+\item If $x'\models p$ and $y\models p$ then $x'\sim y+2$; if $x'\models p$ and $y\nmodels p$ then $x'\sim y+1$.
+\item If $x'\nmodels p$ and $y\models p$ then $x'\sim y+1$; if $x'\nmodels p$ and $y\nmodels p$ then $x'\sim y+2$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $x'<x$.
+\begin{itemize}
+\item If $x'\models p$ and $y\models p$ then $x'\sim y-2$; if $x'\models p$ and $y\nmodels p$ then $x'\sim y-1$.
+\item If $x'\nmodels p$ and $y\models p$ then $x'\sim y-1$; if $x'\nmodels p$ and $y\nmodels p$ then $x'\sim y-2$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $y<y'$.
+\begin{itemize}
+\item If $y'\models p$ and $x\models p$ then $x+2\sim y'$; if $y'\models p$ and $x\nmodels p$ then $x+1\sim y'$.
+\item If $y'\nmodels p$ and $x\models p$ then $x+1\sim y'$; if $y'\nmodels p$ and $x\nmodels p$ then $x+2\sim y'$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $y'<y$.
+\begin{itemize}
+\item If $y'\models p$ and $x\models p$ then $x-2\sim y'$; if $y'\models p$ and $x\nmodels p$ then $x-1\sim y'$.
+\item If $y'\nmodels p$ and $x\models p$ then $x-1\sim y'$; if $y'\nmodels p$ and $x\nmodels p$ then $x-2\sim y'$.
+\end{itemize}
+\end{itemize}
+This shows that $\sim$ is a bisimilation of bidirectional frames. Therefore $0$ and $\frac{1}{2}$ must have the same theories. Since $0\models Sp$ and $\frac{1}{2}\nmodels Sp$ while $0\sim\frac{1}{2}$ it follows that $S$ cannot be equivalent to a formula in the temporal language.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+As in exercise 4(b), the bisimilation $\sim$ has the property that $x\sim y$ precisely when $x\models p$ if and only if $y\models p$. So the condition that bisimilar elements make the same primitive propositions true is trivially satisfied. The rest of the proof also goes very much like the proof of 4(b). For $k\in\mathbb{Z}$, write $\pi_3(k)\in\{0,1,2\}$ for the remainder of $k$ modulo $3$.
+\begin{itemize}
+\item Suppose that $x\sim y$ and $x<x'$. 
+\begin{itemize}
+\item If $x'\models p$ and $y\models p$ then $x'\sim y+3$; if $x'\models p$ and $y\nmodels p$ then $x'\sim y+3-\pi_3(y)$.
+\item If $x'\nmodels p$ and $y\models p$ then $x'\sim y+1$; if $x'\nmodels p$ and $y\nmodels p$ then $x'\sim y+3$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $x'<x$.
+\begin{itemize}
+\item If $x'\models p$ and $y\models p$ then $x'\sim y-3$; if $x'\models p$ and $y\nmodels p$ then $x'\sim y-\pi_3(y)$.
+\item If $x'\nmodels p$ and $y\models p$ then $x'\sim y-1$; if $x'\nmodels p$ and $y\nmodels p$ then $x'\sim y-3$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $y<y'$.
+\begin{itemize}
+\item If $y'\models p$ and $x\models p$ then $x+3\sim y'$; if $y'\models p$ and $x\nmodels p$ then $x+3-\pi_3(x)\sim y'$.
+\item If $y'\nmodels p$ and $x\models p$ then $x+1\sim y'$; if $y'\nmodels p$ and $x\nmodels p$ then $x+3\sim y'$.
+\end{itemize}
+\item Suppose that $x\sim y$ and $y'<y$.
+\begin{itemize}
+\item If $y'\models p$ and $x\models p$ then $x-3\sim y'$; if $y'\models p$ and $x\nmodels p$ then $x-\pi_3(x)\sim y'$.
+\item If $y'\nmodels p$ and $x\models p$ then $x-1\sim y'$; if $y'\nmodels p$ and $x\nmodels p$ then $x-3\sim y'$.
+\end{itemize}
+\end{itemize}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Note that $1\sim 2$ and that $1<2$. Thus, by one of the conditions of bisimilitions, there must exist an integer $k<1$ such that $k\sim 1$. This is not the case.
+\item Note that $x\models GG\neg p$ precisely when $l\models\neg p$ for every $k>x$ and every $l>k$. Thus we see that $-1\models GG\neg p$, while $-2\nmodels GG\neg p$. Since for any bisimilation and any two worlds that are bisimilar, the theories of those worlds are the same and since $-1$ and $-2$ do not have the same theories, it follows that there is no bisimilation which renders $-1$ bisimilar to $-2$. In particular, the relation of the exercise does relate $-1$ to $-2$ and therefore it cannot be a bisimilation.
 \end{enumerate}
 \end{ex}
 \end{document}
