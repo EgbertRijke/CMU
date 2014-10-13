@@ -7,8 +7,218 @@
 \maketitle
 
 \begin{ex}
+In this solution, we have the following notation:
+\begin{align*}
+A(V) & := \{y\in W\mid \exists_{(x\in V)} x\mathbin{R}y\}\\
+A_x & := A(\{x\}).
+\end{align*}
+Note that $y\in A_x$ is equivalent with $x\mathbin{R} y$. 
 \begin{enumerate}
+\item Suppose first that a frame $F$ validates the formulat $\nec\varphi\to\pos\varphi$.
+Since atomic propositions can have arbitrary valuations, this implies that every
+subset $V\subseteq W$ has the property that 
+\begin{equation*}
+\forall_{(x\in W)}(\forall_{(y\in W)} x\mathbin{R}y\to y\in V)\to\exists_{(y\in W)} x\mathbin{R}y\land y\in V
+\end{equation*}
+Let $w\in W$. We see that
+\begin{equation*}
+(\forall_{(y\in W)} w\mathbin{R}y\to y\in V)\to\exists_{(y\in W)} w\mathbin{R}y\land y\in V
+\end{equation*}
+for every $V\subseteq W$. The antecedent of this proposition becomes (equivalent to) a simple
+tautology for the set $V:= A_w$. (It seems that $A_w$ is also the least $V$ for which
+the antecedent is always true.) Thus, for this choice of $V$ the consequent is true,
+so it follows that
+\begin{equation*}
+\exists_{(y\in W)} w\mathbin{R}y.
+\end{equation*}
+We conclude that any frame validating the formulat $\nec\varphi\to\pos\varphi$
+has the property that
+\begin{equation}\label{1a}
+\forall_{(x\in W)}\exists_{(y\in W)}x\mathbin{R}y.
+\end{equation}
+Conversely, let $M$ be a model such that the underlying frame $F$ satisfies
+condition \ref{1a}, let $\varphi$ be a formula of the modal language and let
+$w\in W$. Now note that $w\models\nec\varphi\to\pos\varphi$ if and only if
+$w\models\pos\varphi$ whenever $w\models\nec\varphi$. Suppose that
+$w\models\nec\varphi$. Then every world $y$ accessible from $w$ models $\varphi$.
+since there is a world accessible from $w$ by assumption, there is a world
+accessible from $w$ which models $\varphi$, i.e.~$w\models\pos\varphi$. This shows
+that any model $M$ for which the underlying frame satisfies condition \ref{1a}
+validates the formula $\nec\varphi\to\pos\varphi$.
+\item Suppose first that the frame $F$ validates the formula $\varphi\to\nec\pos\varphi$.
+Since atomic propositions can have artibtrary valuations, this implies that every
+subset $V\subseteq W$ has the property that
+\begin{equation*}
+\forall_{(x\in W)}x\in V\to\forall_{(y\in W)} x\mathbin{R}y\to\exists_{(z\in W)} y\mathbin{R} z\land z\in V
+\end{equation*}
+Let $w\in W$. Then we have
+\begin{equation*}
+w\in V\to\forall_{(y\in W)} w\mathbin{R}y\to\exists_{(z\in W)} y\mathbin{R} z\land z\in V
+\end{equation*}
+The least $V$ for which the antecedent is true is $\{w\}$. For this choice of $V$
+it follows that
+\begin{equation*}
+\forall_{(y\in W)}w\mathbin{R} y\to y\mathbin{R}w.
+\end{equation*}
+Thus only symmetric frames satisfy the formula $\varphi\to\nec\pos\varphi$.
 
+Conversely, let $M$ be a model for which the underlying frame $F$ is symmetric,
+let $\varphi$ be a modal formula and let $w\in W$. We will show that $w\models
+\varphi\to\nec\pos\varphi$. It is equivalent to show that $w\models\nec\pos\varphi$
+whenever $w\models\varphi$. Suppose that $w\models\varphi$. To show that
+$w\models\nec\pos\varphi$ we must show that $y\models\pos\varphi$ for every
+world $y$ accessible from $w$. Let $y$ be a world which is accessible from $w$.
+Since $F$ is a symmetric frame, it follows that $w$ is accessible from $y$.
+Since $w$ is a $\varphi$-world by assumption, it follows that $y\models\pos\varphi$.
+This finishes the proof that any model for which the underlying frame is symmetric
+validates the formula $\varphi\to\nec\pos\varphi$. 
+\item First let $F$ be a frame which satisfies the formula $\pos\nec\varphi\to\nec\pos\varphi$.
+Since atomic propositions can be valuated by arbitrary subsets, it follows that
+any subset $V\subseteq W$ has the property that
+\begin{align*}
+& \forall_{(x\in W)} 
+  (\exists_{(y\in W)} x\mathbin{R}y\land\forall_{(z\in W)}y\mathbin{R} z\to z\in V)
+  \\
+  & \qquad\qquad\qquad \to
+  (\forall_{(y'\in W)} x\mathbin{R}y'\to\exists_{(z'\in W)}y'\mathbin{R} z'\land z'\in V)
+\end{align*}
+This formula is equivalent to the formula
+\begin{align*}
+& \forall_{(x\in W)} \forall_{(y\in W)} x\mathbin{R}y \to
+  (\forall_{(z\in W)}y\mathbin{R} z\to z\in V)
+  \\
+  & \qquad\qquad\qquad \to
+  (\forall_{(y'\in W)} x\mathbin{R}y'\to\exists_{(z'\in W)}y'\mathbin{R} z'\land z'\in V)
+\end{align*}
+Let $w,v\in W$ such that $w\mathbin{R}v$. Then we have
+\begin{align*}
+& (\forall_{(z\in W)}v\mathbin{R} z\to z\in V)
+  \\
+  & \qquad\qquad\qquad \to
+  (\forall_{(y'\in W)} w\mathbin{R}y'\to\exists_{(z'\in W)}y'\mathbin{R} z'\land z'\in V)
+\end{align*}
+Then we see that the antecedent is equivalent to a tautology if we take $V$ to
+be the set $A_v$. Therefore we see that the proposition
+\begin{equation*}
+\forall_{(y'\in W)} w\mathbin{R}y'\to\exists_{(z'\in W)}y'\mathbin{R} z'\land v\mathbin{R} z'
+\end{equation*}
+holds. Therefore we see that the frame $F$ satisfies the proposition
+\begin{equation}\label{1c}
+\forall_{(x\in W)}\forall_{(y\in W)} x\mathbin{R}y\to \forall_{(y'\in W)} x\mathbin{R}y'\to\exists_{(z'\in W)}y'\mathbin{R} z'\land y\mathbin{R} z'.
+\end{equation}
+Now we will show that $\pos\nec\varphi\to\nec\pos\varphi$ is valid in the class
+of frames satisfying condition \ref{1c}. Let $M$ be a model of which the underlying
+frame satisfies condition \ref{1c}, let $\varphi$ be a modal formula and let 
+$w\in W$. We want to show that $w\models\pos\nec\varphi\to\nec\pos\varphi$. It
+is equivalent to show that $w\models\nec\pos\varphi$ whenever 
+$w\models\pos\nec\varphi$. Assume that $w\models\pos\nec\varphi$. Then there is
+a world $v$ such that $w\mathbin{R} v$ and $v\models\nec\varphi$. Our goal is
+to show that $w\models\nec\pos\varphi$, i.e.~to show that for all $v'\in W$
+such that $w\mathbin{R}v'$ we have $v'\models\pos\varphi$. Since there is a world
+$u$ such that both $v\mathbin{R} u$ and $v'\mathbin{R} u$ and since every such
+world is a $\varphi$-world by assumption, it follows that $v'\models\pos\varphi$.
+This shows that every model $M$ for which the underlying frame satisfies
+condition \ref{1c} validates the formula $\pos\nec\varphi\to\nec\pos\varphi$.
 \end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Let $F$ be a frame satisfying the formula $K\varphi\to B\varphi$. Since
+any atomic proposition can be valuated by any subset of $W$, it follows that
+for any subset $V\subseteq W$ we have
+\begin{equation*}
+\forall_{(x\in W)} (\forall_{(y\in W)} x\mathbin{R_K} y\to y\in V)\to\forall_{(y'\in V)} x\mathbin{R_B} y'\to y'\in V
+\end{equation*}
+Let $w\in W$. Then we see that
+\begin{equation*}
+(\forall_{(y\in W)} w\mathbin{R_K} y\to y\in V)\to\forall_{(y'\in V)} w\mathbin{R_B} y'\to y'\in V
+\end{equation*}
+for any $V\subseteq W$. We see that the (least) set $V$ for which the antecedent is a tautology
+is the set $A^K_w$, where $y\in A^K_w$ if and only if $w\mathbin{R_K}y$. Therefore
+we see that $w$ satisfies
+\begin{equation}\label{2a}
+\forall_{(y'\in V)} w\mathbin{R_B} y'\to w\mathbin{R_K} y'.
+\end{equation}
+Conversely, we want to show that if a frame satisfies \ref{2a}, then the formula
+$K\varphi\to B\varphi$ is valid in it. Let $M$ be a model of which the underlying
+frame $F$ satisfies condition \ref{2a}, let $\varphi$ be a modal formula and let
+$w\in W$. Our goal is to show that $w\models K\varphi\to B\varphi$. It is
+equivalent to show that $w\models B\varphi$ whenever $w\models K\varphi$. Assume
+that $w\models K\varphi$. Thus, ever $R_K$-accessible world from $w$ is a
+$\varphi$-world. Since by assumption every $R_B$-accessible world from $w$ is
+a $R_K$-accessible world, it follows that every $R_B$-accessible world from $w$
+is a $\varphi$-world. Hence $w\models B\varphi$.
+\item Let $F$ be a frame satisfying the formula $B\varphi\to BK\varphi$. Since
+any atomic proposition can be valuated by any subset of $W$, it follows that
+for any subset $V\subseteq W$ we have
+\begin{align*}
+& \forall_{(x\in W)}(\forall_{(y\in W)} x\mathbin{R_B} y\to y\in V)
+  \\
+  & \qquad\qquad\qquad\to
+\forall_{(y'\in W)} x\mathbin{R_B} y'\to\forall_{(z'\in W)} y'\mathbin{R_K} z'\to z'\in V
+\end{align*}
+Let $w\in W$. Then the least $V$ for which the formula
+\begin{align*}
+& (\forall_{(y\in W)} w\mathbin{R_B} y\to y\in V)
+  \\
+  & \qquad\qquad\qquad\to
+\forall_{(y'\in W)} w\mathbin{R_B} y'\to\forall_{(z'\in W)} y'\mathbin{R_K} z'\to z'\in V
+\end{align*}
+is a tautology is probably $A^B_w$, where $y\in A^B_w$ if and only if $w\mathbin{R_B} y$.
+Whether this is the least such $W$ or not, we see that the formula
+\begin{equation}\label{2b}
+\forall_{(y'\in W)} w\mathbin{R_B} y'\to\forall_{(z'\in W)} y'\mathbin{R_K} z'\to w\mathbin{R_B} z'
+\end{equation}
+holds for $F$.
+
+Conversely, we want to show that $B\varphi\to BK\varphi$ is valid in the class 
+of frames satisfying \ref{2b}. Let $M$ be a model of which the underlying frame
+satisfies \ref{2b}, let $\varphi$ be a modal formula and let $w\in W$. Our goal
+is to show that $w\models B\varphi\to BK\varphi$. It is equivalent to show that
+$w\models BK\varphi$ whenever $w\models B\varphi$. Assume that $w\models B\varphi$,
+i.e.~that ever $R_B$-accessible world from $w$ is a $\varphi$-world. Our current
+goal is to show that $w\models BK\varphi$, i.e.~that every $R_B$-accessible world
+from $w$ is a $K\varphi$-world. Let $v\in W$ such that $w\mathbin{R_B}v$. We
+want to show that $v\models K\varphi$, i.e.~that every $R_K$-accessible world from
+$v$ is a $\varphi$-world. Let $u\in W$ such that $v\mathbin{R_K} u$. Since
+$w\mathbin{R_B} v$ and $v\mathbin{R_K} u$, it follows that $w\mathbin{R_B} u$.
+Now, since $w\models B\varphi$ it follows that $u$ is a $\varphi$-world.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+Suppose that $F$ is a frame in which the formula 
+$\nec(\nec(\varphi\to\nec\varphi)\to\varphi)\to\varphi$ is valid. Since atomic
+propositions can have an arbitrary subset of $W$ as their valuation, it follows
+that for any $V\subseteq W$ we have
+\begin{align*}
+& \forall_{(x\in W)}
+  (\forall_{(y\in W)} x\mathbin{R}y
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
+  \\
+  & \qquad\qquad \to y\in V) \to x\in V
+\end{align*}
+Thus, for $w\in W$ we have
+\begin{align*}
+& (\forall_{(y\in W)} w\mathbin{R}y
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
+  \\
+  & \qquad\qquad \to y\in V) \to w\in V
+\end{align*}
+Note that the antecedent is equivalent to a tautology if we choose $V$ to be
+$A_w$. Our strategy is to look for a subset $V$ of $A_w$ such that
+\begin{align*}
+& (\forall_{(y\in W)} w\mathbin{R}y
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
+  \\
+  & \qquad\qquad \to y\in V)
+\end{align*}
+is equivalent to a tautology. We might accomplish this goal by finding the largest
+$V\subseteq A_x$ such that
+\begin{equation*}
+(\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
+\end{equation*}
+is false.
 \end{ex}
 \end{document}
