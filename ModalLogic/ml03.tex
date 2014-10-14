@@ -188,7 +188,9 @@ Now, since $w\models B\varphi$ it follows that $u$ is a $\varphi$-world.
 \end{ex}
 
 \begin{ex}
-Suppose that $F$ is a frame in which the formula 
+\begin{enumerate}
+\item
+\item Suppose that $F$ is a frame in which the formula 
 $\nec(\nec(\varphi\to\nec\varphi)\to\varphi)\to\varphi$ is valid. Since atomic
 propositions can have an arbitrary subset of $W$ as their valuation, it follows
 that for any $V\subseteq W$ we have
@@ -197,28 +199,24 @@ that for any $V\subseteq W$ we have
   (\forall_{(y\in W)} x\mathbin{R}y
   \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
   \\
-  & \qquad\qquad \to y\in V) \to x\in V
+  & \qquad\qquad \to y\in V) \to x\in V.
 \end{align*}
 Thus, for $w\in W$ we have
 \begin{align*}
 & (\forall_{(y\in W)} w\mathbin{R}y
   \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
   \\
-  & \qquad\qquad \to y\in V) \to w\in V
+  & \qquad\qquad \to y\in V) \to w\in V.
 \end{align*}
-Note that the antecedent is equivalent to a tautology if we choose $V$ to be
-$A_w$. Our strategy is to look for a subset $V$ of $A_w$ such that
+We now analyze this proposition further in the case we take $V$ to be the
+set $A_w$. We see that we get
 \begin{align*}
 & (\forall_{(y\in W)} w\mathbin{R}y
-  \to (\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z')
   \\
-  & \qquad\qquad \to y\in V)
+  & \qquad\qquad \to w\mathbin{R}y) \to w\mathbin{R} w.
 \end{align*}
-is equivalent to a tautology. We might accomplish this goal by finding the largest
-$V\subseteq A_x$ such that
-\begin{equation*}
-(\forall_{(z\in W)} y\mathbin{R}z\to z\in V\to\forall_{(z'\in W)} z\mathbin{R} z'\to z'\in V)
-\end{equation*}
-is false.
+Note that the antecedent is a tautology, so it follows that $w\mathbin{R} w$.
+\end{enumerate}
 \end{ex}
 \end{document}
