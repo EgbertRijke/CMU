@@ -189,7 +189,45 @@ Now, since $w\models B\varphi$ it follows that $u$ is a $\varphi$-world.
 
 \begin{ex}
 \begin{enumerate}
-\item
+\item Let $F$ be a frame which is reflexive and transitive. We will show that
+if $F$ does not model $\gamma$, then $F$ has an infinite $R$-path which never
+stays on it's place. Suppose therefore, that $M$ is a model of which the underlying
+frame is $F$, let $\varphi$ be a modal formula and let $w_0$ be a world in $M$
+such that $w\nmodels \gamma$. In other words, we have
+\begin{align*}
+w_0 & \models \neg\varphi\\
+w_0 & \models \nec(\nec(\varphi\to\nec\varphi)\to\varphi).
+\intertext{%
+Since $F$ is reflexive, it also follows that}
+w_0 & \models \nec(\varphi\to\nec\varphi)\to\varphi.
+\intertext{%
+We will now construct by induction a function $f:\mathbb{N}\to W$ such that $f(0):=w_0$.
+Suppose we have constructed $w_{2n}$ such that $w_0\mathbin{R} w_{2n}$ and}
+w_{2n} & \models \neg\varphi\\
+w_{2n} & \models \nec(\varphi\to\nec\varphi)\to\varphi.
+\intertext{%
+Then it follows that}
+w_{2n} & \models \neg\nec(\varphi\to\nec\varphi).
+\intertext{%
+Thus, there is a world $w_{2n+1}$ which is $R$-accessible from $w_{2n}$ for which}
+w_{2n+1} & \models \neg(\varphi\to\nec\varphi),
+\intertext{which is equivalent to the conjunction}
+w_{2n+1} & \models \varphi\\
+w_{2n+1} & \models \neg\nec\varphi.
+\intertext{Since $w_{2n}\models\neg\varphi$ and $w_{2n+1}\models\varphi$, we know that
+$w_{2n}\neq w_{2n+1}$. Also, since $w_{2n+1}\models\neg\nec\varphi$ it follows that there is
+a world $w_{2n+2}$ which is $R$-accessible from $w_{2n+1}$ such that}
+w_{2n+2} & \models \neg\varphi.
+\intertext{%
+From the assumption that $w_0\models\nec(\nec(\varphi\to\nec\varphi)\to\varphi)$
+and that $F$ is transitive, it follows that}
+w_{2n+2} & \models \nec(\varphi\to\nec\varphi)\to\varphi.
+\end{align*}
+Thus, we have constructed $w_{2n+2}$ out of $w_{2n}$ and it meets the requirements.
+This gets the induction going, so we obtain a function $\mathbb{N}\to W$ for which
+$f(n)\mathbin{R} f(n+1)$ and $f(n)\neq f(n+1)$ for each $n\in\mathbb{N}$. Thus,
+it follows that in any frame which is reflexive and transitive, $\gamma$ is
+valid if the frame contains no infinite sequences which always progress.
 \item Suppose that $F$ is a frame in which the formula 
 $\nec(\nec(\varphi\to\nec\varphi)\to\varphi)\to\varphi$ is valid. Since atomic
 propositions can have an arbitrary subset of $W$ as their valuation, it follows
@@ -217,6 +255,70 @@ set $A_w$. We see that we get
   & \qquad\qquad \to w\mathbin{R}y) \to w\mathbin{R} w.
 \end{align*}
 Note that the antecedent is a tautology, so it follows that $w\mathbin{R} w$.
+
+Now suppose that $w\mathbin{R} v$ and $v\mathbin{R} u$. Taking, $V=A_w$ and
+$x=u$, we see that
+\begin{align*}
+& (\forall_{(y\in W)} u\mathbin{R}y
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z')
+  \\
+  & \qquad\qquad \to w\mathbin{R}y) \to w\mathbin{R} u.
+\end{align*}
+Thus, to show $w\mathbin{R} u$ we must prove
+\begin{align*}
+& \forall_{(y\in W)} u\mathbin{R}y
+  \to (\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z')
+  \\
+  & \qquad\qquad \to w\mathbin{R}y
+\end{align*}
+Suppose that $y\in W$ is accessible from $u$ and that
+\begin{equation*}
+\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z'
+\end{equation*}
+Then it follows that
+\begin{equation*}
+y\mathbin{R}y\to w\mathbin{R}y\to\forall_{(z'\in W)} y\mathbin{R} z'\to w\mathbin{R} z'
+\end{equation*}
+Since $R$ is reflexive, it follows that
+\begin{equation*}
+w\mathbin{R}y\to\forall_{(z'\in W)} y\mathbin{R} z'\to w\mathbin{R} z'
+\end{equation*}
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Now suppose we have a modal
+formula $B$ such that in any model $M$, any world $w$ is a $B$-world if and only if
+it satisfies the formula $\exists_{(y\in W)}y\mathbin{R} w$.
+Consider the reflexive frame $F$ with one point $w$ and consider the frame
+$F':=(\mathbb{N},<)$. Let $M$ be any model such that the underlying
+frame of $M$ is $F$ and let $M'$ be the model with underlying frame $F'$ such
+that $n\models p$ if and only if $w\models p$. Then the relation
+$\sim$ relating $w$ with any world in $F'$ is then a bisimilation. By the assumption
+that $B$ is a modal formula, it follows that $0\nmodels B$ while $w\models B$.
+Since bisimilar worlds have the same modal theories, this gives us a contradiction.
+Thus, we cannot have a modal formula $B$ with the assumed properities.
+\item Let $F$ be the frame which is a triangle with three distinct vertices
+$a$, $b$ and $c$ and let $F'$ be the reflexive frame with one point $w$. Let $M'$
+be any model with underlying frame $F'$ and let $M$ be the model with underlying
+frame $F$ satisfying the property that $x\models p$ if and only if $w\models p$,
+for any $x\in F$. Then the relation $\sim$ which relates anything in $F$ to $w$
+is immediately seen to be a bisimilation. If there were a modal formula $T$
+which detects whether there exists a triangle in the frame, then it would follow
+from $a\sim w$ that $T$ is in the theory of $w$. However, there is no triangle
+in $F'$. Therefore, there is no such modal formula.
+\item Consider the frame $F$ with underlying set $\{w,v\}$ satisfying
+$w\mathbin{R} v$, $v\mathbin{R} w$, $v\mathbin{R} v$ and no other relations.
+Consider also the reflexive frame $F'$ with only one point $w$. Let $M'$ be any
+model with underlying frame $F'$ and let $M$ be the model satisfying
+$x\models p$ if and only if $w\models p$. Then the relation which relates every
+world of $M$ to $w$ is a bisimilation. Now suppose that $C$ is a formula in
+the modal language such that $C$ is valid in any frame satisfying the mentioned
+property. We know that $w\nmodels C$ since there are no two distinct points in
+$M'$. Since the theories of bisimilar worlds are the same, it follows that no
+world of $M$ can validate $C$. However, $F$ has the mentioned property, so
+$C$ should be valid in $F$. This is our contradiction.
 \end{enumerate}
 \end{ex}
 \end{document}
