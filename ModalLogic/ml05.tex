@@ -1,0 +1,93 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{5}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+\end{ex}
+
+\begin{ex}
+\end{ex}
+
+\begin{ex}
+Recall that $\varphi\to\psi$ is valid if
+and only if $\nu(\varphi)\subseteq\nu(\psi)$ for all valuations $\nu$. 
+\begin{enumerate}
+\item The statement $\nec(\varphi\land\psi)\leftrightarrow(\nec\varphi\land\nec\psi)$
+is valid because
+\begin{align*}
+\nu(\nec(\varphi\land\psi))
+  & =
+\interior{\nu(\varphi\land\psi)}
+  \\
+  & =
+\interior{\nu(\varphi)\cap\nu(\psi)}
+  \\
+  & =
+\interior{\nu(\varphi)}\cap\interior{\nu(\psi)}
+  \\
+  & =
+\nu(\nec\varphi)\cap\nu{\nec\psi}
+  \\
+  & =
+\nu(\nec\varphi\land\nec\psi)
+\end{align*}
+for any valuation $\nu$.
+\item Suppose that $\varphi\to\psi$ is valid. Then $\nu(\varphi)\subseteq\nu(\psi)$
+for any valuation $\nu$. The interior operation is monotone, so it follows that
+$\interior{\nu(\varphi)}\subseteq\interior{\nu(\psi)}$. Thus we conclude that
+$\nu(\nec\varphi)\subseteq\nu(\nec\psi)$ for every valuation $\nu$, 
+and hence that $\nec\varphi\to\nec\psi$ is valid.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Suppose $\varphi\to\nec\varphi$ is valid in a space $X$. Then, for every
+$A\subseteq X$ we have $A\subseteq\interior{A}$. Thus, it follows that
+$A=\interior{A}$ for every $A\subseteq X$. In other words, every subset of $X$
+is open. We conclude that $X$ is discrete.
+
+Now suppose that $X$ is discrete, let $\varphi$ be a modal formula and let
+$\nu$ be a valuation. Then $\nu(\varphi)$ is open, so we have
+\begin{equation*}
+\nu(\varphi)=\interior{\nu(\varphi)}=\nu(\nec\varphi).
+\end{equation*}
+It follows that $\nu(\varphi\to\nec\varphi)=X$, i.e.~that $\varphi\to\nec\varphi$
+is valid in $X$.
+\item To figure out a candidate formula, let $p$ be an atomic proposition and let 
+$X$ be a space. Then the function
+$\{\nu(p)\mid\nu\text{ is a valuation}\}\to 2^X$ is surjective. Thus, we see that
+every closed subset of $X$ can be obtained as a valuation of $\pos p$. Asserting
+that the valuation of $\pos p$ should always be open can be done by asserting that
+$\pos p\to \nec\pos p$. We will show that $\pos\varphi\to\nec\pos\varphi$ is
+defines the class of spaces of which closed sets are open. By the previous reasoning,
+we have already seen that if $\pos\varphi\to\nec\pos\varphi$ is valid in $X$, then
+every closed set is open.
+
+For the other direction, let $X$ be a space in which all closed sets are open, 
+let $\varphi$ be a modal formula and let $\nu$ be a valuation. Then
+$\nu(\pos\varphi)=\closure{\nu(\varphi)}$ is open by assumption, so
+$\closure{\nu(\varphi)}\subseteq\interior{\closure{\nu(\varphi)}}
+=\nu(\nec\pos\varphi)$. It follows that $\nu(\pos\varphi\to\nec\pos\varphi)=X$,
+and hence that $\pos\varphi\to\nec\pos\varphi$ is valid in $X$. 
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Define $U_x:=\bigcap\{U\in\tau\mid x\in U\}$. Then $U_x$ is the intersection
+of open sets, hence it is open. It is contained in every open set which contains
+$x$. To see that $x\in U_x$, note that $X\in\{U\in\tau\mid x\in U\}$.
+\item Suppose that every point in $X$ has a minimal neighborhood $U_x$ and let
+$V:I\to\tau$ for some set $I$. The goal is to show that $V:=\bigcap_{i\in I}V(i)$
+is open. To do this, it suffices to show that $U_x\subseteq V$ for every
+$x\in V$. Suppose $x\in V$. Then $x\in V(i)$ for each $i\in I$. Since $U_x$ is
+minimal, we also have $U_x\subseteq V(i)$ for each $i\in I$. Thus we conclude
+that $U_x\subseteq V$.
+\end{enumerate}
+\end{ex}
+\end{document}
