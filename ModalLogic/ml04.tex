@@ -1,0 +1,158 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{4}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+\begin{enumerate}
+\item Consider the canonical model $\tilde{M}$ for \textsf{K1.1}. The worlds in
+this model are the maximal consistent set of formulas which contain every
+formula of the form $\pos\varphi\to\nec\varphi$. By construction,
+every world in $\tilde{M}$ is a $(\pos\varphi\to\nec\varphi)$-world for every
+modal formula $\varphi$. 
+
+Our current goal is to show that the proposition
+\[
+\forall_{(x,y,z\in\tilde{W})} x\mathbin{\tilde{R}} y\to x\mathbin{\tilde{R}} z\to y=z
+\]
+holds. Let $\Sigma$, $\Gamma$ and $\Delta$ be maximal consistent sets of modal
+formulas containing every formula of the form $\pos\varphi\to\nec\varphi$, such
+that $w_\Sigma\mathbin{\tilde{R}} w_\Gamma$ and $w_\Sigma\mathbin{\tilde{R}} 
+w_\Delta$. To show that $w_\Gamma=w_\Delta$ it suffices to show that
+$\Gamma=\Delta$. By the maximality, it suffices to show that $\Gamma\subseteq
+\Delta$.
+
+Let $\varphi\in\Gamma$. Since we have $w_\Sigma\mathbin{\tilde{R}}w_\Gamma$, it
+follows that $\pos\varphi\in\Sigma$. Therefore we also have $\nec\varphi\in
+\Sigma$. Since we have $w_\Sigma\mathbin{\tilde{R}}w_\Delta$ it follows that
+$\varphi\in\Delta$. Thus we have shown that $\Gamma\subseteq\Delta$.
+
+We have shown that the canonical model belongs to the described class of 
+frames. By the truth lemma, $\tilde{M}$ refutes every non-theorem in 
+\textsf{K1.1}. Therefore we conclude that \textsf{K1.1} is complete with
+respect to the given class of frames.
+\item Consider the canonical model $\tilde{M}$ for \textsf{K5}. By 
+construction, every world in $\tilde{M}$ is a 
+$(\pos\varphi\to\nec\pos\varphi)$-world for every modal formula $\varphi$.
+
+Our current goal is to show that the proposition
+\[
+\forall_{(x,y,z\in\tilde{W})} 
+  x\mathbin{\tilde{R}}y\to x\mathbin{\tilde{R}} z\to y\mathbin{\tilde{R}} z
+\]
+holds for $\tilde{M}$. Let $\Sigma$, $\Gamma$ and $\Delta$ be maximal consistent
+sets of modal formulas containing every formula of the form
+$\pos\varphi\to\nec\pos\varphi$, such that 
+$w_\Sigma\mathbin{\tilde{R}}w_\Gamma$ and 
+$w_\Sigma\mathbin{\tilde{R}}w_\Delta$. We have to show that
+$w_\Gamma\mathbin{\tilde{R}}w_\Delta$. This means that we have to show that
+$\varphi\in\Delta$ whenever $\nec\varphi\in\Gamma$. Equivalently, we have to
+show that $\pos\varphi\in\Gamma$ whenever $\varphi\in\Delta$. 
+
+Suppose $\varphi\in\Delta$. Since $w_\Sigma\mathbin{\tilde{R}}w_\Delta$, it 
+follows that $\pos\varphi\in\Sigma$. Therefore it also follows that 
+$\nec\pos\varphi\in\Sigma$. Since $w_\Sigma\mathbin{\tilde{R}}w_\Gamma$, it
+follows that $\pos\varphi\in\Gamma$, as desired.
+
+We have shown that the canonical model belongs to the described class of 
+frames. By the truth lemma, $\tilde{M}$ refutes every non-theorem in 
+\textsf{K5}. Therefore we conclude that \textsf{K5} is complete with
+respect to the given class of frames.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+The strategy here is the same as in the previous exercise. Thus, we consider
+the exercise solved if we show that the canonical model belongs to the described
+class of frames.
+\begin{enumerate}
+\item Let $\Sigma$ and $\Gamma$ be maximal consistent sets of modal formulas
+containing \textsf{KS}, and suppose that 
+$w_\Sigma\mathbin{\tilde{R}_B}w_\Gamma$. Our goal is to show that
+$w_\Sigma\mathbin{\tilde{R}_K}w_\Gamma$. This means that we have to show that
+$\varphi\in\Gamma$ whenever $K\varphi\in\Sigma$.
+
+Let $\varphi$ be a modal formula such that $K\varphi\in\Sigma$. Since the
+canonical model models \textsf{KS} by construction, it follows that 
+$B\varphi\in\Sigma$. Since $w_\Sigma\mathbin{\tilde{R}_B}w_\Gamma$, it follows 
+that $\varphi\in\Gamma$, as desired.
+\item Let $\Sigma$, $\Gamma$ and $\Delta$ be maximal consistent sets of modal
+formulas containing \textsf{KF}, such that
+$w_\Sigma\mathbin{\tilde{R}_B}w_\Gamma$ and
+$w_\Gamma\mathbin{\tilde{R}_K}w_\Delta$. Our goal is to show that
+$w_\Sigma\mathbin{\tilde{R}_B}w_\Delta$. This means that we have to show that
+$\varphi\in\Delta$ whenever $B\varphi\in\Sigma$.
+
+Let $\varphi$ be a modal formula such that $B\varphi\in\Sigma$. Since the
+canonical model models \textsf{KF} by construction, it follows that
+$BK\varphi\in\Sigma$. Since $w_\Sigma\mathbin{\tilde{R}_B}w_\Gamma$, it follows
+that $K\varphi\in\Gamma$. Since $w_\Gamma\mathbin{\tilde{R}_K}w_\Delta$, it
+follows that $\varphi\in\Delta$, as desired.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Let $\Sigma$ be a maximal \textsf{AX}-consistent set of modal formulas and let
+$\varphi$ be a modal formula such that $\pos\varphi\in\Sigma$. To find a
+maximal \textsf{AX}-consistent set $\Gamma$ such that $\varphi\in\Gamma$ and
+$w_\Sigma\mathbin{\tilde{R}}w_\Gamma$ we apply Lindenbaums lemma. Thus, it
+suffices to show that the set
+\begin{equation*}
+\Gamma':=\{\psi\mid\nec\psi\in\Sigma\}\cup\{\varphi\}
+\end{equation*}
+is \textsf{AX}-consistent. Suppose it is not \textsf{AX}-consistent, then there
+are modal formulas $\psi_1$, \ldots, $\psi_n$ such that $\nec\psi_1\in\Sigma$, 
+\ldots, $\nec\psi_n\in\Sigma$ and
+\begin{equation*}
+\vdash_{\textsf{AX}} (\psi_1\land\cdots\land\psi_n\land\varphi)\to\bot.
+\end{equation*}
+Now we make the formal derivation
+\begin{align*}
+& (\psi_1\land\cdots\land\psi_n\land\varphi)\to\bot
+  \\
+& ((\psi_1\land\cdots\land\psi_n\land\varphi)\to\bot)
+  \to (\psi_1\land\cdots\land\psi_n)\to\neg\varphi
+  \\
+& (\psi_1\land\cdots\land\psi_n)\to\neg\varphi
+  \\
+& \nec(\psi_1\land\cdots\land\psi_n)\to\nec\neg\varphi
+  \\
+& (\nec(\psi_1\land\cdots\land\psi_n)\to\nec\neg\varphi)
+  \to
+  (\nec\psi_1\land\cdots\land\nec\psi_n)\to\nec\neg\varphi
+  \\
+& (\nec\psi_1\land\cdots\land\nec\psi_n)\to\nec\neg\varphi
+\end{align*}
+to see that
+\begin{equation*}
+\vdash_{\textsf{AX}} (\nec\psi_1\land\cdots\land\nec\psi_n)\to\nec\neg\varphi.
+\end{equation*}
+Now note that every $\nec\psi_i$ is in $\Sigma$. By the maximality and
+consistency of $\Sigma$, it follows that also $\nec\neg\varphi\in\Sigma$. Recall
+that by definition we have $\pos\varphi=\neg\nec\neg\varphi$. So we see
+that both $\nec\neg\varphi\in\Sigma$ and $\neg\nec\neg\varphi\in\Sigma$, this
+contradicts with the consistency of $\Sigma$. 
+\item I didn't use $\nec\neg\bot$ anywhere in the proof.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item We show that the canonical model is reflexive, transitive and symmetric.
+\begin{description}
+\item[Reflexivity] Let $\Sigma$ be a maximal \textsf{S5}-consistent set of
+modal formulas. We want to show that $w_\Sigma\mathbin{\tilde{R}}w_\Sigma$.
+This means that $\varphi\in\Sigma$ whenever $\nec\varphi\in\Sigma$, which
+follows immediately from the axiom $\nec\varphi\to\varphi$ and the maximality
+and consistency of $\Sigma$.
+\item[Symmetry] Let $\Sigma$ and $\Gamma$ be maximal \textsf{S5}-consistent
+sets of modal formulas such that $w_\Sigma\mathbin{\tilde{R}}w_\Gamma$. Our
+goal is to show that $w_\Gamma\mathbin{\tilde{R}}w_\Sigma$. 
+\end{description}
+\end{enumerate}
+\end{ex}
+\end{document}

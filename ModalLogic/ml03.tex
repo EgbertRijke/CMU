@@ -255,34 +255,6 @@ set $A_w$. We see that we get
   & \qquad\qquad \to w\mathbin{R}y) \to w\mathbin{R} w.
 \end{align*}
 Note that the antecedent is a tautology, so it follows that $w\mathbin{R} w$.
-
-Now suppose that $w\mathbin{R} v$ and $v\mathbin{R} u$. Taking, $V=A_w$ and
-$x=u$, we see that
-\begin{align*}
-& (\forall_{(y\in W)} u\mathbin{R}y
-  \to (\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z')
-  \\
-  & \qquad\qquad \to w\mathbin{R}y) \to w\mathbin{R} u.
-\end{align*}
-Thus, to show $w\mathbin{R} u$ we must prove
-\begin{align*}
-& \forall_{(y\in W)} u\mathbin{R}y
-  \to (\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z')
-  \\
-  & \qquad\qquad \to w\mathbin{R}y
-\end{align*}
-Suppose that $y\in W$ is accessible from $u$ and that
-\begin{equation*}
-\forall_{(z\in W)} y\mathbin{R}z\to w\mathbin{R}z\to\forall_{(z'\in W)} z\mathbin{R} z'\to w\mathbin{R} z'
-\end{equation*}
-Then it follows that
-\begin{equation*}
-y\mathbin{R}y\to w\mathbin{R}y\to\forall_{(z'\in W)} y\mathbin{R} z'\to w\mathbin{R} z'
-\end{equation*}
-Since $R$ is reflexive, it follows that
-\begin{equation*}
-w\mathbin{R}y\to\forall_{(z'\in W)} y\mathbin{R} z'\to w\mathbin{R} z'
-\end{equation*}
 \end{enumerate}
 \end{ex}
 
