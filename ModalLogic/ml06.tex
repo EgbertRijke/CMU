@@ -1,0 +1,83 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{6}
+\newcommand{\topology}{{\mathcal{T}}}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item For any set $A$ we have $A\subseteq\closure{A}$. In particular we have
+$\{x\}\subseteq\closure{\{x\}}$ for any $x\in X$, so $R_\topology$ is reflexive.
+
+Suppose that $x\mathbin{R_\topology} y$ and $y\mathbin{R_\topology} z$. Then
+we have $y\in\closure{\{z\}}$, so by the minimality of closures we also have
+$\closure{\{y\}}\subseteq\closure{\{z\}}$ and hence $x\in\closure{\{z\}}$. This
+proves the transivity of $R_\topology$.
+\item The relation $R_\topology$ needs not be symmetric. Consider the space
+$X:=\{x,y\}$ with the Sierpinsky topology $\{\varnothing,\{x\},\{x,y\}\}$ on it.
+Then $\closure{\{x\}}=X$ and $\closure{\{y\}}=\{y\}$. Thus, we see that
+$y\mathbin{R_\topology} x$, while $\neg(x\mathbin{R_\topology}y)$. 
+\item The only thing which differs in the two models is how the modal operators
+are interpreted. Thus, in the proof by induction on modal formulas, 
+we only have to show that for all $x\in X$
+\begin{equation*}
+((X,\topology,\lsem{-}\rsem),x)\models\pos\varphi
+  \qquad
+  \text{if and only if}
+  \qquad
+((X,R_\topology,\lsem{-}\rsem),x)\models\pos\varphi
+\end{equation*}
+provided that for all $x\in X$
+\begin{equation*}
+((X,\topology,\lsem{-}\rsem),x)\models\varphi
+  \qquad
+  \text{if and only if}
+  \qquad
+((X,R_\topology,\lsem{-}\rsem),x)\models\varphi
+\end{equation*}
+Note that $((X,\topology,\lsem{-}\rsem),x)\models\pos\varphi$ if and only if
+$x\in\closure{\lsem\varphi\rsem}$, and that
+$((X,R_\topology,\lsem{-}\rsem),x)\models\pos\varphi$ if and only if
+there exists $y\in X$ such that $x\mathbin{R_\topology}y$ and
+$((X,R_\topology,\lsem{-}\rsem),y)\models\varphi$. Thus, our goal is to show
+that for all $x\in X$
+\begin{equation*}
+x\in\closure{\lsem\varphi\rsem}
+  \quad
+  \text{if and only if}
+  \quad
+\exists_{(y\in X)}(x\mathbin{R_\topology}y)\land (((X,R_\topology,\lsem{-}\rsem),y)\models\varphi).
+\end{equation*}
+
+The reverse direction is easy: suppose there exists $y\in X$ such that
+$x\in\closure{\{y\}}$ and $((X,R_\topology,\lsem{-}\rsem),y)\models\varphi$,
+then it follows that $x\in\closure{\{y\}}\subseteq\closure{\lsem\varphi\rsem}$.
+
+For the direct direction we will use the condition that $X$ is an Alexandroff
+space. Suppose that $x\in\closure{\lsem\varphi\rsem}$. There is a minimimal
+open neighborhood $U_x$ of $x$, and we choose $y\in U_x\cap\lsem\varphi\rsem$.
+Then it remains to show that $x\in\closure{\{y\}}$, but this is immediate from
+the observation that every open neighborhood of $x$ contains $U_x$ and hence $y$.
+\item Consider any infinite set $X$ with the cofinite topology, in which the closed
+sets are either finite or $X$. Because singletons are finite and therefore
+closed, the relation $R_\topology$ is the equality relation.
+Let $x\in X$ and define $\lsem p\rsem:=X\setminus\{x\}$. Then $x\in\closure{\lsem p\rsem}$,
+because the closure of any infinite set is $X$. However, $x$ is not equal to any
+of the elements of $X\setminus\{x\}$, so none of the elements of $X\setminus\{x\}$
+is $R_\topology$-accessible from $x$. This shows that
+\begin{equation*}
+((X,\topology,\lsem{-}\rsem),x)\models \pos p
+\end{equation*}
+while
+\begin{equation*}
+((X,R_\topology,\lsem{-}\rsem),x)\nmodels \pos p.
+\end{equation*}
+\end{enumerate}
+\end{ex}
+\end{document}
