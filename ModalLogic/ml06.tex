@@ -8,6 +8,22 @@
 \maketitle
 
 \begin{ex}
+\begin{enumerate}
+\item Ever point $x$ which is not in $\closure{A}$ has an open neighborhood
+$U_x$ such that $U_x\cap A=\varnothing$. Then $V:=\bigcup\{U\in\topology\mid
+U\cap A=\varnothing\}$ contains every point which is not in the closure of $A$,
+and none other, so $V=X\setminus\closure{A}$. Also, since $V$ is a union of
+open sets, it is open. This shows that the complement of a closed set is open.
+
+To show the converse, suppose $A$ is a set with the property that its complement
+is open. Then for any $x\in X$, if every open neighborhood of $x$ intersects $A$, it follows that
+$X\setminus A$ is not a neighborhood of $x$. Thus $A$ is the set of its own
+closure points.
+
+\item We use that \textsf{S5} is complete with respect to the class of all
+topological spaces. In other words, for every non-theorem of \textsf{S5} there
+is a space which refutes it. 
+\end{enumerate}
 \end{ex}
 
 \begin{ex}
