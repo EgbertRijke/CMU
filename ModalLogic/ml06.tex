@@ -3,6 +3,7 @@
 
 \newcommand{\hwnumber}{6}
 \newcommand{\topology}{{\mathcal{T}}}
+\newcommand{\modalcirc}{{\bigcirc}}
 
 \begin{document}
 \maketitle
@@ -116,32 +117,99 @@ while
 \end{ex}
 
 \begin{ex}
+Before we begin with the solution, note that
+\begin{align*}
+\lsem\modalcirc\varphi\rsem
+  & =
+f^{-1}(\lsem\varphi\rsem).
+\end{align*}
+So we only need to reason with the semantic brackets, which is quicker in the
+topological semantics.
 \begin{enumerate}
-\item Suppose $f:X\to X$ is locally constant and let $A\subseteq X$. 
+\item Suppose $f:X\to X$ is locally constant. Then for
+each $x\in X$, there is an open neighborhood $U$ of $x$ such that $U\subseteq f^{-1}(\{x\})$.
+Therefore it follows that $f^{-1}(\{x\})$ is open for each $x$, and from this
+it follows that $f^{-1}(A)$ is open for every $A\subseteq X$. In particular,
+$f^{-1}(\lsem\varphi\rsem)$ is open for every modal formula $\varphi$. Now note
+that $x\models\modalcirc\varphi$ if and only if $x\in f^{-1}(\lsem\varphi\rsem)$.
+We conclude that the formula $\modalcirc\varphi\to\nec\modalcirc\varphi$ asserting
+that $\lsem\modalcirc\varphi\rsem$ is always open, is valid.
+
+We will show that $\modalcirc\varphi\to\nec\modalcirc\varphi$ defines the class of spaces
+with a locally constant map. Suppose that the formula $\modalcirc\varphi\to\nec\modalcirc\varphi$
+is valid. Then for any set $A$ we find that $f^{-1}(A)$ is open. 
+In particular, $f^{-1}(\{f(x)\})$ is open for every $x\in X$, showing that $f$
+is locally constant.
+\item Suppose that $(X,\topology,f)$ is a dynamic space in which every element
+of the form $f(x)$ is a sink. Then for any $x\in X$, we find
+$f(x)\in\interior{f^{-1}(\{f(x)\})}$. As a consequence, we have
+$B\cap f(X)\subseteq\interior{f^{-1}(B)}$ for any $B\subseteq X$. Then we also
+see that $f^{-1}(B)=f^{-1}(B\cap f(X))\subseteq f^{-1}(\interior{f^{-1}(B)})$
+for any $B\subseteq X$. In particular, we find that
+\begin{equation*}
+f^{-1}(\lsem\varphi\rsem)\subseteq f^{-1}(\interior{f^{-1}(\lsem\varphi\rsem)})
+\end{equation*}
+for any modal formula $\varphi$. Thus, we see that the modal formula
+$\modalcirc\varphi\to\modalcirc\nec\modalcirc\varphi$ is valid in such dynamical
+spaces.
+
+Now suppose that the formula $\modalcirc\varphi\to\modalcirc\nec\modalcirc\varphi$
+is valid in a dynamical space and let $x\in X$. Then we see that
+\begin{equation*}
+f^{-1}(\{f(x)\})\subseteq f^{-1}(\interior{f^{-1}(\{f(x)\})}).
+\end{equation*}
+It follows that $x\in f^{-1}(\interior{f^{-1}(\{f(x)\})})$, and thus that
+$f(f(x))=f(x)$. Thus, we get that $f(x)\in f^{-1}(\{f(x)\})$ and as a consequence that
+$f(x)=f(f(x))\in\interior{f^{-1}(\{f(x)\})}$. This proves the existence of an
+open set $U$ containing $f(x)$ such that $f(y)=f(x)$ for all $y\in U$, i.e.~that
+every element of the form $f(x)$ is a sink.
 \end{enumerate}
 \end{ex}
 
 \begin{ex}
-Let $N_k:=\{0,\ldots,k-1\}$ and consider the frame 
-\begin{equation*}
-F:=(2^{N_k},R_0,\ldots,R_{k-1},E,C)
-\end{equation*}
-where $C=E^\ast$, $E=\bigcup_{i\in N_k}R_i$ and $f\mathbin{R_i}g$ if and only if 
-$f|_{N_k\setminus\{i\}}=g|_{N_k\setminus\{i\}}$ for $f,g:N_k\to 2$.
-Note that each $R_i$ is an equivalence relation. We also consider
-the basic propositions $m_1,\ldots,m_k$ where $m_i$ is to be read
-as `child $i$ has a muddy forehead'. The model we get from the
-valuation given by $\lsem m_i\rsem:=\{f:N_k\to 2\mid f(i)=1\}$
-then models the setup of the muddy children problem.
-
-In the standard muddy children problem, it is furthermore given
-that it is common knowledge that at least one of the children
-has a muddy forehead, i.e.~
-\begin{equation*}
-C(m_1\lor\cdots\lor m_k).
-\end{equation*}
 \begin{enumerate}
-\item 
+\item For any two distinct children $i$ and $j$, for all child $i$ knows,
+child $j$ starts with no knowledge. So $i$ must assume that 
+$\neg(m_1\lor\cdots\lor m_k)$ is possible for $j$. So child $i$ can only
+derive that it has mud on his forehead if it sees no others with mud on their
+forehead. Thus, this variant is only solvable for $k=1$.
+\item This variant is solvable only when $k=1$ or $k=2$. 
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Suppose that $w$ is a world so that every $C$-accessible world is a
+$\varphi$-world. We have to show that $w\models E(\varphi\land C(\varphi))$.
+In other words, we have to show that each $E$-accessible world from $w$ is
+both a $\varphi$-world and a $C(\varphi)$ world.
+
+Let $v$ be an $E$-accessible world from $w$. 
+Since $C$ contains $E$, it follows that $v$ is also 
+$C$-accessible. Therefore $v$ is a $\varphi$-world.
+
+Suppose that $u$ is $C$-accessible from $v$. Since $C$ is transitive, we see
+that $u$ is also $C$-accessible from $w$. Hence it is a $\varphi$-world. It
+follows that $v$ is a $C(\varphi)$-world.
+\item Let $\varphi$ and $\psi$ be formulas and assume that
+$\models \varphi\to E(\varphi\land\psi)$. To show that $w\models\varphi\to C(\psi)$,
+for every world $w$, let $w$ be a $\varphi$-world. In order to show that every
+$C$-accessible world from $w$ is a $\psi$-world, we will show that every $C$-accessible
+world from $w$ is both a $\varphi\land\psi$-world. We do this by showing
+that $w\models E^n(\varphi\land\psi)$ for every $n\in\mathbb{N}$.
+
+Note first that $w$ is a $(\varphi\to E(\varphi\land\psi))$-world. Since it is
+assumed to be a $\varphi$-world, it follows that $w$ is also an $E(\varphi\land
+\psi)$-world. This completes the base step of the induction proof.
+
+Now suppose that $w$ is an $E^n(\varphi\land\psi)$-world and let $v$ be
+$E^n$-accessible from $w$. It follows immediately that $v$ is a
+$\varphi\land\psi$-world. Since $v$ is a $(\varphi\to E(\varphi\land\psi))$-world,
+it follows that $v$ is a $E(\varphi\land\psi)$-world. This shows that every
+$E^n$-accessible world from $w$ is an $E(\varphi\land\psi)$-world, so $w$ is
+an $E^{n+1}(\varphi\land\psi)$-world,
+completing the proof by induction.
+
 \end{enumerate}
 \end{ex}
 \end{document}
