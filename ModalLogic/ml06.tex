@@ -9,7 +9,7 @@
 
 \begin{ex}
 \begin{enumerate}
-\item Ever point $x$ which is not in $\closure{A}$ has an open neighborhood
+\item Every point $x$ which is not in $\closure{A}$ has an open neighborhood
 $U_x$ such that $U_x\cap A=\varnothing$. Then $V:=\bigcup\{U\in\topology\mid
 U\cap A=\varnothing\}$ contains every point which is not in the closure of $A$,
 and none other, so $V=X\setminus\closure{A}$. Also, since $V$ is a union of
@@ -21,8 +21,26 @@ $X\setminus A$ is not a neighborhood of $x$. Thus $A$ is the set of its own
 closure points.
 
 \item We use that \textsf{S5} is complete with respect to the class of all
-topological spaces. In other words, for every non-theorem of \textsf{S5} there
-is a space which refutes it. 
+topological spaces. We use the canonical space of maximal \textsf{S5}-consistent
+sets of formulas, with basic open sets
+\begin{equation*}
+B_{\varphi}:=\{x_\Sigma\mid\nec\varphi\in\Sigma\}
+\end{equation*}
+for its topology. The valuation of this model is such that $x_\Sigma\models\varphi$
+if and only if $\varphi\in\Sigma$. Consequently, we see that 
+$B_\varphi=\lsem\nec\varphi\rsem$.
+
+Our goal is to show that every basic open set is closed. In other words, we must
+show that $\lsem\nec\varphi\rsem=\closure{\lsem\nec\varphi\rsem}$, where we note
+that $\closure{\lsem\nec\varphi\rsem}=\lsem\pos\nec\varphi\rsem$. Since any set
+is contained in its closure, the goal reduces to verifying the inclusion
+$\lsem\pos\nec\varphi\rsem\subseteq\lsem\nec\varphi\rsem$. This holds if and only
+if 
+\begin{equation*}
+\pos\nec\varphi\to\nec\varphi
+\end{equation*}
+is valid, which it is because it is an \textsf{S5}-theorem (by exercise 2(b) of
+the second homework set).
 \end{enumerate}
 \end{ex}
 
