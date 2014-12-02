@@ -1,0 +1,250 @@
+\documentclass{article}
+
+\input{preamble}
+
+\newcommand\hwnumber{3}
+\newcommand{\cprob}[2]{\prob{#1\mathbin|#2}}
+\newcommand{\prob}[1]{P(#1)}
+\newcommand{\indep}[2]{#1\mathbin{\amalg}#2}
+\newcommand{\cindep}[3]{\indep{#1}{#2}\mid #3}
+
+\begin{document}
+
+\maketitle
+
+\begin{ex}
+\begin{enumerate}
+\item The Markov decomposition can be found by listing all the probabilities of
+all events given their parents. So we obtain
+\begin{equation*}
+\cprob{A}{F}
+  \cdot
+\cprob{B}{A,C}
+  \cdot
+\prob{C}
+  \cdot
+\prob{D}
+  \cdot
+\cprob{E}{B,C,D}
+  \cdot
+\prob{F}
+  \cdot
+\cprob{G}{F,D}.
+\end{equation*}
+\item $2+4+1+1+8+1+4=21$.
+\item Note that $\cindep{D}{A}{B,F,G}$ and $\cindep{D}{B}{F,G}$. Therefore,
+we deduce that
+\begin{equation*}
+\cprob{D=1}{A=0,B=1,F=1,G=0}=\cprob{D=1}{F=1,G=0}.
+\end{equation*}
+Note also that $\indep{D}{F}$, so we can compute
+\begin{align*}
+\cprob{D=1}{F=1,G=0}
+  & =
+\frac
+  {\cprob{G=0}{F=1,D=1}\cdot\cprob{D=1}{F=1}}
+  {\cprob{G=0}{F=1}}
+  \\
+  & =
+\frac
+  {\cprob{G=0}{F=1,D=1}\cdot\prob{D=1}}
+  {\cprob{G=0}{F=1}}.
+\end{align*}
+The terms in the numerator are terms of the Markov decomposition, so it remains 
+to compute $\cprob{G=0}{F=1}$. 
+\begin{align*}
+\cprob{G=0}{F=1}
+  & =
+\sum_d \cprob{G=0\land D=d}{F=1}
+  \\
+  & =
+\sum_d \cprob{G=0}{D=d,F=1}\cprob{D=d}{F=1}
+  \\
+  & =
+\sum_d \cprob{G=0}{D=d,F=1}\prob{D=d}.
+\end{align*}
+Thus, we express $\cprob{D=1}{A=0,B=1,F=1,G=0}$ in terms of the variables
+appearing in the Markov decomposition in the following way:
+\begin{equation*}
+\frac
+  {\cprob{G=0}{F=1,D=1}\cdot\prob{D=1}}
+  {\sum_d \cprob{G=0}{D=d,F=1}\prob{D=d}}.
+\end{equation*}
+\item Every arrow except the arrow from $F$ to $A$ appears in an unshielded
+collider, so the Markov equivalence class contains the given graph, and the
+given graph with the edge from $F$ to $A$ reversed.
+\item The Markov blanket contains the parents, the children and the parents of
+the children, so the Markov blanket of $C$ consists of $A$, $B$, $D$ and $E$.
+\item In that case, there is no edge from $F$ to $D$ or vice versa, but there
+will be an edge from $F$ to $B$. The Markov blanket therefore consists of $B$
+and $C$.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item There is the active path $B-A-C-G$, so $B$ and $G$ are not d-separated.
+\item Yes, because the Markov blanket of $F$ consists exactly of $C$ and $G$.
+\item All three of $C$, $D$ and $F$ appear in colliders with $G$ at one of the
+ends. So none of these can d-separate $A$ and $G$. Therefore, we find
+$\varnothing$, $\{B\}$, $\{E\}$ and $\{B,E\}$. 
+\item There is no active path from $B$ to $E$, so we have $\indep{B}{E}$.
+Therefore, we have
+\begin{equation*}
+\cprob{E=0}{B=1}=\prob{E=0}.
+\end{equation*}
+\item Likewise, $\cprob{A=1}{G=1}=\prob{A=1}$. 
+\item Note that $\cindep{B}{C}{A}$, so we have
+\begin{align*}
+\cprob{B=0}{A=1,C=0}
+  & =
+\cprob{B=0}{A=1}
+  \\
+  & =
+\frac{\cprob{A=1}{B=0}\cdot\prob{B=0}}{\prob{A=1}}
+  \\
+  & =
+\frac{\cprob{A=1}{B=0}\cdot\prob{B=0}}{\sum_b\cprob{A=1}{B=b}\prob{B=b}}.
+\end{align*}
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item No, there is the active path $X4-X1-X2$.
+\item No, there is the active path $X8-X1-X7-X6$.
+\item Yes, all the paths from $X8$ to $X7$ go through either 
+$X1\rightarrow X6\leftarrow X7$, $X2\rightarrow X3\leftarrow X7$ or
+$X2\rightarrow X5\leftarrow X3$, so $X8$ and $X7$ are unconditionally 
+independent.
+\item The set $\{X1\}$ d-separates $X7$ and $X2$. The only smaller set is
+the empty set, but $\varnothing$ does not d-separate $X7$ and $X2$ because
+they are d-connected by the path $X7-X1-X2$.
+\item $X4-X8$ and $X1-X2$ are the only edges that are not in a collider pair.
+Reverting the $X1-X2$ edge would create new d-separated pairs, such as 
+$(X8,X2)$. Therefore, the only edge that may be reverted is $X4-X8$.
+\item Yes, the path $X8 \rightarrow X1 \rightarrow X2 \rightarrow X5
+\leftarrow X3 \leftarrow X7$ is active, because the only collider it goes through
+is at $X5$.
+\item By intervention on $X1$, the edges into $X1$ are deleted. Thus, by intervening
+on $X1$, there remain no paths from $X7$ to $X8$.
+\item Yes, via the path $X7-X6-X1$.
+\item $\{X1\}$. 
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item
+\begin{equation*}
+\begin{tikzcd}
+S
+  &
+Q \ar{l}
+  \ar[-]{d}
+  \\
+U \ar{u}
+  \ar[-]{r}
+  &
+R \ar{r}
+  &
+V
+  &
+T \ar{l}
+\end{tikzcd}
+\end{equation*}
+Removing the edges for each of the independencies is obvious. Then $S$ and $V$ 
+have to be the only colliders because only $S$ and $V$ do not appear in their
+respective conditioning sets.
+\item The Markov blanket of $R$ consists of $Q$, $T$, $U$ and $V$. Note that
+$S$ is not a parent, and neither it is a child of $R$, so it cannot be in the
+Markov blanket.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item By one run of removing edges and labeling unshielded colliders, we obtain
+the graph
+\begin{equation*}
+\begin{tikzcd}
+X1 
+  \ar[-]{d}
+  \ar{dr}
+  \\
+X4 \ar[-]{r}
+  &
+X3 
+  &
+X2
+  \ar{l}
+\end{tikzcd}
+\end{equation*}
+Second, $X2\to X3 - X4$ cannot be an unshielded collider, so the edge $X3-X4$
+must be directed as $X3\to X4$. Then, to prevent the existence of a cycle
+and to prevent that $X1$ and $X2$ become d-connected, we must direct the
+edge $X1-X4$ as $X1\to X4$. The resulting equivalence class consists only of
+the graph
+\begin{equation*}
+\begin{tikzcd}
+X1 
+  \ar{d}
+  \ar{dr}
+  \\
+X4 
+  &
+X3 \ar{l}
+  &
+X2
+  \ar{l}
+\end{tikzcd}
+\end{equation*}
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+Since all edges remain, there could not have been arrows pointing into $X1$.
+that means we're left with the equivalence class
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+{} & X1 \ar{dl} \ar{dr}
+  \\
+X2 \ar[-]{rr}
+  & &
+X3
+\end{tikzcd}
+\end{equation*}
+Note that directing the edge $X2-X3$ in either way cannot change the equivalence
+class, since it does neither change the adjacencies nor the unshielded colliders.
+\end{ex}
+
+\begin{ex}
+The Markov equivalence class is given by
+\begin{equation*}
+\begin{tikzcd}[column sep=tiny]
+X1
+  \ar{dr}
+  &
+  {} &
+X2
+  \ar{dl}
+  \\
+  {} &
+X3
+  \ar{dr}
+  \ar{dl}
+  \\
+X4
+  \ar[-]{rr}
+  &
+  {} &
+X5
+\end{tikzcd}
+\end{equation*}
+Note that we have the unshielded collider $X1\rightarrow X3\leftarrow X2$ because
+$X1$ and $X2$ are unconditionally independent. Furthermore, neither
+$X1\to X3-X4$ nor $X2\to X3-X5$ can be an unshielded collider, so we find that
+the edges $X3\to X4$ and $X3\to X5$ are directed as indicated.
+\end{ex}
+
+\end{document}
