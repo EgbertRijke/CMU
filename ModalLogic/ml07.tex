@@ -1,0 +1,96 @@
+\documentclass{article}
+\input{preamble}
+
+\newcommand{\hwnumber}{7}
+\newcommand{\topology}{{\mathcal{T}}}
+\newcommand{\modalcirc}{{\bigcirc}}
+\newcommand{\sfivenc}{\mathsf{S5_nC}}
+
+\begin{document}
+\maketitle
+
+\begin{ex}
+\begin{enumerate}
+\item The proof is by induction on $k$. We first show that $\vdash_{\sfivenc}C\varphi\to E\varphi$. 
+By the axiom $(\varphi\to\psi_1)\to\ldots\to(\varphi\to\psi_n)\to\varphi\to\psi_1\land
+\cdots\land\psi_n$, it follows that we only have to show that
+$\vdash_{\sfivenc}C\varphi\to K_i\varphi$.
+We have $C\varphi\to E(\varphi\land C\varphi)$, $E(\varphi\land C\varphi)\to
+K_i(\varphi\land C\varphi)$ and $K_i(\varphi\land C\varphi)\to K_i(\varphi)$,
+which combine in the desired formal proof.
+
+Next is the inductive step. Suppose that
+$\vdash_{\sfivenc}C(\varphi)\to E^k(\varphi)$, i.e.~we may treat $C(\varphi)
+\to E^k(\varphi)$ as an axiom. Then we have $\varphi\land C(\varphi)\to
+\varphi\land E^k(\varphi)$.
+
+Provided that $E(\varphi\to\psi)\to E\varphi\to E\psi$, we also have $E(\varphi\land C(\varphi))\to
+E^{k+1}(\varphi)$. To see that the provided formula is valid, we only have to
+show that $E(\varphi\to\psi)\to E\varphi\to K_i\psi$. Since $E(\varphi\to\psi)\to
+K_i(\varphi\to\psi)$ and $E\varphi\to K_i\varphi$, this is a trivial check.
+
+Now it follows from the axiom
+$C(\varphi)\to E(\varphi\land C(\varphi))$ that $C(\varphi)\to E^{k+1}(\varphi)$. 
+\item Note that $K_i$ is just a box operator and we know by the proof of the
+truth lemma that box operators are truthy.
+\item Note that $E^k$ is just a combination of the $K_i$ operators and conjunction,
+both of which preserve truthyness.
+\item Suppose that $C\varphi\in\Sigma$ and let $\Gamma$ be such that
+$w_\Sigma\mathbin{\tilde{R}_C} w_\Gamma$. We have $\tilde{R}_C={\tilde{R}_E}^*$,
+so there is an $E$-path from $w_\Sigma$ to $w_\Gamma$. We have seen that
+$C\varphi\to E^k\varphi$, so it follows that $E^k\varphi\in\Sigma$ for every
+$k\geq1$. Therefore, we conclude that any $E$-reachable world from
+$w_\Sigma$ is a $\varphi$-world. In particular, $w_\Gamma$ is a $\varphi$-world,
+so we conclude that $w_\Sigma$ is a $C\varphi$-world.
+\item Let $p$ be an atomic formula and consider the set
+\begin{equation*}
+\{E^kp\mid k\geq 1\}\cup\{\neg Cp\}.
+\end{equation*}
+We have seen in class that this set is consistent. Therefore, it has a maximal
+consistent extension $\Sigma$. Since $E^kp$ is truthy for each $k\geq 1$,
+it follows that $w_\Sigma\models E^kp$. Hence, by our way of interpreting
+$C$, it follows that $w_\Sigma\models Cp$. However, we have $\neg Cp\in\Sigma$,
+so we have $Cp\notin\Sigma$ by the restriction that $\Sigma$ is consistent.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item Let $w\in W$ be such that $w\models K_i\varphi$. Since $R_i[w]$ consists
+of the worlds $v$ which are $R_i$-equivalent to $w$. Therefore, each $v\in R_i[w]$
+is a $\varphi$-world. So $Pr_i(w)(\lsem\varphi\rsem)=\pi(\lsem\varphi\rsem|R_i[w])=
+\pi(R_i[w]|R_i[w])=1$, which gives us that $w$ is a $B^1_i\varphi$-world.
+\item Let $w\in W$ be such that $w\models B^\alpha_i\varphi$. Our goal is to
+show that $w\models K_iB^\alpha_i\varphi$, i.e. that every $R_i$-equivalent
+world $v$ to $w$ satisfies $Pr_i(v)(\lsem\varphi\rsem)\geq\alpha$. Recall that
+$Pr_i(v)=Pr_i(w)$ whenever $v$ and $w$ are $R_i$-equivalent, and that we have
+$Pr_i(w)(\lsem\varphi\rsem)\geq\alpha$ by assumption.
+\item To construct a countermodel, it suffices to have only one agent.
+Consider the frame $\{w,v\}$ where every worlds are equivalent, and where
+$\pi(\{w\})=1$ and $\lsem p\rsem=\{w\}$. Then it easily follows that
+$w\models B^1\varphi$. However $\lsem K_i\varphi\rsem=\varnothing$, so
+$Pr_i(w)(\lsem K_i\varphi\rsem)=0$.
+\item Suppose $w\in W$ is such that $w\models K_i B^1_j\varphi$ for some
+$i$ and $j$. Then, for every $v$ which is $K_i$-equivalent to $w$, we have
+$Pr_j(v)(\lsem\varphi\rsem)=1$. It follows that 
+$\pi(\lsem\varphi\rsem\cap R_j[v])=\pi(R_j[v])$, and because $\pi$ is a finite
+measure it follows that we also
+have that $\pi(\lsem\varphi\rsem\cap R_j[v]| R_i[w])=\pi(R_j[v]|R_i[w])$. Now we obtain that
+\begin{align*}
+\pi(\lsem\varphi\rsem|R_i[w])
+  & =
+\sum_j \pi(\lsem\varphi\rsem\cap R_j[v]| R_i[w])
+  \\
+  & =
+\sum_j \pi(R_j[v]|R_i[w])
+  \\
+  & =
+\pi(W|R_i[w])
+  \\
+  & =
+1.
+\end{align*}
+We conclude that $w\models B^1_i\varphi$.
+\end{enumerate}
+\end{ex}
+\end{document}
