@@ -1,0 +1,320 @@
+\documentclass{article}
+\title{{\sc Understanding proofs}\\{\footnotesize Summary of Avigad's paper}}
+\author{Egbert Rijke}
+\date\today
+
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{etoolbox}
+
+\AtBeginEnvironment{quote}{\sl}
+
+\begin{document}
+\maketitle
+
+\hfill
+\begin{minipage}{.4\textwidth}
+\sl
+Concepts lead us to make investigations; are the expressions of our interest,
+and direct our interest.
+\end{minipage}
+
+\vspace{3\baselineskip}
+
+The goal of the paper is to describe what is expected of a theory of 
+mathematical understanding, and to identify the appropriate support for a claim
+to mathematical knowledge. The notion of a mathematical proof needs to be
+clarified, and it must be explained how such proofs are capable of providing
+appropriate mathematical knowledge. 
+
+In particular, it should be explained what is 
+involved with understanding a mathematical theorem, definition, proof, a theory,
+a method or an algorithm. Avigad considers two sorts of agents to model 
+understanding behavior: the human and the computer. Automated reasoning is 
+supposed to model the kind understanding needed in the verification of a 
+theorem.
+
+There is an intuitive difference between knowing that a mathematical claim is
+true, and understanding why the claim is true. the words definition and concept
+have different connotations. The fact that there is a gap between knowledge and
+understanding is made pointedly clear by the fact that one often finds dozens
+of published proofs of a theorem in the literature, all of which are deemed
+important contributions, even after the first one has been accepted as correct.
+
+\begin{quote}
+Discovery consists precisely in not constructing useless combinations, but in
+constructing those that are useful, which are an infinitely small minority.
+Discovery is discernment, selection.
+\end{quote}
+
+Avigad presents the following metaphor to clarify the role of understanding:
+Mathematics presents us with a complex network of roads; understanding
+helps us navigate them, and find the way to our destination. Mathematics
+presents us with a combinatorial explosion of options; understanding helps us
+sift through them, and pick out the ones that are worth pursuing. Without
+understanding, we are lost in confusion, wandering blindly, unable to cope.
+When we do mathematics, we are like Melville's sailors, swimming in a vast
+expanse. Just as the sailors cling to sides of their ship, we rely on our
+understanding to guide us and support us.
+
+Ascriptions of understanding are best understood in terms of the possession of
+certain abilities, and it is an important philosophical task to try to
+characterize the relevant abilities in sufficiently restricted contexts in which
+such ascriptions are made. One way of clarifying an ascription of understanding
+is by specifying some of the abilities that I take such an understanding to
+encompass. When we talk about understanding, we are invariably talking about
+the ability, or capacity, to do something such as to solve a problem, to choose
+an appropriate strategy, to discover a proof, to discern a fruitful definition
+from alternatives or the ability to apply a concept efficaciously. When we say
+that someone understands we simply mean that they possess the relevant
+abilities. Thus, it is often fruitful to analyze understanding in terms of the
+possession of abilities. The ability to determine whether a proof is correct
+is fundamental to mathematics, and the standard theory has a lot to say as to
+what that ability amounts to. Verifying correctness is only a small part of
+understanding a proof, and we commonly speak of understanding other sorts of
+things as well. Thus we need to describe and analyze the interrelated network
+of abilities which constitute the practice of mathematics, in relation to fields
+of inquiry that rely, either implicitly or explicitly, on models of that
+practice.
+
+There seems to be some sort of reciprocal relationship between mathematics and 
+understanding. Understanding is clearly needed to carry out certain mathematical
+tasks, but although understanding can explain the ability to carry out a task
+successfully, isn't it a mistake to conflate the two? We should expect a
+philosophical theory of understanding to provide a characterization of
+mathematical understanding that is consistent with, but independent of, our
+subjective experience.
+
+The idea to ascribe understanding in terms of the possession of certain abilities
+accords well with Wittgenstein's views on language. An important segment of
+Wittgenstein's Philosophical Investigations explores what it means to follow
+a rule, as well as related notions, like obeying a command or using a formula
+correctly. His analysis shows that,
+from a certain point philosophical perspective, it is fruitless to hope for a 
+certain type of explanation of the meaning of judgments of understanding.
+Nor is it necessary: there are philosophical gains to be had by exploring the
+relationships between such fundamental judgments, and unraveling problems that
+arise from confused or misguided applications of the terms. Understanding is
+only made manifest in an array of uses. The common philosophical tendency is
+therefore to distinguish the two, and take understanding to be `possession' of
+a meaning that somehow `determines' the appropriate usage.
+
+If our goal is to explain what it means to say that someone has understood a
+particular word, formula, or command, we simply need to describe the 
+circumstances under which we are willing to make this assertion. Thus, from a
+Wittgensteinian perspective, the philosopher's task is not to explain the
+feeling of having understood, or any underlying mental or physical processes.
+The challenge is rather to clarify the circumstances under which we make our
+ascriptions.
+
+We should not be distressed by the fact that our ascriptions of understanding
+are fallible. The aim of the investigations is to shape the way we think about
+language and thought. here, I have proposed that this world view is relevant to
+the way we think about mathematical understanding. When it comes to the
+philosophy of mathematics, I believe it is also fruitful to explore what we take
+to constitute appropriate behavior, even in situations where we take a goal or
+a standard of correctness to be fixed and unproblematic. The claim I am making
+here is simply that the terrain we are describing is best viewed as a network
+of abilities, or mechanisms and capacities for thought.
+
+This stands in contrast to the traditional view of mathematics as a collection
+of definitions and theorems. For Wittgenstein, a proposition is not just an
+object of knowledge, but rather something that shapes our behavior. It is our
+acting which lies at the bottom of the language game.
+
+This way of thinking challenges us to view mathematics in dynamic terms, not as
+a body of knowledge, but rather as a complex system that guides our thoughts
+and actions.
+
+A theory of mathematical understanding should be a theory of mathematical
+abilities:
+\begin{itemize}
+\item The ability to respond to challenges as to the correctness of the proof,
+and fill in details and justify inferences at a skeptic's request;
+\item The ability to give a high-level outline, or overview of the proof;
+\item The ability to cast the proof in different terms, say, eliminating or
+adding abstract terminology;
+\item The ability to indicate `key' or novel points in the argument, and
+separate them from the steps that are straightforward;
+\item The ability to motivate the proof. That is, to explain why certain steps
+are natural, or to be expected;
+\item The ability to give natural examples of the various phenomena described in
+the proof;
+\item The ability to indicate where in the proof certain of the theorem's
+hypotheses are needed, and perhaps, to provide counterexamples that show what
+goes wrong when various hypotheses are omitted;
+\item The ability to view the proof in terms of a parallel development, for
+example, as a generalization or adaption of a well-known proof of a simpler
+theorem;
+\item The ability to offer generalizations, or, to suggest an interesting
+weakening of the conclusion that can be obtained with a corresponding of the
+hypotheses;
+\item The ability to calculate a particular quantity, or to provide an explicit
+description of an object, whose existence is guaranteed by the theorem;
+\item The ability to provide a diagram representing some of the data in the
+proof, or to relate the proof to a particular diagram;
+\item \ldots
+\end{itemize}
+The philosophical challenge is to characterize these abilities with clarity and
+precision, and fit them into a structured and informative theory.
+
+Our analysis entails that understanding only becomes manifests in an agent's
+behavior across a range of contexts, and we seem to have come dangerously close
+to identifying understanding with the class of relevant behaviors. Such a
+dispositional or behavioral account of understanding has famously been put
+forth by Gilbert Ryle as part of a more general philosophy of mind. Since Ryle's
+approach is commonly viewed as having failed, it is worth reviewing some of the
+usual criticisms to see what bearing they have on the more specific issues 
+addressed here.
+
+Ryle intended his dispositional theory to account for ascriptions of a variety
+of mental states, including things like belief, desire, intent, and so on.
+We may have concerns that there are situations under which it makes sense
+to say that someone understands a proof, but is unable to exhibit the expected
+behaviors. But the examples that come to mind are contrived, and it does not
+seem unreasonable to declare these outside the scope of a suitably focused
+theory of mathematical understanding. If we view at least the outward signs of
+mathematical activity as essentially linguistic, it seems reasonable to take
+verbal and written communication as reliable correlates of understanding.
+
+These concerns translate into doubts that one can adequately characterie the
+behaviors that warrant attributions of understanding. But the problem can be
+mitigated by limiting the scope. We would like our theory to help explain why
+certain proofs are preferred in contemporary mathematics, why certain historical
+developments were viewed as advances, or why certain expository practices yield
+desired results. Moving from a general theory of mind to a more specific
+theory of mathematical understanding gives us a great latitude in bracketing
+issues that we take to fall outside our scope. We should be able to screen off
+extraneous beliefs and desires, and assume nothing about an agent's intent
+beyond the intent to perform mathematically.
+
+Perhaps the most compelling criticism of a dispositional account is that even
+if we could characterize the behaviors that are correlated with the mental states
+under consideration, 
+the theory which identifies the mental states with the associated behaviors
+does not provide some sort of causal explanation that tells us how intelligent
+and intentional behavior is brought about. We would like a theory that explains
+how a proper understanding enables one to function mathematically. Insofar as
+our theory is to be relevant to mathematical exposition and pedagogy, we would
+expect it not only to characterize the outward signs of mathematical 
+understanding, but also provide some hints as to how they can be encouraged and
+taught. Similarly, a theory of mathematical understanding should be of service 
+to computer scientists trying to write software that exhibits various types of
+competent mathematical behavior. In short, we might expect a useful 
+philosophical theory to both clarify and characterize desired behaviors, as well
+as to provide some guidance in bringing them about.
+
+Our theory of mathematical abilities need not degenerate to a laundry list of
+behavioral cues. The abilities we describe interact in complex ways and will 
+not always be cast in terms of behavioral manifestations.
+
+Informal notions of understanding are useful in the implementation of proof
+verification programs, a.k.a.~(interactive) proof assistants. 
+A user's interaction with a proof assistant can be seen as an attempt to provide
+the computer with enough information to see that there is a formal axiomatic
+proof of the purported theorem. Alternatively, the formal proof scripts that
+are given to the computer can be viewed as providing instructions to how to
+find a formal axiomatic derivation. The task of the computational proof assistant
+is to use these scripts to construct such a derivation. When it has done so,
+the system indicates that it has `understood' the user's proof by certifying
+the theorem as correct.
+
+Without the theory of 
+understanding, writing a proof in a proof assistant becomes an excessively
+daunting task, which suffers from problems like
+\begin{enumerate}
+\item Combinatorial explosion of the number of cases: Computers
+can search exhaustively for an axiomatic derivation of the desired inference,
+but blind search does not get very far. The space of possibilities grows
+exponentially. Users are forced to verify a large amount of possibilities in 
+case distinctions.
+\item Proving an existential conclusion, or using a universal hypothesis, can
+require finding appropriate instances. There may be infinitely many terms to
+consider. Among the strategies that have been employed in the implementation
+of proof assistants are: defer choosing terms as long as possible, using
+Skolem functions and a process called unification. Even in the presence of such
+methods, there will be choices to be made, resulting in explosion.
+\item There is a large class of inferences that require very little effort on
+our part, but are beyond the means of current verification technology.
+Commonly, inferences require background facts and theorems
+that are left implicit. Each discipline typically has its own bag of tricks. 
+In this case, the challenge is to determine which
+external facts and theorems need to be imported to the local hypotheses. The
+range of options once again render the problem intractable. 
+\item Irrelevant information: Users are forced to keep track of irrelevant
+information, where every detail is spelled out precisely in such a way that
+pattern matching against a manageable list of precisely specified rules, whereas
+in textbooks, readers are called upon their ability to see that each of the
+successive steps is warranted.
+\item Even though in restricted domains decision procedures might exist, we
+know as a consequence of the incompleteness theorem that decidability of
+propositions is the exception rather than the rule. Where they exist, they tend
+to be inefficient or even infeasible. There are many instances where a short
+derivation is possible, but where a general decision procedure follows a more
+circuitous route.
+\end{enumerate}
+The flip explanation as to why competent mathematicians succeed where computers
+fail is simply that mathematicians understand, while computers don't. At a
+suitable level of abstraction, an account of how this understanding works should
+not only explain the efficacy of our own mathematical practices, but also help
+us fashion computational systems that share in the succes.
+
+A theory of mathematical understanding should clarify the structural aspects of
+mathematics that characterize successful performance for agents of any sort.
+The theory should differentiate good teaching practice from good programming
+practice, the theory should be relativized to the particuliarities of the relevant
+class of agents. We see nothing ruling out that a general philosophical theory
+can help explain what makes it possible for either type of agent to understand
+a mathematical proof.
+
+Computers are good at
+\begin{itemize}
+\item performing an exhaustive search. Some strategies that may speed up the 
+search procedure include: backchaining, forward search and combining methods.
+\item carrying out symbolic calculations and deriving equalities by means of 
+normalization.
+\end{itemize} 
+Often mathematical facts are verified by combining methods from a multitude of
+restricted domains, in each of which it is clear how to proceed. A general
+theory of how the three strategies of backward-driven search, forward-driven
+search and combination of methods can be combined successfully to capture common
+mathematical inferences is needed. Insofar as structural features of the
+mathematics that we care about make it possible to preceed in principled and 
+effective ways, we should identify these structural features.
+
+It is also common in mathematics that one first recognizes an algebraic 
+structure in a domain of interest, and then one instantiates facts, procedures
+and methods that have been developed in the general setting to the case at hand.
+Thus, algebraic reasoning involves complementary processes of abstraction and
+instantiation. The most commonly cited advantage of the algebraic method is
+generality. Sometimes the benefits are terminological and notational: algebraic
+abstraction has a way of focussing our efforts by suppressing distracting
+information that is irrelevant to the solution of a problem. Finally, the
+algebraic method enables us to discover notions that are likely to be fruitful
+elsewhere. It provides a uniform way of seeing analogies in otherwise disparate
+settings. In other words, they lead us to make investigations, they are the
+expression of interest and they direct our interest.
+
+In the example of group theory, once we recognize that we are dealing with a
+group, facts about groups are suddenly ready to hand. We know how to simplify
+terms, and what properties are potentially relevant. The logical story does
+not have much to say about how this works. Nor does it have much to say about
+how we are able to reason in the abstract setting, and how this reasoning differs
+from that of the domain of application. In formal verification, the notion of
+a collection of facts and procedures that are ready at hand is sometimes called
+a context.
+
+To enable contexts locally, proof assistants have developed schemes that go
+under names such as locales or modules. In these locales or modules, the system
+has to provide mechanisms for identifying certain theorems as theorems about
+groups, for specializing facts about groups automatically to the specific
+group at hand, and for keeping track of the calculational rules and basic facts
+that enable the automated tools to recognize straightforward inferences and
+calculations in both the general and particular settings. Furthermore, one needs
+mechanisms to manage locales and combine them effectively. An amount of
+bookkeeping is needed to keep track of the facts and procedures that are
+immediately available to human mathematicians, when we recognize one algebraic
+structure to be present in another. A good deal more effort is needed to
+determine what lies behind even the most straightforward algebraic inferences,
+and how we understand algebraic proofs.
+\end{document}

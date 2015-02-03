@@ -247,4 +247,87 @@ $X1\to X3-X4$ nor $X2\to X3-X5$ can be an unshielded collider, so we find that
 the edges $X3\to X4$ and $X3\to X5$ are directed as indicated.
 \end{ex}
 
+\begin{ex}
+\begin{enumerate}
+\item $81$. There are three possibilities for each arrow with a circle and an
+arrow tip. We do not have to consider that latencies coincide, and neither
+do unshielded colliders $L\rightarrow X\leftarrow L'$ between latencies 
+influence the independencies.
+\item Only the graph
+\begin{equation*}
+\begin{tikzcd}
+X1
+  &
+X4 \ar{l} \ar{d}
+  \\
+X3 \ar{r} \ar{u}
+  &
+X2
+\end{tikzcd}
+\end{equation*}
+is possible.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item By the uniform structure prior, we have $P(G)=P(H)$ for any two graphs
+$G$ and $H$. For any data input $d$, we have $\cprob{d}{G}=\cprob{d}{H}$.
+\end{enumerate}
+\end{ex}
+
+\begin{ex}
+\begin{enumerate}
+\item As we have seen in class, we have
+\begin{align*}
+\rho_{12}\rho_{34}
+  & = 
+\alpha_1\alpha_2\alpha_3\alpha_4
+  \\
+\rho_{13}\rho_{24}
+  & =
+\alpha_1\alpha_2\alpha_3\alpha_4e^2
+  \\
+\rho_{14}\rho_{23}
+  & =
+\alpha_1\alpha_2\alpha_3\alpha_4e^2.
+\end{align*}
+So the tetrad conditions are that $\rho_{12}\rho_{34}\neq\rho_{13}\rho_{24}$ and
+$\rho_{13}\rho_{24}=\rho_{14}\rho_{23}$. 
+\item In the one-latent model, we would have that
+$\rho_{12}\rho_{34}=\rho_{13}\rho_{24}=\rho_{14}\rho_{23}$.
+\item We would have 
+\begin{align*}
+\rho_{12}\rho_{34}
+  & = 
+\alpha_1\alpha_2\alpha_3\alpha_4
+  \\
+\rho_{13}\rho_{24}
+  & =
+(\alpha_1\alpha_3e+\beta)(\alpha_2e\alpha_4)
+  \\
+\rho_{14}\rho_{23}
+  & =
+(\alpha_1e\alpha_4)(\alpha_2 e\alpha_3+\alpha_2\alpha_1\beta).
+\end{align*}
+None of them are equal.
+\item We would have 
+\begin{align*}
+\rho_{12}\rho_{34}
+  & =
+(\alpha_1\alpha_2+\beta)(\alpha_3\alpha_4)
+  \\
+\rho_{14}\rho_{23}
+  & =
+(\alpha_1e\alpha_4)(\alpha_2e\alpha_3+\beta\alpha_1e\alpha_3)
+  \\
+\rho_{13}\rho_{24}
+  & =
+(\alpha_1e\alpha_3)(\alpha_2e\alpha_4+\beta\alpha_1e\alpha_4).
+\end{align*}
+So we have $\rho_{13}\rho_{24}=\rho_{14}\rho_{23}$, which are both different
+from $\rho_{12}\rho_{34}$. Based on the (in)equalities only, we cannot different
+this situation from the situation in part (a).
+\end{enumerate}
+\end{ex}
 \end{document}
